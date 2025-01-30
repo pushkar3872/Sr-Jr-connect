@@ -1,36 +1,24 @@
-// src/logincomponents/WelcomePage.jsx
-import React from 'react'
-import {useNavigate} from 'react-router-dom';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 export default function WelcomePage() {
-
-
-    const navigate= useNavigate();
-
-    const handle= ()=>
-    {
-        navigate('/login');
-    }
-
-    const handle1 = () => {
-        navigate('/register');
-    }
+  const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center">
-      <div className="text-center bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
-        <h2 className="text-3xl font-extrabold text-gray-800 mb-4">
-          Welcome !
-        </h2>
-        <p className="text-lg text-gray-600 mb-6">
-          Welcome to our  Alumni Portal:
-        </p>
-        <button onClick={handle} className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full">
-          Login
-        </button>
-        <button onClick={handle1} className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full">
-          Register
-        </button>
+    <div className="min-h-screen bg-base-200 flex items-center justify-center p-4">
+      <div className="card w-full max-w-lg shadow-xl bg-base-100 p-8 text-center">
+        <h2 className="text-4xl font-bold text-primary">Welcome!</h2>
+        <p className="text-lg text-gray-600 mt-4">Welcome to our Alumni Portal:</p>
+
+        <div className="mt-6 space-x-4">
+          <button onClick={() => navigate('/login')} className="btn btn-primary">
+            Login
+          </button>
+          <button onClick={() => navigate('/register')} className="btn btn-secondary">
+            Register
+          </button>
+        </div>
       </div>
     </div>
-  )
+  );
 }

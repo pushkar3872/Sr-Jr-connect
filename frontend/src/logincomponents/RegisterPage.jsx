@@ -1,122 +1,122 @@
-// src/logincomponents/RegisterPage.jsx
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 export default function RegisterPage() {
   // State for form fields and error messages
-  const [fullName, setFullName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [error, setError] = useState('')
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
 
   // Handle form submission
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // Basic form validation
     if (!fullName || !email || !password || !confirmPassword) {
-      setError('All fields are required!')
-      return
+      setError('All fields are required!');
+      return;
     }
 
     // Check if passwords match
     if (password !== confirmPassword) {
-      setError('Passwords do not match!')
-      return
+      setError('Passwords do not match!');
+      return;
     }
 
-    // Example: Here you can replace this with an actual API call for registration
-    alert('Registration successful!')
+    // Example: Replace this with an actual API call for registration
+    alert('Registration successful!');
+    
     // Clear the form
-    setFullName('')
-    setEmail('')
-    setPassword('')
-    setConfirmPassword('')
-  }
+    setFullName('');
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-500 to-teal-500 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Register</h2>
+    <div className="min-h-screen bg-base-200 flex items-center justify-center p-4">
+      <div className="card w-full max-w-md shadow-xl bg-base-100 p-8">
+        <h2 className="text-3xl font-bold text-primary text-center">Register</h2>
 
-        {/* Display error message if any */}
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+        {/* Error Message */}
+        {error && <div className="alert alert-error mt-4">{error}</div>}
 
-        <form onSubmit={handleSubmit}>
-          {/* Full Name field */}
-          <div className="mb-4">
-            <label htmlFor="fullName" className="block text-gray-700 font-medium mb-2">Full Name</label>
+        <form onSubmit={handleSubmit} className="mt-6">
+          {/* Full Name Field */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Full Name</span>
+            </label>
             <input
               type="text"
-              id="fullName"
-              name="fullName"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input input-bordered w-full"
               placeholder="Enter your full name"
             />
           </div>
 
-          {/* Email field */}
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 font-medium mb-2">Email</label>
+          {/* Email Field */}
+          <div className="form-control mt-4">
+            <label className="label">
+              <span className="label-text">Email</span>
+            </label>
             <input
               type="email"
-              id="email"
-              name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input input-bordered w-full"
               placeholder="Enter your email"
             />
           </div>
 
-          {/* Password field */}
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-700 font-medium mb-2">Password</label>
+          {/* Password Field */}
+          <div className="form-control mt-4">
+            <label className="label">
+              <span className="label-text">Password</span>
+            </label>
             <input
               type="password"
-              id="password"
-              name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input input-bordered w-full"
               placeholder="Enter your password"
             />
           </div>
 
-          {/* Confirm Password field */}
-          <div className="mb-6">
-            <label htmlFor="confirmPassword" className="block text-gray-700 font-medium mb-2">Confirm Password</label>
+          {/* Confirm Password Field */}
+          <div className="form-control mt-4">
+            <label className="label">
+              <span className="label-text">Confirm Password</span>
+            </label>
             <input
               type="password"
-              id="confirmPassword"
-              name="confirmPassword"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input input-bordered w-full"
               placeholder="Confirm your password"
             />
           </div>
 
-          {/* Submit button */}
-          <button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            Register
-          </button>
+          {/* Submit Button */}
+          <div className="mt-6">
+            <button type="submit" className="btn btn-primary w-full">
+              Register
+            </button>
+          </div>
         </form>
 
+        {/* Login Link */}
         <div className="mt-4 text-center">
-          <p className="text-sm text-gray-600">
+          <p className="text-sm">
             Already have an account?{' '}
-            <a href="/login" className="text-blue-600 hover:text-blue-700 font-semibold">
+            <a href="/login" className="text-primary font-semibold">
               Login here
             </a>
           </p>
         </div>
       </div>
     </div>
-  )
+  );
 }

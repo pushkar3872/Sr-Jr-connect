@@ -1,71 +1,98 @@
-import React from 'react'
+import React from 'react';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gray-100 flex">
-      {/* Left Section (1/4) - User Profile */}
-      <div className="w-1/4 bg-white p-6 border-r border-gray-300">
-        <h3 className="text-xl font-semibold text-gray-800 mb-4">User Profile</h3>
-        <div className="flex items-center mb-6">
-          <div className="w-16 h-16 rounded-full bg-gray-300 mb-4"></div> {/* Profile image */}
-          <div className="ml-4">
-            <h4 className="font-semibold text-gray-800">John Doe</h4>
-            <p className="text-gray-600">john.doe@example.com</p>
+    <div className="min-h-screen bg-base-200 flex flex-col md:flex-row">
+      {/* Left Section (User Profile) */}
+      <div className="w-full md:w-1/4 bg-base-100 p-6 border-b md:border-r border-base-300 shadow-lg">
+        <h3 className="text-xl font-semibold text-primary mb-4">User Profile</h3>
+        <div className="flex flex-col sm:flex-row items-center mb-6">
+          <div className="avatar">
+            <div className="w-16 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+              <img src="/avatar.png" alt="Profile" />
+            </div>
+          </div>
+          <div className="mt-4 sm:mt-0 sm:ml-4 text-center sm:text-left">
+            <h4 className="font-semibold text-base-content">John Doe</h4>
+            <p className="text-sm text-base-content">john.doe@example.com</p>
           </div>
         </div>
-        <div>
-          <p className="text-gray-700 mb-2">Joined: January 2022</p>
-          <p className="text-gray-700">Location: San Francisco, CA</p>
+        <div className="text-base-content text-center sm:text-left">
+          <p className="mb-2">Joined: January 2022</p>
+          <p>Location: San Francisco, CA</p>
         </div>
       </div>
 
-      {/* Middle Section (2/4) - Chat Area */}
-      <div className="w-2/4 bg-white p-6">
-        <h3 className="text-xl font-semibold text-gray-800 mb-4">Chat Area</h3>
-        <div className="border-b border-gray-300 mb-6 pb-4">
+      {/* Middle Section (Chat Area) */}
+      <div className="w-full md:w-2/4 bg-base-100 p-6 shadow-lg">
+        <h3 className="text-xl font-semibold text-primary mb-4">Chat Area</h3>
+        <div className="border-b border-base-300 mb-6 pb-4">
           <input
             type="text"
             placeholder="Search messages..."
-            className="w-full p-2 border border-gray-300 rounded-lg"
+            className="input input-bordered w-full"
           />
         </div>
         <div className="space-y-4">
-          <div className="flex justify-between">
-            <div className="bg-blue-100 p-3 rounded-lg max-w-xs">
-              <p className="text-sm text-gray-700">Hey! How are you doing?</p>
+          {/* Received Message (Chat Start) */}
+          <div className="chat chat-start">
+            <div className="chat-image avatar">
+              <div className="w-10 rounded-full">
+                <img src="/avatar.png" alt="Alice" />
+              </div>
             </div>
-            <div className="text-xs text-gray-400">10:30 AM</div>
-          </div>
-          <div className="flex justify-between">
-            <div className="bg-green-100 p-3 rounded-lg max-w-xs">
-              <p className="text-sm text-gray-700">I'm good! Let's catch up soon.</p>
+            <div className="chat-header">
+              Alice <time className="text-xs opacity-50">10:30 AM</time>
             </div>
-            <div className="text-xs text-gray-400">10:35 AM</div>
+            <div className="chat-bubble bg-primary text-primary-content">Hey! How are you doing?</div>
           </div>
-          {/* Add more messages as needed */}
+
+          {/* Sent Message (Chat End) */}
+          <div className="chat chat-end">
+            <div className="chat-image avatar">
+              <div className="w-10 rounded-full">
+                <img src="/avatar.png" alt="You" />
+              </div>
+            </div>
+            <div className="chat-header">
+              You <time className="text-xs opacity-50">10:35 AM</time>
+            </div>
+            <div className="chat-bubble bg-secondary text-secondary-content">I'm good! Let's catch up soon.</div>
+          </div>
+
+          {/* Another Received Message (Chat Start) */}
+          <div className="chat chat-start">
+            <div className="chat-image avatar">
+              <div className="w-10 rounded-full">
+                <img src="/avatar.png" alt="Alice" />
+              </div>
+            </div>
+            <div className="chat-header">
+              Alice <time className="text-xs opacity-50">10:37 AM</time>
+            </div>
+            <div className="chat-bubble bg-primary text-primary-content">Sounds great! See you soon.</div>
+          </div>
         </div>
       </div>
 
-      {/* Right Section (1/4) - Leaderboard */}
-      <div className="w-1/4 bg-white p-6">
-        <h3 className="text-xl font-semibold text-gray-800 mb-4">Leaderboard</h3>
+      {/* Right Section (Leaderboard) */}
+      <div className="w-full md:w-1/4 bg-base-100 p-6 shadow-lg">
+        <h3 className="text-xl font-semibold text-primary mb-4">Leaderboard</h3>
         <div className="space-y-4">
-          {/* Example leaderboard entries */}
-          <div className="flex justify-between text-gray-800">
+          <div className="flex justify-between text-base-content">
             <span>1. John Doe</span>
-            <span>1200 pts</span>
+            <span className="badge badge-primary">1200 pts</span>
           </div>
-          <div className="flex justify-between text-gray-800">
+          <div className="flex justify-between text-base-content">
             <span>2. Jane Smith</span>
-            <span>1100 pts</span>
+            <span className="badge badge-secondary">1100 pts</span>
           </div>
-          <div className="flex justify-between text-gray-800">
+          <div className="flex justify-between text-base-content">
             <span>3. Bob Johnson</span>
-            <span>1000 pts</span>
+            <span className="badge badge-accent">1000 pts</span>
           </div>
-          {/* Add more leaderboard entries as needed */}
         </div>
       </div>
     </div>
-  )
+  );
 }

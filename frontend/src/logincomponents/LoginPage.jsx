@@ -1,96 +1,91 @@
-// src/logincomponents/LoginPage.jsx
-import React, { useState } from 'react'
-
-import { useNavigate } from 'react-router-dom'
-
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
+  const navigate = useNavigate();
 
+  const handle = () => {
+    navigate('/home');
+  };
 
-    const navigate = useNavigate();
-
-    const handle = ()=>
-    {
-        navigate('/home');
-    }
   // State for email, password, and error messages
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   // Handle form submission
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    // Basic form validation (you can enhance this with more complex logic)
+    // Basic validation
     if (!email || !password) {
-      setError('Both fields are required!')
-      return
+      setError('Both fields are required!');
+      return;
     }
 
-    // Example of verifying the login (replace with real API call)
+    // Example verification (Replace with real API call)
     if (email === 'taklepushkar3872@gmail.com' && password === '123') {
-          handle();  //have call like this for the function outside the jsx
+      handle(); // Redirect to home
     } else {
-      setError('Invalid email or password!')
+      setError('Invalid email or password!');
     }
-  }
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-500 to-teal-500 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Login</h2>
+    <div className="min-h-screen bg-base-200 flex items-center justify-center p-4">
+      <div className="card w-full max-w-md shadow-xl bg-base-100 p-8">
+        <h2 className="text-3xl font-bold text-primary text-center">Login</h2>
 
-        {/* Display error message if any */}
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+        {/* Error Message */}
+        {error && <div className="alert alert-error mt-4">{error}</div>}
 
-        <form onSubmit={handleSubmit}>
-          {/* Email field */}
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 font-medium mb-2">Email</label>
+        <form onSubmit={handleSubmit} className="mt-6">
+          {/* Email Field */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Email</span>
+            </label>
             <input
               type="email"
-              id="email"
-              name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input input-bordered w-full"
               placeholder="Enter your email"
             />
           </div>
 
-          {/* Password field */}
-          <div className="mb-6">
-            <label htmlFor="password" className="block text-gray-700 font-medium mb-2">Password</label>
+          {/* Password Field */}
+          <div className="form-control mt-4">
+            <label className="label">
+              <span className="label-text">Password</span>
+            </label>
             <input
               type="password"
-              id="password"
-              name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input input-bordered w-full"
               placeholder="Enter your password"
             />
           </div>
 
-          {/* Submit button */}
-          <button
-            type="submit" 
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            Login
-          </button>
+          {/* Submit Button */}
+          <div className="mt-6">
+            <button type="submit" className="btn btn-primary w-full">
+              Login
+            </button>
+          </div>
         </form>
 
+        {/* Register Link */}
         <div className="mt-4 text-center">
-          <p className="text-sm text-gray-600">
+          <p className="text-sm">
             Don't have an account?{' '}
-            <a href="/register" className="text-blue-600 hover:text-blue-700 font-semibold">
+            <a href="/register" className="text-primary font-semibold">
               Register here
             </a>
           </p>
         </div>
       </div>
     </div>
-  )
+  );
 }
