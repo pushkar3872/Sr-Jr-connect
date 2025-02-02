@@ -4,9 +4,15 @@ import LoginPage from './logincomponents/LoginPage';
 import RegisterPage from './logincomponents/RegisterPage';
 import HomePage from './pages/HomePage';
 
+import NavBar from './NavBar';
+
 function App() {
   return (
     <div className="min-h-screen bg-base-200">
+
+      <NavBar/>
+
+
       <Routes>
         <Route path="/" element={<WelcomePage />} />
         <Route path="/login" element={<LoginPage />} />
