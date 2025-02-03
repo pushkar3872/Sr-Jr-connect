@@ -10,9 +10,7 @@ function App() {
   return (
     <div className="min-h-screen bg-base-200">
 
-      <NavBar/>
-
-
+      <NavBar />
       <Routes>
         <Route path="/" element={<WelcomePage />} />
         <Route path="/login" element={<LoginPage />} />

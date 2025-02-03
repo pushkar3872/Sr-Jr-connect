@@ -1,56 +1,42 @@
 import React from 'react'
+import Messageinput from '../components/Messageinput';
 
 export default function GeneralUpdate() {
   return (
-    <div className="w-full md:w-2/4 bg-base-100 p-6 shadow-lg">
-        <h3 className="text-xl font-semibold text-primary mb-4">Chat Area</h3>
-        <div className="border-b border-base-300 mb-6 pb-4">
-          <input
-            type="text"
-            placeholder="Search messages..."
-            className="input input-bordered w-full"
-          />
-        </div>
-        <div className="space-y-4">
-          {/* Received Message (Chat Start) */}
-          <div className="chat chat-start">
-            <div className="chat-image avatar">
-              <div className="w-10 rounded-full">
-                <img src="/avatar.png" alt="Alice" />
-              </div>
-            </div>
-            <div className="chat-header">
-              Alice <time className="text-xs opacity-50">10:30 AM</time>
-            </div>
-            <div className="chat-bubble bg-primary text-primary-content">Hey! How are you doing?</div>
-          </div>
-
-          {/* Sent Message (Chat End) */}
-          <div className="chat chat-end">
-            <div className="chat-image avatar">
-              <div className="w-10 rounded-full">
-                <img src="/avatar.png" alt="You" />
-              </div>
-            </div>
-            <div className="chat-header">
-              You <time className="text-xs opacity-50">10:35 AM</time>
-            </div>
-            <div className="chat-bubble bg-secondary text-secondary-content">I'm good! Let's catch up soon.</div>
-          </div>
-
-          {/* Another Received Message (Chat Start) */}
-          <div className="chat chat-start">
-            <div className="chat-image avatar">
-              <div className="w-10 rounded-full">
-                <img src="/avatar.png" alt="Alice" />
-              </div>
-            </div>
-            <div className="chat-header">
-              Alice <time className="text-xs opacity-50">10:37 AM</time>
-            </div>
-            <div className="chat-bubble bg-primary text-primary-content">Sounds great! See you soon.</div>
-          </div>
-        </div>
+    <div className="w-full md:w-2/4 bg-base-100 p-6 shadow-lg rounded-lg flex flex-col justify-between ">
+      <h3 className="text-xl font-semibold text-primary mb-4">Chat Area</h3>
+      <div className="border-b border-base-300 mb-6 pb-4">
+        <input
+          type="text"
+          placeholder="Search messages..."
+          className="input input-bordered w-full"
+        />
       </div>
+      <div className="flex-1 overflow-auto space-y-4">
+        {/* Chat Messages */}
+        {[
+          { name: "Alice", time: "10:30 AM", message: "Hey! How are you doing?", type: "start" },
+          { name: "You", time: "10:35 AM", message: "I'm good! Let's catch up soon.", type: "end" },
+          { name: "Alice", time: "10:37 AM", message: "Sounds great! See you soon.", type: "start" }
+        ].map((chat, index) => (
+          <div key={index} className={`chat chat-${chat.type}`}>
+            <div className="chat-image avatar">
+              <div className="w-10 rounded-full">
+                <img src="/avatar.png" alt={chat.name} />
+              </div>
+            </div>
+            <div className="chat-header">
+              {chat.name} <time className="text-xs opacity-50">{chat.time}</time>
+            </div>
+            <div className={`chat-bubble ${chat.type === 'start' ? 'bg-primary text-primary-content' : 'bg-secondary text-secondary-content'}`}>
+              {chat.message}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-auto">
+        <Messageinput />
+      </div>
+    </div>
   )
 }

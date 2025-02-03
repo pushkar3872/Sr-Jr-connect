@@ -1,31 +1,21 @@
+import Messageinput from '../components/Messageinput';
 import React from 'react';
 
-//importing the containers on the home page
-import Profile from '../containers/Profile';
-import GeneralUpdate from '../containers/GeneralUpdate';
-import LeaderBoard from '../containers/LeaderBoard';
+import GeneralUpdate from "../containers/GeneralUpdate";
+import LeaderBoard from "../containers/LeaderBoard";
+import Profile from "../containers/Profile";
 
-import NavBar from '../NavBar';
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-base-200 flex flex-col md:flex-row">
-
-
-      {/*Here we are going to keep the NavBar page*/}
-
-      
-
-
+    <div className="min-h-screen bg-base-200 flex flex-col md:flex-row gap-4 p-4">
       {/* Left Section (User Profile) */}
-      
-     <Profile/>
+      <Profile />
 
       {/* Middle Section (Chat Area) */}
-      <GeneralUpdate/>
+      <GeneralUpdate />
 
       {/* Right Section (Leaderboard) */}
-      <LeaderBoard/>
-
+      <LeaderBoard />
     </div>
   );
 }
