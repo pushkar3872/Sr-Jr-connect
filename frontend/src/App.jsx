@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import WelcomePage from './logincomponents/WelcomePage';
-import LoginPage from './logincomponents/LoginPage';
-import RegisterPage from './logincomponents/RegisterPage';
+import WelcomePage from './pages/WelcomePage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
+import Settings from './pages/Settings';
 
 import NavBar from './NavBar';
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </div>
   );

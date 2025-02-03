@@ -3,7 +3,7 @@ import { Image, Send } from "lucide-react";
 
 const MessageInput = () => {
     return (
-        <div className="p-4 w-full">
+        <div className="pt-4 w-full">
             <form className="flex items-center gap-2">
                 <div className="flex-1 flex gap-2">
                     <input
