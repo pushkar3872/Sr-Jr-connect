@@ -21,7 +21,7 @@ const Navbar = () => {
               className="btn btn-sm transition-colors"
             >
               <Settings className="size-5" />
-              <span className="hidden sm:inline"></span>
+              <span className="hidden"></span>
             </Link>
 
             {

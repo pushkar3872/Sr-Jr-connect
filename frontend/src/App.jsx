@@ -5,7 +5,7 @@ import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import Settings from './pages/Settings';
 
-import NavBar from './NavBar';
+import NavBar from './components/NavBar';
 
 function App() {
   return (
