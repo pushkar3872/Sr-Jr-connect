@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { toast } from 'react-hot-toast';
 export default function LoginPage() {
   const navigate = useNavigate();
 
@@ -11,7 +11,6 @@ export default function LoginPage() {
   // State for email, password, and error messages
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
   // Handle form submission
   const handleSubmit = (e) => {
@@ -19,7 +18,7 @@ export default function LoginPage() {
 
     // Basic validation
     if (!email || !password) {
-      setError('Both fields are required!');
+      toast.error('All fields are required!');
       return;
     }
 
@@ -27,7 +26,7 @@ export default function LoginPage() {
     if (email === 'taklepushkar3872@gmail.com' && password === '123') {
       handle(); // Redirect to home
     } else {
-      setError('Invalid email or password!');
+      toast.error('Invalid email or password!');
     }
   };
 
@@ -37,7 +36,6 @@ export default function LoginPage() {
         <h2 className="text-3xl font-bold text-primary text-center">Login</h2>
 
         {/* Error Message */}
-        {error && <div className="alert alert-error mt-4">{error}</div>}
 
         <form onSubmit={handleSubmit} className="mt-6">
           {/* Email Field */}

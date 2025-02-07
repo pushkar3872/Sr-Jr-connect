@@ -4,13 +4,13 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import Settings from './pages/Settings';
-
+import { Toaster } from 'react-hot-toast';
 import NavBar from './components/NavBar';
 
 function App() {
   return (
     <div className="min-h-screen bg-base-200">
-
+      <Toaster />
       <NavBar />
       <Routes>
         <Route path="/" element={<WelcomePage />} />

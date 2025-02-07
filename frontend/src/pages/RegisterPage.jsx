@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 export default function RegisterPage() {
   // State for form fields and error messages
@@ -6,7 +7,6 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
 
   // Handle form submission
   const handleSubmit = (e) => {
@@ -14,19 +14,19 @@ export default function RegisterPage() {
 
     // Basic form validation
     if (!fullName || !email || !password || !confirmPassword) {
-      setError('All fields are required!');
+      toast.error('All fields are required!');
       return;
     }
 
     // Check if passwords match
     if (password !== confirmPassword) {
-      setError('Passwords do not match!');
+      toast.error('Passwords do not match!');
       return;
     }
 
     // Example: Replace this with an actual API call for registration
-    alert('Registration successful!');
-    
+    toast.success('Registration successful!');
+
     // Clear the form
     setFullName('');
     setEmail('');
@@ -40,7 +40,7 @@ export default function RegisterPage() {
         <h2 className="text-3xl font-bold text-primary text-center">Register</h2>
 
         {/* Error Message */}
-        {error && <div className="alert alert-error mt-4">{error}</div>}
+        {/* {error && <div className="alert alert-error mt-4">{error}</div>} */}
 
         <form onSubmit={handleSubmit} className="mt-6">
           {/* Full Name Field */}
