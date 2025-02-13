@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-export default function LoginPage() {
+
+export default function LoginPage({ onLogin }) {
   const navigate = useNavigate();
 
   const handle = () => {
     navigate('/home');
+  };
+
+  const handleLogin = () => {
+    onLogin(true); // Update authentication status
   };
 
   // State for email, password, and error messages
@@ -24,7 +29,8 @@ export default function LoginPage() {
 
     // Example verification (Replace with real API call)
     if (email === 'taklepushkar3872@gmail.com' && password === '123') {
-      handle(); // Redirect to home
+      handle();
+      handleLogin(); // Redirect to home
     } else {
       toast.error('Invalid email or password!');
     }

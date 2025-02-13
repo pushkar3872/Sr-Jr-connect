@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 export default function RegisterPage() {
   // State for form fields and error messages
@@ -7,6 +8,9 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  // Use navigate hook outside of handleSubmit
+  const navigate = useNavigate();
 
   // Handle form submission
   const handleSubmit = (e) => {
@@ -24,10 +28,14 @@ export default function RegisterPage() {
       return;
     }
 
-    // Example: Replace this with an actual API call for registration
+    // You can replace this part with an actual API call for registration
+    // For now, let's simulate success
     toast.success('Registration successful!');
 
-    // Clear the form
+    // Navigate to /takedata after successful registration
+    navigate('/takedata');
+
+    // Clear the form after navigating
     setFullName('');
     setEmail('');
     setPassword('');
