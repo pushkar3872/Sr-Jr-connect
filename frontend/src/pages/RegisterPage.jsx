@@ -1,13 +1,32 @@
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { useAuthstore } from '../store/useAuthstore';
+import { Loader2 } from 'lucide-react';
 
 export default function RegisterPage() {
-  // State for form fields and error messages
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const { register, isregistering } = useAuthstore();
+
+  const validateForm = () => {
+    if (!formData.fullName.trim()) return toast.error("Full Name Is Required !");
+    if (!formData.email.trim()) return toast.error("Email Is Required !");
+    if (!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Invalid Email Format !");
+    if (!formData.password.trim()) return toast.error("Password Is Required !");
+    if (formData.password != formData.confirmPassword) {
+      toast.error("password does not match")
+    }
+    if (formData.password.length < 6) {
+      return toast.error("Password must be at least 6 characters !");
+    }
+    return true;
+  };
 
   // Use navigate hook outside of handleSubmit
   const navigate = useNavigate();
@@ -15,31 +34,12 @@ export default function RegisterPage() {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Basic form validation
-    if (!fullName || !email || !password || !confirmPassword) {
-      toast.error('All fields are required!');
-      return;
+    const success = validateForm();
+    if (success === true) {
+      register(formData);
+      // toast.success('Registration successful!');
     }
-
-    // Check if passwords match
-    if (password !== confirmPassword) {
-      toast.error('Passwords do not match!');
-      return;
-    }
-
-    // You can replace this part with an actual API call for registration
-    // For now, let's simulate success
-    toast.success('Registration successful!');
-
-    // Navigate to /takedata after successful registration
-    navigate('/takedata');
-
-    // Clear the form after navigating
-    setFullName('');
-    setEmail('');
-    setPassword('');
-    setConfirmPassword('');
+    navigate('/');
   };
 
   return (
@@ -58,8 +58,8 @@ export default function RegisterPage() {
             </label>
             <input
               type="text"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              value={formData.fullName}
+              onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
               className="input input-bordered w-full"
               placeholder="Enter your full name"
             />
@@ -72,8 +72,8 @@ export default function RegisterPage() {
             </label>
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="input input-bordered w-full"
               placeholder="Enter your email"
             />
@@ -86,8 +86,8 @@ export default function RegisterPage() {
             </label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               className="input input-bordered w-full"
               placeholder="Enter your password"
             />
@@ -100,8 +100,8 @@ export default function RegisterPage() {
             </label>
             <input
               type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              value={formData.confirmPassword}
+              onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
               className="input input-bordered w-full"
               placeholder="Confirm your password"
             />
@@ -109,8 +109,20 @@ export default function RegisterPage() {
 
           {/* Submit Button */}
           <div className="mt-6">
-            <button type="submit" className="btn btn-primary w-full">
-              Register
+            <button
+              type="submit"
+              className="btn btn-primary w-full"
+              disabled={isregistering}
+            >
+              {isregistering ? (
+                <>
+                  <Loader2 className="size-5 animate-spin" />
+                  Loading...
+                </>
+              ) : (
+                "Create Account"
+              )
+              }
             </button>
           </div>
         </form>

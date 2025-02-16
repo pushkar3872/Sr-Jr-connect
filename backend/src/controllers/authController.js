@@ -118,14 +118,34 @@ export const updateProfile = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error " });
     }
 }
-
 export const checkAuth = (req, res) => {
     try {
-
-        res.status(200).json(req.user);
+        // console.log(req.SrJrUser)
+        if (!req.SrJrUser) {
+            return res.status(401).json({ message: "Unauthorized: No user data found" });
+        }
+        res.status(200).json(req.SrJrUser);
     } catch (error) {
-        console.log("Error in checkAuth controller")
-        res.status(500).json({ message: "Internal Server Error " });
+        console.error("Error in checkAuth controller:", error.message);
+        res.status(500).json({ message: "Internal Server Error" });
     }
 };
 
+export const deleteSrJruser = async (req, res) => {
+    try {
+        // const { email } = req.body
+
+        const userId = req.SrJrUser.id;
+        const deletedUser = await SrJrUser.findByIdAndDelete(userId)
+
+        if (!deletedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({ message: "User deleted successfully" });
+
+    } catch (error) {
+        console.error("Error in deleting user:", error.message);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}

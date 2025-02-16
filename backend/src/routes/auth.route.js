@@ -1,5 +1,6 @@
 import express from "express";
-import { register, login, updateProfile, logout, checkAuth } from "../controllers/authController.js";
+import { register, login, updateProfile, logout, checkAuth, deleteSrJruser } from "../controllers/authController.js";
+import { protectroute } from "../middleware/auth.middleware.js";
 
 const authRouter = express.Router();
 
@@ -13,6 +14,9 @@ authRouter.post("/login", login);
 authRouter.post("/logout", logout);
 
 // Profile route
-// authRouter.get("/profile", checkAuth);
+authRouter.get("/check", protectroute, checkAuth);
+
+authRouter.delete("/delete", deleteSrJruser);
+
 
 export default authRouter;

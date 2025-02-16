@@ -1,40 +1,23 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import { useAuthstore } from '../store/useAuthstore';
+import { Loader2 } from 'lucide-react';
 
 export default function LoginPage({ onLogin }) {
-  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  })
 
-  const handle = () => {
-    navigate('/home');
-  };
+  const { login, isLoggingIn } = useAuthstore();
 
-  const handleLogin = () => {
-    onLogin(true); // Update authentication status
-  };
-
-  // State for email, password, and error messages
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    login(formData);
+  }
 
-    // Basic validation
-    if (!email || !password) {
-      toast.error('All fields are required!');
-      return;
-    }
 
-    // Example verification (Replace with real API call)
-    if (email === 'taklepushkar3872@gmail.com' && password === '123') {
-      handle();
-      handleLogin(); // Redirect to home
-    } else {
-      toast.error('Invalid email or password!');
-    }
-  };
 
   return (
     <div className="min-h-screen bg-base-200 flex items-center justify-center p-4">
@@ -51,8 +34,8 @@ export default function LoginPage({ onLogin }) {
             </label>
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="input input-bordered w-full"
               placeholder="Enter your email"
             />
@@ -65,8 +48,8 @@ export default function LoginPage({ onLogin }) {
             </label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               className="input input-bordered w-full"
               placeholder="Enter your password"
             />
@@ -74,8 +57,20 @@ export default function LoginPage({ onLogin }) {
 
           {/* Submit Button */}
           <div className="mt-6">
-            <button type="submit" className="btn btn-primary w-full">
-              Login
+            <button
+              type="submit"
+              className="btn btn-primary w-full "
+              disabled={isLoggingIn}
+            >
+              {isLoggingIn ? (
+                <>
+                  <Loader2 className="size-5 animate-spin" />
+                  Loading...
+                </>
+              ) : (
+                "Login"
+              )
+              }
             </button>
           </div>
         </form>

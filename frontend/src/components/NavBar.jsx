@@ -1,7 +1,11 @@
 // import { useAuthStore } from "../store/useAuthStore"
 import { LogOut, MessageCircle, Settings, User } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAuthstore } from "../store/useAuthstore";
 const Navbar = () => {
+  const { authUser, logout } = useAuthstore();
+
+
   return (
     <header className=" border-b border-base-300 fixed w-full tpo-0 z-40 backdrop-blur-lg bg-base-100/80">
       <div className="container mx-auto px-4 h-12 ">
@@ -25,20 +29,24 @@ const Navbar = () => {
             </Link>
 
             {
-              <>
-                <Link
-                  to={"/profile"}
-                  className={`btn btn-sm gap-2 transition-colors`}
-                >
-                  <User className="size-5" />
-                  <span className="hidden "></span>
-                </Link>
+              authUser &&
+              (
+                <>
+                  <Link
+                    to={"/profile"}
+                    className={`btn btn-sm gap-2 transition-colors`}
+                  >
+                    <User className="size-5" />
+                    <span className="hidden "></span>
+                  </Link>
 
-                <button className="btn btn-sm gap-2 transition-all" >
-                  <LogOut className="size-5" />
-                  <span className="hidden "></span>
-                </button>
-              </>
+                  <button className="btn btn-sm gap-2 transition-all" onClick={logout} >
+                    <LogOut className="size-5" />
+                    <span className="hidden "></span>
+                  </button>
+                </>
+              )
+
             }
 
           </div>
