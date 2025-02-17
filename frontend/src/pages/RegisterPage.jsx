@@ -19,11 +19,11 @@ export default function RegisterPage() {
     if (!formData.email.trim()) return toast.error("Email Is Required !");
     if (!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Invalid Email Format !");
     if (!formData.password.trim()) return toast.error("Password Is Required !");
-    if (formData.password != formData.confirmPassword) {
-      toast.error("password does not match")
-    }
     if (formData.password.length < 6) {
       return toast.error("Password must be at least 6 characters !");
+    }
+    if (formData.password != formData.confirmPassword) {
+      return toast.error("password does not match")
     }
     return true;
   };
@@ -38,8 +38,8 @@ export default function RegisterPage() {
     if (success === true) {
       register(formData);
       // toast.success('Registration successful!');
+      navigate('/');
     }
-    navigate('/');
   };
 
   return (

@@ -12,9 +12,21 @@ export default function LoginPage({ onLogin }) {
 
   const { login, isLoggingIn } = useAuthstore();
 
+
+  const validateForm = () => {
+    if (!formData.email.trim()) return toast.error("Email Is Required !");
+    if (!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Invalid Email Format !");
+    if (!formData.password.trim()) return toast.error("Password Is Required !");
+    if (formData.password.length < 6) {
+      return toast.error("Password must be at least 6 characters !");
+    }
+    return true;
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    login(formData);
+    if (validateForm() === true) {
+      login(formData);
+    }
   }
 
 
