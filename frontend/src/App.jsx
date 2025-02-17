@@ -4,10 +4,11 @@ import WelcomePage from './pages/WelcomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
-import Settings from './pages/Settings';
+import Settings from './pages/Profile';
 import { Toaster } from 'react-hot-toast';
 import NavBar from './components/NavBar';
 import TakeData from './pages/TakeData';
+import FindTeammate from "./pages/FindTeammate"
 
 import { useAuthstore } from './store/useAuthstore';
 import { Loader } from 'lucide-react';
@@ -18,7 +19,7 @@ function App() {
 
   const { authUser, checkAuth, isCheckingAuth } = useAuthstore();
   useEffect(() => {
-    console.log("called !!!!")
+    // console.log("called !!!!")
     checkAuth();
   }, [])
 
@@ -43,8 +44,9 @@ function App() {
         <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to={"/"} />} />
         <Route path="/register" element={!authUser ? <RegisterPage /> : <Navigate to={"/"} />} />
         {/* <Route path="/home" element={<HomePage />} /> */}
-        <Route path="/settings" element={<Settings />} />
+        <Route path="/profile" element={<Settings />} />
         <Route path="/takedata" element={<TakeData />} />
+        <Route path='/teammate' element={<FindTeammate />} />
       </Routes>
     </div>
   );

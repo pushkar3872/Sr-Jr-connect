@@ -1,5 +1,5 @@
 // import { useAuthStore } from "../store/useAuthStore"
-import { LogOut, MessageCircle, Settings, User } from "lucide-react";
+import { LogOut, MessageCircle, Settings, User, UserRoundSearch } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuthstore } from "../store/useAuthstore";
 const Navbar = () => {
@@ -38,6 +38,12 @@ const Navbar = () => {
                   >
                     <User className="size-5" />
                     <span className="hidden "></span>
+                  </Link>
+                  <Link
+                    to="/teammate"
+                    className="btn btn-sm gap-2 transition-colors"
+                  >
+                    <UserRoundSearch className="size-5" />
                   </Link>
 
                   <button className="btn btn-sm gap-2 transition-all" onClick={logout} >

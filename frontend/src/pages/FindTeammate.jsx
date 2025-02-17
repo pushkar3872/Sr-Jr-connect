@@ -1,5 +1,3 @@
-FindTeammate.jsx
-
 import React, { useState } from "react";
 
 const students = [
@@ -225,10 +223,10 @@ const Teammate = () => {
           ))
         ) : (
           <div className="flex items-center justify-center h-64 col-span-full">
-  <p className="text-center text-gray-600 text-xl font-bold animate-bounce">
-    Oops! Couldn't find you teammates.
-  </p>
-</div>
+            <p className="text-center text-gray-600 text-xl font-bold animate-bounce">
+              Oops! Couldn't find you teammates.
+            </p>
+          </div>
 
         )}
       </div>
