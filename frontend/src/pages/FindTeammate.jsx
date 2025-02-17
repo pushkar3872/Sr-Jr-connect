@@ -176,7 +176,7 @@ const Teammate = () => {
     <div className="container mx-auto px-4 py-20">
       {/* Instruction Text */}
       <div className="text-center mb-4">
-        <p className="text-xl font-semibold">
+        <p className="text-xl font-semibold text-primary">
           Find a teammate with your desired domain
         </p>
       </div>
@@ -187,7 +187,7 @@ const Teammate = () => {
           placeholder="Search by domain..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full max-w-md px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="input input-bordered w-full max-w-md"
         />
       </div>
       {/* Flip Cards Grid */}
@@ -197,37 +197,34 @@ const Teammate = () => {
             <div key={student.id} className="flip-card h-72">
               <div className="flip-card-inner h-full">
                 {/* Front Side */}
-                <div className="flip-card-front h-full bg-white shadow-lg rounded-lg p-4 flex flex-col items-center">
+                <div className="flip-card-front h-full bg-base-100 shadow-lg rounded-lg p-4 flex flex-col items-center border border-primary">
                   <img
-                    className="w-24 h-24 rounded-full border-4 border-blue-500"
+                    className="w-24 h-24 rounded-full border-4 border-primary"
                     src={student.image}
                     alt={student.name}
                   />
-                  <h2 className="mt-4 text-lg font-bold">{student.name}</h2>
-                  <p className="text-gray-600">{student.role}</p>
-                  <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-lg transform hover:scale-105 hover:bg-blue-600 transition duration-300">
-                    Connect
-                  </button>
+                  <h2 className="mt-4 text-lg font-bold text-primary">
+                    {student.name}
+                  </h2>
+                  <p className="text-secondary">{student.role}</p>
+                  <button className="mt-3 btn btn-primary">Connect</button>
                 </div>
                 {/* Back Side */}
-                <div className="flip-card-back h-full bg-blue-500 text-white shadow-lg rounded-lg p-4 flex flex-col items-center justify-center">
+                <div className="flip-card-back h-full bg-primary text-base-100 shadow-lg rounded-lg p-4 flex flex-col items-center justify-center">
                   <h2 className="text-lg font-bold">More Info</h2>
                   <p className="mt-2">{student.email}</p>
                   <p className="mt-2">{student.more}</p>
-                  <button className="mt-3 px-4 py-2 bg-white text-blue-500 rounded-lg hover:bg-gray-100 transition">
-                    Contact
-                  </button>
+                  <button className="mt-3 btn btn-secondary">Contact</button>
                 </div>
               </div>
             </div>
           ))
         ) : (
           <div className="flex items-center justify-center h-64 col-span-full">
-            <p className="text-center text-gray-600 text-xl font-bold animate-bounce">
-              Oops! Couldn't find you teammates.
+            <p className="text-center text-error text-xl font-bold animate-bounce">
+              Oops! Couldn't find your teammates.
             </p>
           </div>
-
         )}
       </div>
       {/* Flip Card Styles */}

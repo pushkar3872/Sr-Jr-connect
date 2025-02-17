@@ -46,7 +46,7 @@ function App() {
         {/* <Route path="/home" element={<HomePage />} /> */}
         <Route path="/profile" element={<Settings />} />
         <Route path="/takedata" element={<TakeData />} />
-        <Route path='/teammate' element={<FindTeammate />} />
+        <Route path='/teammate' element={authUser?<FindTeammate />:<WelcomePage/>} />
       </Routes>
     </div>
   );
