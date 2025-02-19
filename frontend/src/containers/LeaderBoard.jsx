@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function LeaderBoard() {
   return (
-    <div className="w-full md:w-1/4 bg-base-100 p-6 shadow-lg rounded-lg">
+    <div className="hidden md:block w-full md:w-1/4 bg-base-100 p-6 shadow-lg rounded-lg">
       <h3 className="text-xl font-semibold text-primary mb-4">Leaderboard</h3>
       <div className="space-y-4">
         {[

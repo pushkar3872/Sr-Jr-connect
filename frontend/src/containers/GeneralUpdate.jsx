@@ -3,7 +3,7 @@ import Messageinput from '../components/Messageinput';
 
 export default function GeneralUpdate() {
   return (
-    <div className="w-full md:w-2/4 bg-base-100 p-6 shadow-lg rounded-lg flex flex-col justify-between ">
+    <div className="w-full md:w-2/4 bg-base-100 p-6 shadow-lg rounded-lg flex flex-col justify-between h-[86vh] md:h-auto" style={{ scrollBehavior: 'smooth', scrollbarWidth: 'thin' }}>
       {/* <h3 className="text-xl font-semibold text-primary mb-4">Chat Area</h3> */}
       <div className="border-b border-base-300 mb-6 pb-4">
         <input
@@ -12,7 +12,7 @@ export default function GeneralUpdate() {
           className="input input-bordered w-full"
         />
       </div>
-      <div className="flex-1 overflow-auto space-y-4">
+      <div className="flex-1 overflow-auto space-y-4" style={{ scrollbarWidth: 'thin', scrollBehavior: 'smooth' }}>
         {/* Chat Messages */}
         {[
           { name: "Alice", time: "10:30 AM", message: "Hey! How are you doing?", type: "start" },
@@ -41,5 +41,5 @@ export default function GeneralUpdate() {
         <Messageinput />
       </div>
     </div>
-  )
+  );
 }

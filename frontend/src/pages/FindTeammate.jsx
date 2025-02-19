@@ -199,7 +199,7 @@ const Teammate = () => {
                 {/* Front Side */}
                 <div className="flip-card-front h-full bg-base-100 shadow-lg rounded-lg p-4 flex flex-col items-center border border-primary">
                   <img
-                    className="w-24 h-24 rounded-full border-4 border-primary"
+                    className="w-24 h-24 rounded-full border-2 border-primary"
                     src={student.image}
                     alt={student.name}
                   />

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Settings = () => {
+const Profilepage = () => {
   const [activeTab, setActiveTab] = useState('general');
   const [profilePic, setProfilePic] = useState('https://i.imgur.com/4Hbw7hj.png');
   const [fullName, setFullName] = useState('');
@@ -42,7 +42,7 @@ const Settings = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <h1 className="text-center text-2xl font-semibold text-gray-800 mb-6">⚙ Profile Settings</h1>
+      <h1 className="text-center text-2xl font-semibold text-gray-800 mb-6">⚙ Profilepage Profilepage</h1>
       <div className="flex">
         <div className="w-1/4 bg-blue-600 text-white rounded-l-lg p-4">
           <ul className="space-y-4">
@@ -147,7 +147,7 @@ const Settings = () => {
                 <img
                   id="profile-picture"
                   src={profilePic}
-                  alt="Profile"
+                  alt="Profilepage"
                   className="w-36 h-36 rounded-full object-cover shadow-md mb-4"
                 />
                 <div className="mb-4">
@@ -181,4 +181,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default Profilepage;
