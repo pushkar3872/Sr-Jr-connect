@@ -81,7 +81,7 @@ const Navbar = () => {
                       {/* Profile Section */}
                       <div className="p-4 flex flex-col items-center border-b border-base-300">
                         <img className="w-16 h-16 rounded-full object-cover" src="avatar.png" alt="Profile" />
-                        <p className="mt-2 text-md font-bold">Shubham</p>
+                        <p className="mt-2 text-md font-bold">{authUser.fullName}</p>
                       </div>
 
                       {/* Menu Items */}
