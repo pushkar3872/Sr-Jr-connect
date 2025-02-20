@@ -28,9 +28,6 @@ export default function LoginPage({ onLogin }) {
       login(formData);
     }
   }
-
-
-
   return (
     <div className="min-h-screen bg-base-200 flex items-center justify-center p-4">
       <div className="card w-full max-w-md shadow-xl bg-base-100 p-8">

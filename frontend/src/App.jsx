@@ -13,6 +13,8 @@ import FindTeammate from "./pages/FindTeammate"
 import { useAuthstore } from './store/useAuthstore';
 import { Loader } from 'lucide-react';
 import Settings from './pages/Settings';
+
+
 //import Profilepage from './pages/Profile';
 
 function App() {
@@ -44,7 +46,9 @@ function App() {
         <Route path="/" element={!authUser ? <WelcomePage /> : <HomePage />} />
         <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to={"/"} />} />
         <Route path="/register" element={!authUser ? <RegisterPage /> : <Navigate to={"/"} />} />
-        <Route path="/profile" element={<Profilepage />} />
+
+        <Route path="/profile" element={authUser ? <Profilepage /> : <welcomePage/>} />
+        
         <Route path="/takedata" element={<TakeData />} />
         <Route path='/settings' element={<Settings />} />
         <Route path='/teammate' element={authUser ? <FindTeammate /> : <WelcomePage />} />
