@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { useAuthstore } from '../store/useAuthstore';
+import { Link } from "react-router-dom"
 import { Loader2 } from 'lucide-react';
 
 export default function LoginPage({ onLogin }) {
@@ -88,9 +89,9 @@ export default function LoginPage({ onLogin }) {
         <div className="mt-4 text-center">
           <p className="text-sm">
             Don't have an account?{' '}
-            <a href="/register" className="text-primary font-semibold">
-              Register here
-            </a>
+            <Link to="/register" className=" link-primary hover:underline font-bold">
+              register
+            </Link>
           </p>
         </div>
       </div>

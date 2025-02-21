@@ -1,5 +1,5 @@
 // import { useAuthStore } from "../store/useAuthStore"
-import { LogOut, MessageCircle, Settings, User, UserRoundSearch } from "lucide-react";
+import { LogOut, MessageCircle, Settings, User, UserRoundSearch, UsersRound } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuthstore } from "../store/useAuthstore";
 import { useEffect, useRef, useState } from "react";
@@ -33,6 +33,29 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-2">
+
+            {(authUser &&
+              <>
+                <Link
+                  to="/"
+                  className="btn btn-sm gap-2 transition-colors"
+                >
+                  <UsersRound className="size-5" />
+                  <span>Connections</span>
+                </Link>
+
+
+                <Link
+                  to="/teammate"
+                  className="btn btn-sm gap-2 transition-colors"
+                >
+                  <UserRoundSearch className="size-5" />
+                  <span>Find Team</span>
+                </Link>
+              </>
+            )}
+
+
             <Link
               to={"/settings"}
               className="btn btn-sm transition-colors"
@@ -45,30 +68,10 @@ const Navbar = () => {
               authUser &&
               (
                 <>
-                  {/* <Link
-                    to={"/profile"}
-                    className={`btn btn-sm gap-2 transition-colors`}
-                  >
-                    <User className="size-5" />
-                    <span className="hidden "></span>
-                  </Link> */}
-                  <Link
-                    to="/teammate"
-                    className="btn btn-sm gap-2 transition-colors"
-                  >
-                    <UserRoundSearch className="size-5" />
-                    <span>Find Team</span>
-                  </Link>
-
-                  {/* <button className="btn btn-sm gap-2 transition-all" onClick={logout} >
-                    <LogOut className="size-5" />
-                    <span className="hidden "></span>
-                  </button> */}
-
                   {/* Profile avatar */}
                   <button
                     onClick={() => setOpen(!open)}
-                    className="avatar hover:cursor-pointer"
+                    className="avatar hover:cursor-pointer pl-2 pr-2"
                   >
                     <div className="w-9 rounded-full">
                       <img src="avatar.png" alt="User" />

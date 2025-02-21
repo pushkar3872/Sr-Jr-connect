@@ -46,7 +46,7 @@ const TakeData = ({ onLogin }) => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-base-100 shadow-lg rounded-lg">
+    <div className="pt-16 max-w-3xl mx-auto p-6 bg-base-100 shadow-lg rounded-lg">
       <h2 className="text-2xl font-bold text-center text-primary mb-6">Complete Your Profile</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">

@@ -21,6 +21,7 @@ function App() {
 
 
   const { authUser, checkAuth, isCheckingAuth } = useAuthstore();
+
   useEffect(() => {
     // console.log("called !!!!")
     checkAuth();
@@ -43,13 +44,13 @@ function App() {
       <NavBar />
 
       <Routes>
-        <Route path="/" element={!authUser ? <WelcomePage /> : <HomePage />} />
+        <Route path="/" element={authUser ? <HomePage /> : <WelcomePage />} />
         <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to={"/"} />} />
         <Route path="/register" element={!authUser ? <RegisterPage /> : <Navigate to={"/"} />} />
 
-        <Route path="/profile" element={authUser ? <Profilepage /> : <welcomePage/>} />
-        
-        <Route path="/takedata" element={<TakeData />} />
+        <Route path="/profile" element={authUser ? <Profilepage /> : <WelcomePage />} />
+
+        <Route path="/takedata" element={authUser ? <TakeData /> : <Navigate to={"/"} />} />
         <Route path='/settings' element={<Settings />} />
         <Route path='/teammate' element={authUser ? <FindTeammate /> : <WelcomePage />} />
       </Routes>

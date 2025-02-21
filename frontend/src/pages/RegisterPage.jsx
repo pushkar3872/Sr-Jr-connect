@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useAuthstore } from '../store/useAuthstore';
+import { Link } from "react-router-dom"
 import { Loader2 } from 'lucide-react';
 
 export default function RegisterPage() {
@@ -38,7 +39,7 @@ export default function RegisterPage() {
     if (success === true) {
       register(formData);
       // toast.success('Registration successful!');
-      navigate('/');
+      navigate('/profile');
     }
   };
 
@@ -131,9 +132,9 @@ export default function RegisterPage() {
         <div className="mt-4 text-center">
           <p className="text-sm">
             Already have an account?{' '}
-            <a href="/login" className="text-primary font-semibold">
-              Login here
-            </a>
+            <Link to="/login" className=" link-primary hover:underline font-bold">
+              Sign in
+            </Link>
           </p>
         </div>
       </div>
