@@ -41,7 +41,7 @@ const Navbar = () => {
                   className="btn btn-sm gap-2 transition-colors"
                 >
                   <UsersRound className="size-5" />
-                  <span>Connections</span>
+                  <span className="hidden sm:block">Connections</span>
                 </Link>
 
 
@@ -50,7 +50,7 @@ const Navbar = () => {
                   className="btn btn-sm gap-2 transition-colors"
                 >
                   <UserRoundSearch className="size-5" />
-                  <span>Find Team</span>
+                  <span className="hidden sm:block">Find Team</span>
                 </Link>
               </>
             )}
@@ -61,7 +61,7 @@ const Navbar = () => {
               className="btn btn-sm transition-colors"
             >
               <Settings className="size-5" />
-              <span >Setting</span>
+              <span className="hidden sm:block" >Setting</span>
             </Link>
 
             {

@@ -36,14 +36,14 @@ export default function Skills() {
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Select Your Skills</h2>
+    <div className="p-6 max-w-md mx-auto bg-base-100 rounded-lg shadow-lg">
+      <h2 className="text-2xl font-bold mb-4 text-primary">Select Your Skills</h2>
 
       {/* Dropdown for Selecting Skills */}
       <div className="mb-4">
         <label className="block mb-2 font-medium">Choose a Skill:</label>
         <select
-          className="w-full border rounded px-3 py-2"
+          className="select select-bordered w-full"
           onChange={handleSkillChange}
           defaultValue=""
         >
@@ -62,29 +62,26 @@ export default function Skills() {
       <div className="mt-4">
         <h3 className="text-lg font-semibold mb-2">Your Selected Skills:</h3>
         {selectedSkills.length > 0 ? (
-          <ul className="list-disc pl-5">
+          <div className="flex flex-wrap gap-2">
             {selectedSkills.map((skill, index) => (
-              <li key={index} className="text-gray-700 flex items-center space-x-2">
-                <span>{skill}</span>
+              <span key={index} className="badge badge-primary gap-2">
+                {skill}
                 <button
-                  className="text-red-500 hover:underline"
+                  className="ml-1 text-red-500 hover:text-red-700"
                   onClick={() => removeSkill(skill)}
                 >
-                  Remove
+                  ✕
                 </button>
-              </li>
+              </span>
             ))}
-          </ul>
+          </div>
         ) : (
           <p className="text-gray-500">No skills selected yet.</p>
         )}
       </div>
 
       {/* Save Button */}
-      <button
-        onClick={handleSave}
-        className="w-full bg-blue-500 text-white py-2 rounded mt-4 hover:bg-blue-600"
-      >
+      <button onClick={handleSave} className="w-full btn btn-primary mt-4">
         Save
       </button>
     </div>

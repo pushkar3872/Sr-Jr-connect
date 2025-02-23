@@ -18,5 +18,8 @@ authRouter.get("/check", protectroute, checkAuth);
 
 authRouter.delete("/delete", deleteSrJruser);
 
+// Update profile route
+authRouter.put("/update", protectroute, updateProfile);
+
 
 export default authRouter;

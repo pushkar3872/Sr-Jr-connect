@@ -17,88 +17,31 @@ export default function SocialLinks() {
 
   const handleSave = (e) => {
     e.preventDefault();
-
     console.log("Saved Social Links:", socialLinks);
     alert("Social links saved successfully!");
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Enter Your Social Links</h2>
+    <div className="p-6 max-w-md mx-auto bg-base-100 rounded-lg shadow-lg">
+      <h2 className="text-2xl font-bold mb-4 text-primary">Enter Your Social Links</h2>
 
       {/* Input Fields */}
       <div className="space-y-4">
-        <div>
-          <label className="block mb-2 font-medium">LinkedIn:</label>
-          <input
-            type="url"
-            name="linkedin"
-            className="w-full border rounded px-3 py-2"
-            placeholder="https://linkedin.com/in/username"
-            value={socialLinks.linkedin}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div>
-          <label className="block mb-2 font-medium">LeetCode:</label>
-          <input
-            type="url"
-            name="leetcode"
-            className="w-full border rounded px-3 py-2"
-            placeholder="https://leetcode.com/username"
-            value={socialLinks.leetcode}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div>
-          <label className="block mb-2 font-medium">CodeChef:</label>
-          <input
-            type="url"
-            name="codechef"
-            className="w-full border rounded px-3 py-2"
-            placeholder="https://www.codechef.com/users/username"
-            value={socialLinks.codechef}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div>
-          <label className="block mb-2 font-medium">CodeForces:</label>
-          <input
-            type="url"
-            name="codeforces"
-            className="w-full border rounded px-3 py-2"
-            placeholder="https://codeforces.com/profile/username"
-            value={socialLinks.codeforces}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div>
-          <label className="block mb-2 font-medium">Instagram:</label>
-          <input
-            type="url"
-            name="instagram"
-            className="w-full border rounded px-3 py-2"
-            placeholder="https://instagram.com/username"
-            value={socialLinks.instagram}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div>
-          <label className="block mb-2 font-medium">Email:</label>
-          <input
-            type="email"
-            name="email"
-            className="w-full border rounded px-3 py-2"
-            placeholder="example@email.com"
-            value={socialLinks.email}
-            onChange={handleInputChange}
-          />
-        </div>
+        {Object.entries(socialLinks).map(([key, value]) => (
+          <div key={key}>
+            <label className="block mb-2 font-medium capitalize">{key}:</label>
+            <input
+              type={key === "email" ? "email" : "url"}
+              name={key}
+              className="input input-bordered w-full"
+              placeholder={
+                key === "email" ? "example@email.com" : `https://${key}.com/username`
+              }
+              value={value}
+              onChange={handleInputChange}
+            />
+          </div>
+        ))}
       </div>
 
       {/* Display the Links */}
@@ -128,10 +71,7 @@ export default function SocialLinks() {
       </div>
 
       {/* Save Button */}
-      <button
-        onClick={handleSave}
-        className="w-full bg-blue-500 text-white py-2 rounded mt-4 hover:bg-blue-600"
-      >
+      <button onClick={handleSave} className="w-full btn btn-primary mt-4">
         Save
       </button>
     </div>

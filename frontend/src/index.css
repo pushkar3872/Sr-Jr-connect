@@ -2,5 +2,5 @@
 @plugin "daisyui";
 
 @plugin "daisyui" {
-  themes: light --default, night --prefersdark, dark, retro, lofi, forest, pastel, cupcake, corporate, dracula, swiss, bumblebee, halloween, night;
+  themes: light --default, light --prefersdark, dark, retro, lofi, forest, pastel, cupcake, corporate, dracula, swiss, bumblebee, halloween, night;
 }

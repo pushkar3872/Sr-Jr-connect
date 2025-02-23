@@ -57,7 +57,19 @@ export const useAuthstore = create((set) => ({
             toast.error(error.response.data.message);
         }
     },
-
+    update: async (data) => {
+        set({ isUpdatingProfile: true });
+        try {
+            const result = await axiosInstance.put("/auth/update", data);
+            set({ authUser: result.data });
+            toast.success("Profile Updated Successfully");
+        } catch (error) {
+            toast.error(error.response.data.message);
+        } finally {
+            set({ isUpdatingProfile: false });
+        }
+    }
+    ,
     deleteUser: async () => {
         try {
             await axiosInstance.delete("/auth/delete");

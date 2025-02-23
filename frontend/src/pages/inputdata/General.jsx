@@ -1,68 +1,77 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { useAuthstore } from "../../store/useAuthstore";
 
-const General = () => {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [graduationYear, setGraduationYear] = useState("");
-  const [branch, setBranch] = useState("");
+const General = (props) => {
+  const { authUser, update } = useAuthstore();
+
+  // const [fullName, setFullName] = useState(props.fullName);
+  // const [email, setEmail] = useState(props.email);
+  // const [graduationYear, setGraduationYear] = useState("");
+  // const [branch, setBranch] = useState("");
+
+  const [formdata, setFormData] = useState({
+    fullName: authUser.fullName,
+    email: authUser.email,
+    graduationYear: "",
+    branch: ""
+  })
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!graduationYear) {
+    if (!formdata.graduationYear) {
       alert("Please select a graduation year.");
       return;
     }
 
-    if (!branch) {
+    if (!formdata.graduationYear) {
       alert("Please select a branch.");
       return;
     }
-
-    const userInfo = {
-      fullName,
-      email,
-      graduationYear,
-      branch,
-    };
-
-    console.log("Collected User Information:", userInfo);
+    if (formdata.fullName === "" || formdata.email === "" || formdata.graduationYear === "" || formdata.branch === "") {
+      toast.error("Please fill all the fields");
+      return;
+    }
+    else {
+      update(formdata);
+    }
+    console.log("Collected User Information:", formdata);
     alert("User information collected successfully!");
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Profile Information</h2>
+    <div className="p-4 max-w-md mx-auto bg-base-100 shadow-md rounded-lg">
+      <h2 className="text-2xl font-bold mb-4 text-primary">Profile Information</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block mb-2 font-medium">Full Name</label>
+          <label className="block mb-2 font-medium text-secondary">Full Name</label>
           <input
             type="text"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            className="w-full border rounded px-3 py-2"
+            value={formdata.fullName}
+            onChange={(e) => setFormData({ ...formdata, fullName: e.target.value })}
+            className="w-full input input-bordered"
             required
           />
         </div>
 
         <div>
-          <label className="block mb-2 font-medium">Email Address</label>
+          <label className="block mb-2 font-medium text-secondary">Email Address</label>
           <input
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full border rounded px-3 py-2"
+            value={formdata.email}
+            onChange={(e) => setFormData({ ...formdata, email: e.target.value })}
+            className="w-full input input-bordered"
             required
           />
         </div>
 
         <div>
-          <label className="block mb-2 font-medium">Graduation Year</label>
-          
+          <label className="block mb-2 font-medium text-secondary">Graduation Year</label>
           <select
-            value={graduationYear}
-            onChange={(e) => setGraduationYear(e.target.value)}
-            className="w-full border rounded px-3 py-2"
+            value={formdata.graduationYear}
+            onChange={(e) => setFormData({ ...formdata, graduationYear: e.target.value })}
+            className="w-full select select-bordered"
             required
           >
             <option value="" disabled>Select your graduation year</option>
@@ -71,15 +80,14 @@ const General = () => {
             <option value="2026">2026</option>
             <option value="2027">2027</option>
           </select>
-
         </div>
 
         <div>
-          <label className="block mb-2 font-medium">Branch</label>
+          <label className="block mb-2 font-medium text-secondary">Branch</label>
           <select
-            value={branch}
-            onChange={(e) => setBranch(e.target.value)}
-            className="w-full border rounded px-3 py-2"
+            value={formdata.branch}
+            onChange={(e) => setFormData({ ...formdata, branch: e.target.value })}
+            className="w-full select select-bordered"
             required
           >
             <option value="" disabled>Select your branch</option>
@@ -90,11 +98,8 @@ const General = () => {
           </select>
         </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
-        >
-         Save
+        <button type="submit" className="w-full btn btn-primary">
+          Save
         </button>
       </form>
     </div>

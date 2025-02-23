@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 export default function ChangePass() {
   const [currentPassword, setCurrentPassword] = useState(""); // State for current password
@@ -24,15 +24,15 @@ export default function ChangePass() {
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Change Your Password</h2>
+    <div className="p-4 max-w-md mx-auto bg-base-100 rounded-lg shadow-lg">
+      <h2 className="text-2xl font-bold mb-4 text-primary">Change Your Password</h2>
       
       {/* Current Password Input */}
       <div className="mb-4">
         <label className="block mb-2 font-medium">Current Password:</label>
         <input
           type="password"
-          className="w-full border rounded px-3 py-2"
+          className="w-full input input-bordered"
           placeholder="Enter your current password"
           value={currentPassword}
           onChange={handleCurrentPasswordChange}
@@ -45,7 +45,7 @@ export default function ChangePass() {
         <label className="block mb-2 font-medium">New Password:</label>
         <input
           type="password"
-          className="w-full border rounded px-3 py-2"
+          className="w-full input input-bordered"
           placeholder="Enter your new password"
           value={newPassword}
           onChange={handleNewPasswordChange}
@@ -55,7 +55,7 @@ export default function ChangePass() {
       
       {/* Change Password Button */}
       <button
-        className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+        className="w-full btn btn-primary"
         onClick={handleChangePassword}
       >
         Change Password
@@ -63,7 +63,7 @@ export default function ChangePass() {
 
       {/* Success Message */}
       {isPasswordChanged && (
-        <p className="mt-4 text-green-500 font-medium">
+        <p className="mt-4 text-success font-medium">
           Your password has been successfully changed!
         </p>
       )}

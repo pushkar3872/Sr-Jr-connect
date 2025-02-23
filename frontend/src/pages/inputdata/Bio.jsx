@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 export default function Bio() {
   const [bio, setBio] = useState(""); // State to store the user's bio
@@ -16,12 +16,12 @@ export default function Bio() {
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Tell us about yourself</h2>
+    <div className="p-4 max-w-md mx-auto bg-base-100 shadow-md rounded-lg">
+      <h2 className="text-2xl font-bold mb-4 text-primary">Tell us about yourself</h2>
 
       {/* Input Container */}
       <textarea
-        className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="w-full textarea textarea-bordered"
         placeholder="Write your bio here..."
         value={bio}
         onChange={handleInputChange}
@@ -30,25 +30,18 @@ export default function Bio() {
       ></textarea>
 
       {/* Save Button */}
-      <button
-        className="mt-4 w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
-        onClick={handleSave}
-      >
+      <button className="mt-4 w-full btn btn-primary" onClick={handleSave}>
         Save
       </button>
 
       {/* Display the Saved Bio */}
-      <div className="mt-4 p-4 bg-gray-50 border rounded shadow-md">
-        <h3 className="text-lg font-semibold mb-2">Your Saved Bio:</h3>
-        <p className="text-gray-700">{savedBio || "Your saved bio will appear here..."}</p>
+      <div className="mt-4 p-4 bg-base-200 border rounded shadow-md">
+        <h3 className="text-lg font-semibold mb-2 text-secondary">Your Saved Bio:</h3>
+        <p className="text-neutral">{savedBio || "Your saved bio will appear here..."}</p>
       </div>
 
       {/* Confirmation Message */}
-      {isSaved && (
-        <p className="mt-2 text-green-500 font-medium">
-          Your bio has been successfully saved!
-        </p>
-      )}
+      {isSaved && <p className="mt-2 text-success font-medium">Your bio has been successfully saved!</p>}
     </div>
   );
 }
