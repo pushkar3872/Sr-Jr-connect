@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs"
+import cloudinary from "../config/cloudinary.js"
 import jwt from "jsonwebtoken"
 import { generateToken } from "../lib/utils.js";
 import SrJrUser from "../models/UserModel.js";
@@ -103,21 +104,45 @@ export const logout = (req, res) => {
 
 export const updateProfile = async (req, res) => {
     try {
-        const { profilePic } = req.body;
-        const userId = req.user._id
-        if (!profilePic) {
-            res.status(400).json({ message: "Profile Picture Requred " });
+        const userId = req.SrJrUser._id;
+        if (!userId) {
+            return res.status(400).json({ message: "User not found" });
         }
 
-        const uploadResponse = await cloudinary.uploader.upload(profilePic)
-        const updatedUser = await User.findByIdAndUpdate(userId, { profilePic: uploadResponse.secure_url }, { new: true })
+        // Extract fields from request
+        const { fullName, email, profilePicture, biodata, graduationYear, skills, PlatformLinks, branch, dateOfBirth, gender } = req.body;
 
-        res.status(200).json(updatedUser)
+        // Create an empty object to store updated fields
+        const updatedFields = {};
+
+        // Check and update only provided fields
+        if (fullName) updatedFields.fullName = fullName;
+        if (email) updatedFields.email = email;
+        if (biodata) updatedFields.biodata = biodata;
+        if (graduationYear) updatedFields.graduationYear = graduationYear;
+        if (skills) updatedFields.skills = skills;
+        if (PlatformLinks) updatedFields.PlatformLinks = PlatformLinks;
+        if (branch) updatedFields.academicDetails = { Department: branch };
+        if (dateOfBirth) updatedFields.dateOfBirth = dateOfBirth;
+        if (gender) updatedFields.gender = gender;
+
+        // Handle profile picture upload separately
+        if (profilePicture) {
+            const uploadResponse = await cloudinary.uploader.upload(profilePicture);
+            updatedFields.profilePicture = uploadResponse.secure_url;
+        }
+
+        // Update user only with provided fields
+        const updatedUser = await SrJrUser.findByIdAndUpdate(userId, updatedFields, { new: true });
+
+        res.status(200).json(updatedUser);
     } catch (error) {
-        console.log("Error in Update Profile in controller")
-        res.status(500).json({ message: "Internal Server Error " });
+        console.log("Error in Update Profile Controller:", error);
+        res.status(500).json({ message: "Internal Server Error" });
     }
-}
+};
+
+
 export const checkAuth = (req, res) => {
     try {
         // console.log(req.SrJrUser)

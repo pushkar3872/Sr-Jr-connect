@@ -1,34 +1,21 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useAuthstore } from "../../store/useAuthstore";
+import { Loader } from 'lucide-react';
 
 const General = (props) => {
-  const { authUser, update } = useAuthstore();
-
-  // const [fullName, setFullName] = useState(props.fullName);
-  // const [email, setEmail] = useState(props.email);
-  // const [graduationYear, setGraduationYear] = useState("");
-  // const [branch, setBranch] = useState("");
+  const { authUser, update, isUpdatingProfile } = useAuthstore();
 
   const [formdata, setFormData] = useState({
     fullName: authUser.fullName,
     email: authUser.email,
-    graduationYear: "",
-    branch: ""
+    graduationYear: authUser.graduationYear,
+    branch: authUser.academicDetails.Department,
   })
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!formdata.graduationYear) {
-      alert("Please select a graduation year.");
-      return;
-    }
-
-    if (!formdata.graduationYear) {
-      alert("Please select a branch.");
-      return;
-    }
     if (formdata.fullName === "" || formdata.email === "" || formdata.graduationYear === "" || formdata.branch === "") {
       toast.error("Please fill all the fields");
       return;
@@ -36,8 +23,8 @@ const General = (props) => {
     else {
       update(formdata);
     }
-    console.log("Collected User Information:", formdata);
-    alert("User information collected successfully!");
+    console.log("Collected User Information:");
+    // alert("User information collected successfully!");
   };
 
   return (
@@ -98,8 +85,8 @@ const General = (props) => {
           </select>
         </div>
 
-        <button type="submit" className="w-full btn btn-primary">
-          Save
+        <button type="submit" disabled={isUpdatingProfile} className="w-full btn btn-primary">
+          {isUpdatingProfile ? <Loader className="animate-spin" size={20} /> : "Save"}
         </button>
       </form>
     </div>

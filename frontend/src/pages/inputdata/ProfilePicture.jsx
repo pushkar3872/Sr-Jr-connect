@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useAuthstore } from "../../store/useAuthstore";
 
 export default function ProfilePicture() {
-  const [profilePicture, setProfilePicture] = useState(null);
+  const { authUser, update, isUpdatingProfile } = useAuthstore();
+  const [profilePicture, setProfilePicture] = useState(authUser.profilePicture || null);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -29,7 +31,7 @@ export default function ProfilePicture() {
       <div className="flex justify-center mb-4">
         <div className="w-32 h-32 rounded-full bg-base-300 flex items-center justify-center overflow-hidden">
           {profilePicture ? (
-            <img src={profilePicture} alt="Profile" className="w-full h-full object-cover" />
+            <img src={profilePicture} alt="" className="w-full h-full object-cover" />
           ) : (
             <span className="text-neutral-content">No Image</span>
           )}

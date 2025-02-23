@@ -9,7 +9,6 @@ import ProfilePicture from './inputdata/ProfilePicture';
 import { useAuthstore } from '../store/useAuthstore';
 
 export default function Profilepage() {
-  const { authUser, update } = useAuthstore();
   return (
     <div className="p-6 bg-base-200 pt-16">
       {/* Spacer at the top so pt-16 given above */}
@@ -21,7 +20,7 @@ export default function Profilepage() {
       <div className="flex flex-wrap gap-6 justify-center">
         {/* Each component wrapped in a styled div */}
         <div className="bg-base-100 p-4 shadow-md rounded-lg w-full md:w-[45%] lg:w-[30%]">
-          <General fullName={authUser.fullName} email={authUser.email} />
+          <General />
         </div>
 
         <div className="bg-base-100 p-4 shadow-md rounded-lg w-full md:w-[45%] lg:w-[30%]">
