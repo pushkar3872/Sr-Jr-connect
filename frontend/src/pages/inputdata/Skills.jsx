@@ -54,7 +54,7 @@ export default function Skills() {
       <div className="mb-4">
         <label className="block mb-2 font-medium">Choose a Skill:</label>
         <select
-          className="select select-bordered w-full cursor-pointer cursor-auto"
+          className="select select-bordered w-full cursor-auto"
           onChange={handleSkillChange}
           defaultValue=""
         >
