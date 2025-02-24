@@ -16,7 +16,7 @@ export default function Bio() {
 
   return (
     <form onSubmit={handlesubmit} className="p-4 max-w-md mx-auto bg-base-100 shadow-md rounded-lg">
-      <h2 className="text-2xl font-bold mb-4 text-primary">Tell us about yourself</h2>
+      <h2 className="text-2xl font-bold mb-4 text-primary">About Myself</h2>
 
       {/* Input Container */}
       <textarea
@@ -35,8 +35,8 @@ export default function Bio() {
 
       {/* Display the Saved Bio */}
       <div className="mt-4 p-4 bg-base-200 border rounded shadow-md">
-        <h3 className="text-lg font-semibold mb-2 text-secondary">Your Saved Bio:</h3>
-        <p className="text-neutral">{formdata.biodata || "Your saved bio will appear here..."}</p>
+        <h3 className="text-lg font-semibold mb-2 ">Your Saved Bio:</h3>
+        <p className="text-base ">{formdata.biodata || "Your saved bio will appear here..."}</p>
       </div>
     </form>
   );

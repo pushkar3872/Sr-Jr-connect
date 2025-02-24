@@ -8,8 +8,8 @@ export default function Profile() {
       <h3 className="text-xl text-center font-semibold text-primary mb-4">User Profile</h3>
       <div className="flex flex-col items-center mb-6">
         <div className="avatar">
-          <div className="w-16 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-            <img src="/avatar.png" alt="Profile" />
+          <div className="w-28 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+            <img src={authUser.profilePicture ||"/avatar.png"} alt="Profile" />
           </div>
         </div>
         <div className="pt-2 mt-4 sm:mt-0 sm:ml-4 text-center sm:text-left">

@@ -34,6 +34,7 @@ const srJrUserSchema = new mongoose.Schema({
         linkedin: { type: String, default: '' },
         github: { type: String, default: '' },
         leetcode: { type: String, default: '' },
+        codechef: { type: String, default: '' },
         codeforces: { type: String, default: '' },
         instagram: { type: String, default: '' }
     },

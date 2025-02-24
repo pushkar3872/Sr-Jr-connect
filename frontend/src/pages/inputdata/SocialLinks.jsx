@@ -1,24 +1,58 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { useAuthstore } from "../../store/useAuthstore";
 
 export default function SocialLinks() {
+  const { authUser, update, isUpdatingProfile } = useAuthstore();
   const [socialLinks, setSocialLinks] = useState({
-    linkedin: "",
-    leetcode: "",
-    codechef: "",
-    codeforces: "",
-    instagram: "",
-    email: "",
+    linkedin: authUser.PlatformLinks.linkedin,
+    github: authUser.PlatformLinks.github,
+    leetcode: authUser.PlatformLinks.leetcode,
+    codechef: authUser.PlatformLinks.codechef,
+    codeforces: authUser.PlatformLinks.codeforces,
+    instagram: authUser.PlatformLinks.instagram,
   });
 
+  // Regular Expressions for Validation
+  const patterns = {
+    linkedin: /^https:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9-_.]+\/$/,
+    github: /^https:\/\/(www\.)?github\.com\/[a-zA-Z0-9-]+\/?$/,
+    leetcode: /^https:\/\/(www\.)?leetcode\.com\/(u\/)?[a-zA-Z0-9-_]+\/?$/,
+    codechef: /^https:\/\/(www\.)?codechef\.com\/users\/[a-zA-Z0-9-_.]+$/,
+    codeforces: /^https:\/\/(www\.)?codeforces\.com\/profile\/[a-zA-Z0-9-_.]+$/,
+    instagram: /^https:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9-_.]+$/,
+    email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+  };
+
+  // Handle Input Change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setSocialLinks({ ...socialLinks, [name]: value });
   };
 
-  const handleSave = (e) => {
+  // Validate Links
+  const validateLinks = () => {
+    for (let key in socialLinks) {
+      if (socialLinks[key] && !patterns[key].test(socialLinks[key])) {
+        toast.error(`Invalid ${key} link!`);
+        return false;
+      }
+    }
+    return true;
+  };
+
+  // Save Links to Backend
+  const handleSave = async (e) => {
     e.preventDefault();
-    console.log("Saved Social Links:", socialLinks);
-    alert("Social links saved successfully!");
+
+    if (!validateLinks()) return;
+    try {
+      update({ PlatformLinks: socialLinks });
+      toast.success("Social Links saved successfully!");
+    } catch (error) {
+      console.error("Failed to save social links:", error);
+      toast.error("Failed to save social links. Please try again later.");
+    }
   };
 
   return (
@@ -34,9 +68,7 @@ export default function SocialLinks() {
               type={key === "email" ? "email" : "url"}
               name={key}
               className="input input-bordered w-full"
-              placeholder={
-                key === "email" ? "example@email.com" : `https://${key}.com/username`
-              }
+              placeholder={key === "email" ? "example@email.com" : `https://${key}.com/username`}
               value={value}
               onChange={handleInputChange}
             />
@@ -44,34 +76,8 @@ export default function SocialLinks() {
         ))}
       </div>
 
-      {/* Display the Links */}
-      <div className="mt-6">
-        <h3 className="text-lg font-semibold mb-2">Your Social Links:</h3>
-        <ul className="list-disc pl-5 text-gray-700">
-          {Object.entries(socialLinks).map(([key, value]) =>
-            value ? (
-              <li key={key}>
-                <strong className="capitalize">{key}:</strong>{" "}
-                <a
-                  href={value.includes("http") ? value : `mailto:${value}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline"
-                >
-                  {value}
-                </a>
-              </li>
-            ) : (
-              <li key={key} className="text-gray-500 capitalize">
-                {key}: Not provided
-              </li>
-            )
-          )}
-        </ul>
-      </div>
-
       {/* Save Button */}
-      <button onClick={handleSave} className="w-full btn btn-primary mt-4">
+      <button onClick={handleSave} disabled={isUpdatingProfile} className="w-full btn btn-primary mt-4">
         Save
       </button>
     </div>

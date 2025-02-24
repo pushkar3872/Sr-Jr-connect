@@ -5,14 +5,16 @@ import cookieParser from 'cookie-parser';
 
 import connectDB from './config/mongodb.js';
 import authRouter from './routes/auth.route.js';
-import { protectroute } from './middleware/auth.middleware.js';
+import bodyParser from 'body-parser';
+
 
 const app = express();
 
 const PORT = process.env.PORT || 4005;
 connectDB();
 
-
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({

@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { useAuthstore } from "../../store/useAuthstore";
 
 export default function Skills() {
-  const [selectedSkills, setSelectedSkills] = useState([]); // State to store selected skills
+  const { authUser, update, isUpdatingProfile } = useAuthstore();
+  const [skills, setskills] = useState(authUser.skills); // State to store selected skills
 
   const allSkills = [
     "JavaScript",
@@ -14,36 +17,44 @@ export default function Skills() {
     "C++",
     "SQL",
     "Machine Learning",
-  ]; // List of available skills
+  ];
 
   const handleSkillChange = (e) => {
     const selectedValue = e.target.value;
 
     // Avoid duplicates in the selected skills list
-    if (selectedValue && !selectedSkills.includes(selectedValue)) {
-      setSelectedSkills([...selectedSkills, selectedValue]);
+    if (selectedValue && !skills.includes(selectedValue)) {
+      setskills([...skills, selectedValue]);
     }
   };
 
-  const removeSkill = (skill) => {
+  const removeSkill = (e, skill) => {
+    e.preventDefault();
     // Remove a skill from the selected skills list
-    setSelectedSkills(selectedSkills.filter((s) => s !== skill));
+    setskills(skills.filter((s) => s !== skill));
   };
 
-  const handleSave = () => {
-    console.log("Saved Skills:", selectedSkills);
-    alert("Skills saved successfully!");
+  const handleSave = (e) => {
+    e.preventDefault(); // Prevent form from refreshing
+    console.log("Saved Skills:", skills);
+    try {
+      update({ skills });
+      toast.success("Skills saved successfully!");
+    } catch (error) {
+      console.error("Failed to save skills:", error);
+      toast.error("Failed to save skills. Please try again later.");
+    }
   };
 
   return (
-    <div className="p-6 max-w-md mx-auto bg-base-100 rounded-lg shadow-lg">
+    <form onSubmit={handleSave} className="p-6 max-w-md mx-auto bg-base-100 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-4 text-primary">Select Your Skills</h2>
 
       {/* Dropdown for Selecting Skills */}
       <div className="mb-4">
         <label className="block mb-2 font-medium">Choose a Skill:</label>
         <select
-          className="select select-bordered w-full"
+          className="select select-bordered w-full cursor-pointer cursor-auto"
           onChange={handleSkillChange}
           defaultValue=""
         >
@@ -61,14 +72,19 @@ export default function Skills() {
       {/* Display Selected Skills */}
       <div className="mt-4">
         <h3 className="text-lg font-semibold mb-2">Your Selected Skills:</h3>
-        {selectedSkills.length > 0 ? (
+        {skills.length > 0 ? (
           <div className="flex flex-wrap gap-2">
-            {selectedSkills.map((skill, index) => (
-              <span key={index} className="badge badge-primary gap-2">
+            {skills.map((skill, index) => (
+              <span key={index} className="badge h-8 badge-ghost">
                 {skill}
                 <button
-                  className="ml-1 text-red-500 hover:text-red-700"
-                  onClick={() => removeSkill(skill)}
+                  type="button" // Prevents form submission
+                  className="btn h-4 w-2 bg-inherit border-none btn-sm text-sm text-base-content"
+                  onClick={(e) => {
+                    e.preventDefault(); // Stops unintended form submission
+                    const updatedSkills = skills.filter((_, i) => i !== index);
+                    setskills(updatedSkills);
+                  }}
                 >
                   ✕
                 </button>
@@ -81,9 +97,9 @@ export default function Skills() {
       </div>
 
       {/* Save Button */}
-      <button onClick={handleSave} className="w-full btn btn-primary mt-4">
+      <button type="submit" disabled={isUpdatingProfile} className="w-full btn btn-primary mt-4">
         Save
       </button>
-    </div>
+    </form>
   );
 }

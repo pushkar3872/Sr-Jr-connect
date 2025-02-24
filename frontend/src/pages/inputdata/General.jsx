@@ -32,7 +32,7 @@ const General = (props) => {
       <h2 className="text-2xl font-bold mb-4 text-primary">Profile Information</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block mb-2 font-medium text-secondary">Full Name</label>
+          <label className="block mb-2 font-medium ">Full Name</label>
           <input
             type="text"
             value={formdata.fullName}
@@ -43,7 +43,7 @@ const General = (props) => {
         </div>
 
         <div>
-          <label className="block mb-2 font-medium text-secondary">Email Address</label>
+          <label className="block mb-2 font-medium ">Email Address</label>
           <input
             type="email"
             value={formdata.email}
@@ -54,7 +54,7 @@ const General = (props) => {
         </div>
 
         <div>
-          <label className="block mb-2 font-medium text-secondary">Graduation Year</label>
+          <label className="block mb-2 font-medium ">Graduation Year</label>
           <select
             value={formdata.graduationYear}
             onChange={(e) => setFormData({ ...formdata, graduationYear: e.target.value })}
@@ -70,7 +70,7 @@ const General = (props) => {
         </div>
 
         <div>
-          <label className="block mb-2 font-medium text-secondary">Branch</label>
+          <label className="block mb-2 font-medium ">Branch</label>
           <select
             value={formdata.branch}
             onChange={(e) => setFormData({ ...formdata, branch: e.target.value })}
