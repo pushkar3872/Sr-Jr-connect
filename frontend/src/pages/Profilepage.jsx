@@ -8,7 +8,7 @@ import SocialLinks from './inputdata/SocialLinks';
 import ProfilePicture from './inputdata/ProfilePicture';
 import { useAuthstore } from '../store/useAuthstore';
 
-export default function Profilepage() {
+export default function ProfilePage() {
   return (
     <div className="p-6 bg-base-200 pt-16">
       {/* Spacer at the top so pt-16 given above */}

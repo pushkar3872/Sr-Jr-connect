@@ -4,16 +4,17 @@ import WelcomePage from './pages/WelcomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
-import Profilepage from './pages/Profilepage';
+import ProfilePage from './pages/Profilepage';
 import { Toaster } from 'react-hot-toast';
 import NavBar from './components/NavBar';
 import TakeData from './pages/TakeData';
-import FindTeammate from "./pages/FindTeammate"
+import FindTeammatePage from './pages/FindTeammatePage';
+import ConnectionPage from './pages/ConnectionPage';
+
 
 import { useAuthstore } from './store/useAuthstore';
 import { Loader } from 'lucide-react';
-import Settings from './pages/Settings';
-
+import SettingsPage from './pages/SettingsPage';
 
 //import Profilepage from './pages/Profile';
 
@@ -48,11 +49,12 @@ function App() {
         <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to={"/"} />} />
         <Route path="/register" element={!authUser ? <RegisterPage /> : <Navigate to={"/"} />} />
 
-        <Route path="/profile" element={authUser ? <Profilepage /> : <WelcomePage />} />
+        <Route path="/profile" element={authUser ? <ProfilePage /> : <WelcomePage />} />
 
         <Route path="/takedata" element={authUser ? <TakeData /> : <Navigate to={"/"} />} />
-        <Route path='/settings' element={<Settings />} />
-        <Route path='/teammate' element={authUser ? <FindTeammate /> : <WelcomePage />} />
+        <Route path='/settings' element={<SettingsPage />} />
+        <Route path='/teammate' element={authUser ? <FindTeammatePage /> : <WelcomePage />} />
+        <Route path='/connections' element={authUser ? <ConnectionPage /> : <WelcomePage />} />
       </Routes>
     </div>
   );

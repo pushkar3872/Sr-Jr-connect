@@ -43,7 +43,7 @@ const Navbar = () => {
             {(authUser &&
               <>
                 <Link
-                  to="/"
+                  to="/connections"
                   className="btn btn-sm gap-2 transition-colors"
                 >
                   <UsersRound className="size-5" />
