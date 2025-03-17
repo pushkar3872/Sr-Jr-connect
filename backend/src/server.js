@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import connectDB from './config/mongodb.js';
 import authRouter from './routes/auth.route.js';
 import bodyParser from 'body-parser';
+import MessageRoute from './routes/messages.route.js';
 
 
 const app = express();
@@ -23,11 +24,12 @@ app.use(cors({
 }));
 
 // API ENDPOINT
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+// app.get('/', (req, res) => {
+//     res.send('Hello World!');
+// });
 
-app.use("/api/auth", authRouter)
+app.use("/api/auth", authRouter);
+app.use("/api", MessageRoute);
 
 
 

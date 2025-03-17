@@ -3,7 +3,7 @@ import Messageinput from '../components/Messageinput';
 
 export default function GeneralUpdate() {
   return (
-    <div className="w-full md:w-2/4 bg-base-100 p-6 shadow-lg rounded-lg flex flex-col justify-between h-[86vh] md:h-auto" style={{ scrollBehavior: 'smooth', scrollbarWidth: 'thin' }}>
+    <div className="w-full md:w-2/4 bg-base-100 p-6 shadow-2xl rounded-2xl flex flex-col justify-between h-[86vh] md:h-auto" style={{ scrollBehavior: 'smooth', scrollbarWidth: 'thin' }}>
       {/* <h3 className="text-xl font-semibold text-primary mb-4">Chat Area</h3> */}
       <div className="border-b border-base-300 mb-6 pb-4">
         <input

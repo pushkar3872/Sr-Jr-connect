@@ -23,7 +23,7 @@ export const useAuthstore = create((set) => ({
 
     register: async (data) => {
         set({ isregistering: true });
-        console.log(data);
+        // console.log(data);
         try {
             const result = await axiosInstance.post("/auth/register", data);
             set({ authUser: result.data });
