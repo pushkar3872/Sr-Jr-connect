@@ -50,6 +50,10 @@ const srJrUserSchema = new mongoose.Schema({
         gpa: {
             type: Number,
             default: 0.0
+        },
+        domain: {
+            type: String,
+            default: ""
         }
     },
     dateOfBirth: {
