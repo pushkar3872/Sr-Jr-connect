@@ -16,7 +16,7 @@ export default function Bio() {
 
   return (
     <form onSubmit={handlesubmit} className="p-4 max-w-md mx-auto bg-base-100 shadow-md rounded-lg">
-      <h2 className="text-2xl font-bold mb-4 text-primary">About Myself</h2>
+      <h2 className="text-2xl font-bold mb-4 text-primary">About</h2>
 
       {/* Input Container */}
       <textarea

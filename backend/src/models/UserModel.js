@@ -61,16 +61,21 @@ const srJrUserSchema = new mongoose.Schema({
         enum: ['Male', 'Female', 'Other', 'Prefer not to say'],
         default: 'Prefer not to say'
     },
-
     Competitive_Programming: {
         LeetcodeData: {
             username: String,
             ranking: String,
-            totalSolved: Number
+            totalSolved: {
+                type: Number,
+                default: -1
+            }
         },
         CodeforcesData: {
             username: String,
-            rating: String,
+            rating: {
+                type: Number,
+                default: -1
+            }
         }
     }
 }, {
