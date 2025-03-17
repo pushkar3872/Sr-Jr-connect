@@ -22,6 +22,19 @@ const srJrUserSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
+    Mobnum: {
+        type: String,
+        default: ""
+    },
+    dateOfBirth: {
+        type: Date,
+        default: Date.now
+    },
+    gender: {
+        type: String,
+        enum: ['Male', 'Female', 'Other', 'Prefer not to say'],
+        default: 'Prefer not to say'
+    },
     graduationYear: {
         type: Number,
         default: -1
@@ -55,15 +68,6 @@ const srJrUserSchema = new mongoose.Schema({
             type: String,
             default: ""
         }
-    },
-    dateOfBirth: {
-        type: Date,
-        default: Date.now
-    },
-    gender: {
-        type: String,
-        enum: ['Male', 'Female', 'Other', 'Prefer not to say'],
-        default: 'Prefer not to say'
     },
     Competitive_Programming: {
         LeetcodeData: {

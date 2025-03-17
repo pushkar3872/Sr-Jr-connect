@@ -15,7 +15,7 @@ export default function LeaderBoard() {
     <div className="hidden bg-base-100 md:block w-full md:w-1/4 p-6 shadow-2xl rounded-2xl text-base-content">
       <h3 className="text-2xl font-bold text-primary mb-4 text-center">Leaderboard</h3>
 
-      <div className="space-y-4">
+      <div className="space-y-4 scroll-auto">
         {sortedUsers && sortedUsers.length > 0 ? (
           sortedUsers.map((leader, index) => (
             <div
