@@ -25,11 +25,11 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-full">
           <div className="flex items-center gap-8">
             <Link to="/" className=" flex items-center gap-2.5 hover:opacity-80 transition-all">
-              <div className="size-14 rounded-lg bg-base-100 flex items-center justify-center">
+              <div className="flex items-center justify-center">
                 <img
                   src={document.getElementById("data-theme")?.getAttribute("data-theme") === "dark" ? "App.svg" : "Logo.svg"}
                   alt="Logo"
-                  className="w-28 h-28"
+                  className="size-12"
                 />
 
               </div>

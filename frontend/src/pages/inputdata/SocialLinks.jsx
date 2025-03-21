@@ -5,12 +5,12 @@ import { useAuthstore } from "../../store/useAuthstore";
 export default function SocialLinks() {
   const { authUser, update, isUpdatingProfile } = useAuthstore();
   const [socialLinks, setSocialLinks] = useState({
-    linkedin: authUser.PlatformLinks.linkedin,
-    github: authUser.PlatformLinks.github,
-    leetcode: authUser.PlatformLinks.leetcode,
-    codechef: authUser.PlatformLinks.codechef,
-    codeforces: authUser.PlatformLinks.codeforces,
-    instagram: authUser.PlatformLinks.instagram,
+    linkedin: authUser.PlatformLinks?.linkedin || "",
+    github: authUser.PlatformLinks?.github || "",
+    leetcode: authUser.PlatformLinks?.leetcode || "",
+    codechef: authUser.PlatformLinks?.codechef || "",
+    codeforces: authUser.PlatformLinks?.codeforces || "",
+    instagram: authUser.PlatformLinks?.instagram || "",
   });
 
   // Regular Expressions for Validation
@@ -73,7 +73,9 @@ export default function SocialLinks() {
               onChange={handleInputChange}
             />
           </div>
-        ))}
+        )
+        )
+        }
       </div>
 
       {/* Save Button */}

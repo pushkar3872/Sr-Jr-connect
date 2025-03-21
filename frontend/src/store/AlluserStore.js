@@ -10,7 +10,7 @@ const AlluserStore = create((set, get) => ({
     getUsersforleaderboard: async () => {
         set({ isUsersLoading: true });
         try {
-            const result = await axiosInstance.get("/competusers");
+            const result = await axiosInstance.get("users/batchusers");
             set({ sortedUsers: result.data || [] }); // Ensure it's always an array
         } catch (error) {
             console.error("Error fetching leaderboard users:", error);
@@ -23,7 +23,7 @@ const AlluserStore = create((set, get) => ({
     getAllStudents: async () => {
         set({ isUsersLoading: true });
         try {
-            const result = await axiosInstance.get("/allusers");
+            const result = await axiosInstance.get("users/allusers");
             set({ users: result.data || [] }); // Ensure it's always an array
         } catch (error) {
             console.error("Error fetching all users:", error);

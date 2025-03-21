@@ -8,7 +8,7 @@ import Profile from "../containers/Profile";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-base-200 flex flex-col md:flex-row gap-4 p-4 pt-16">
+    <div className="min-h-screen bg-base-200 flex flex-col md:flex-row lg:gap-4 md:justify-center p-4 pt-14">
       {/* Left Section (User Profile) */}
       <Profile />
 

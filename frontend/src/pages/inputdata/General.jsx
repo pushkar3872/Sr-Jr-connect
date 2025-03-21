@@ -7,10 +7,10 @@ const General = (props) => {
   const { authUser, update, isUpdatingProfile } = useAuthstore();
 
   const [formdata, setFormData] = useState({
-    fullName: authUser.fullName,
-    email: authUser.email,
-    graduationYear: authUser.graduationYear,
-    branch: authUser.academicDetails.Department,
+    fullName: authUser?.fullName || "",
+    email: authUser?.email || "",
+    graduationYear: authUser?.graduationYear || "",
+    branch: authUser.academicDetails?.Department || "",
   })
 
   const handleSubmit = (e) => {
@@ -35,7 +35,7 @@ const General = (props) => {
           <label className="block mb-2 font-medium ">Full Name</label>
           <input
             type="text"
-            value={formdata.fullName}
+            value={formdata?.fullName || ""}
             onChange={(e) => setFormData({ ...formdata, fullName: e.target.value })}
             className="w-full input input-bordered"
             required
@@ -46,7 +46,7 @@ const General = (props) => {
           <label className="block mb-2 font-medium ">Email Address</label>
           <input
             type="email"
-            value={formdata.email}
+            value={formdata?.email || ""}
             onChange={(e) => setFormData({ ...formdata, email: e.target.value })}
             className="w-full input input-bordered"
             required
@@ -56,7 +56,7 @@ const General = (props) => {
         <div>
           <label className="block mb-2 font-medium ">Graduation Year</label>
           <select
-            value={formdata.graduationYear}
+            value={formdata?.graduationYear || ""}
             onChange={(e) => setFormData({ ...formdata, graduationYear: e.target.value })}
             className="w-full select select-bordered"
             required
@@ -72,7 +72,7 @@ const General = (props) => {
         <div>
           <label className="block mb-2 font-medium ">Branch</label>
           <select
-            value={formdata.branch}
+            value={formdata?.branch || ""}
             onChange={(e) => setFormData({ ...formdata, branch: e.target.value })}
             className="w-full select select-bordered"
             required

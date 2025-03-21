@@ -4,7 +4,7 @@ import { useAuthstore } from "../../store/useAuthstore";
 
 export default function Skills() {
   const { authUser, update, isUpdatingProfile } = useAuthstore();
-  const [skills, setskills] = useState(authUser.skills); // State to store selected skills
+  const [skills, setskills] = useState(authUser?.skills || {}); // State to store selected skills
 
   const allSkills = [
     "JavaScript",

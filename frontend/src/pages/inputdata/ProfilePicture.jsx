@@ -47,7 +47,7 @@ export default function ProfilePicture() {
         <div className="avatar">
           <div className="ring-primary ring-offset-base-100 w-28 rounded-full ring ring-offset-2">
             <img
-              src={selectedImg || authUser.profilePicture || "/avatar.png"} alt="Profile"
+              src={selectedImg || authUser?.profilePicture || "/avatar.png"} alt="Profile"
             // className="size-36 rounded-full object-cover  border-x-2"
             />
           </div>

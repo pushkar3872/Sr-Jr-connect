@@ -4,7 +4,7 @@ const students = [
   {
     id: 1,
     name: "Alice Johnson",
-    role: "Web Developer",
+    domain: "Web Developer",
     image: "https://randomuser.me/api/portraits/women/1.jpg",
     email: "alice@example.com",
     more: "Loves React and Tailwind CSS",
@@ -15,7 +15,7 @@ const students = [
   {
     id: 2,
     name: "Bob Smith",
-    role: "UI/UX Designer",
+    domain: "UI/UX Designer",
     image: "https://randomuser.me/api/portraits/men/2.jpg",
     email: "bob@example.com",
     more: "Passionate about design and creativity",
@@ -26,7 +26,7 @@ const students = [
   {
     id: 3,
     name: "Charlie Brown",
-    role: "Software Engineer",
+    domain: "Software Engineer",
     image: "https://randomuser.me/api/portraits/men/3.jpg",
     email: "charlie@example.com",
     more: "Enjoys problem-solving and clean code",
@@ -37,7 +37,7 @@ const students = [
   {
     id: 4,
     name: "Diana Prince",
-    role: "Data Scientist",
+    domain: "Data Scientist",
     image: "https://randomuser.me/api/portraits/women/4.jpg",
     email: "diana@example.com",
     more: "Expert in machine learning and AI",
@@ -48,7 +48,7 @@ const students = [
   {
     id: 5,
     name: "Ethan Hunt",
-    role: "Backend Developer",
+    domain: "Backend Developer",
     image: "https://randomuser.me/api/portraits/men/5.jpg",
     email: "ethan@example.com",
     more: "Focused on building scalable systems",
@@ -59,7 +59,7 @@ const students = [
   {
     id: 6,
     name: "Fiona Davis",
-    role: "AI Specialist",
+    domain: "AI Specialist",
     image: "https://randomuser.me/api/portraits/women/6.jpg",
     email: "fiona@example.com",
     more: "Works on innovative AI projects",
@@ -70,7 +70,7 @@ const students = [
   {
     id: 7,
     name: "George Wilson",
-    role: "Cybersecurity Expert",
+    domain: "Cybersecurity Expert",
     image: "https://randomuser.me/api/portraits/men/7.jpg",
     email: "george@example.com",
     more: "Protects systems from security threats",
@@ -81,7 +81,7 @@ const students = [
   {
     id: 8,
     name: "Hannah Lee",
-    role: "Machine Learning Engineer",
+    domain: "Machine Learning Engineer",
     image: "https://randomuser.me/api/portraits/women/8.jpg",
     email: "hannah@example.com",
     more: "Develops ML models for various applications",
@@ -92,7 +92,7 @@ const students = [
   {
     id: 9,
     name: "Ian Wright",
-    role: "Game Developer",
+    domain: "Game Developer",
     image: "https://randomuser.me/api/portraits/men/9.jpg",
     email: "ian@example.com",
     more: "Passionate about interactive experiences",
@@ -103,7 +103,7 @@ const students = [
   {
     id: 10,
     name: "Jasmine Carter",
-    role: "Cloud Engineer",
+    domain: "Cloud Engineer",
     image: "https://randomuser.me/api/portraits/women/10.jpg",
     email: "jasmine@example.com",
     more: "Specializes in cloud infrastructure and services",
@@ -114,7 +114,7 @@ const students = [
   {
     id: 11,
     name: "Kevin Parker",
-    role: "Full Stack Developer",
+    domain: "Full Stack Developer",
     image: "https://randomuser.me/api/portraits/men/11.jpg",
     email: "kevin@example.com",
     more: "Enjoys working with both front and back end",
@@ -125,7 +125,7 @@ const students = [
   {
     id: 12,
     name: "Laura Green",
-    role: "Graphic Designer",
+    domain: "Graphic Designer",
     image: "https://randomuser.me/api/portraits/women/12.jpg",
     email: "laura@example.com",
     more: "Creates stunning visuals and designs",
@@ -136,7 +136,7 @@ const students = [
   {
     id: 13,
     name: "Michael Scott",
-    role: "DevOps Engineer",
+    domain: "DevOps Engineer",
     image: "https://randomuser.me/api/portraits/men/13.jpg",
     email: "michael@example.com",
     more: "Optimizes development processes and pipelines",
@@ -147,7 +147,7 @@ const students = [
   {
     id: 14,
     name: "Nancy Drew",
-    role: "Digital Marketer",
+    domain: "Digital Marketer",
     image: "https://randomuser.me/api/portraits/women/14.jpg",
     email: "nancy@example.com",
     more: "Expert in online marketing strategies",
@@ -158,7 +158,7 @@ const students = [
   {
     id: 15,
     name: "Oliver Queen",
-    role: "Product Manager",
+    domain: "Product Manager",
     image: "https://randomuser.me/api/portraits/men/15.jpg",
     email: "oliver@example.com",
     more: "Leads teams and product vision",
@@ -169,7 +169,7 @@ const students = [
   {
     id: 16,
     name: "Pam Beesly",
-    role: "Data Analyst",
+    domain: "Data Analyst",
     image: "https://randomuser.me/api/portraits/women/16.jpg",
     email: "pam@example.com",
     more: "Turns data into actionable insights",
@@ -180,7 +180,7 @@ const students = [
   {
     id: 17,
     name: "Quentin Tarantino",
-    role: "Content Writer",
+    domain: "Content Writer",
     image: "https://randomuser.me/api/portraits/men/17.jpg",
     email: "quentin@example.com",
     more: "Writes engaging and creative content",
@@ -191,7 +191,7 @@ const students = [
   {
     id: 18,
     name: "Rachel Green",
-    role: "Software Tester",
+    domain: "Software Tester",
     image: "https://randomuser.me/api/portraits/women/18.jpg",
     email: "rachel@example.com",
     more: "Ensures software quality and performance",
@@ -202,7 +202,7 @@ const students = [
   {
     id: 19,
     name: "Samuel Jackson",
-    role: "Network Engineer",
+    domain: "Network Engineer",
     image: "https://randomuser.me/api/portraits/men/19.jpg",
     email: "samuel@example.com",
     more: "Maintains robust network infrastructure",
@@ -213,7 +213,7 @@ const students = [
   {
     id: 20,
     name: "Tina Turner",
-    role: "Tech Support Specialist",
+    domain: "Tech Support Specialist",
     image: "https://randomuser.me/api/portraits/women/20.jpg",
     email: "tina@example.com",
     more: "Provides exceptional technical support",
@@ -234,15 +234,15 @@ const Teammate = () => {
       case "all":
         return (
           student.name.toLowerCase().includes(searchQuery) ||
-          student.role.toLowerCase().includes(searchQuery) ||
+          student.domain.toLowerCase().includes(searchQuery) ||
           student.age.toString().includes(searchQuery) ||
           student.gender.toLowerCase().includes(searchQuery) ||
           student.skills.toLowerCase().includes(searchQuery)
         );
       case "name":
         return student.name.toLowerCase().includes(searchQuery);
-      case "role":
-        return student.role.toLowerCase().includes(searchQuery);
+      case "domain":
+        return student.domain.toLowerCase().includes(searchQuery);
       case "age":
         return student.age.toString().includes(searchQuery);
       case "gender":
@@ -278,7 +278,7 @@ const Teammate = () => {
         >
           <option value="all">All</option>
           <option value="name">Name</option>
-          <option value="role">Role</option>
+          <option value="domain">Role</option>
           <option value="age">Age</option>
           <option value="gender">Gender</option>
           <option value="skills">Skills</option>
@@ -300,7 +300,7 @@ const Teammate = () => {
                   <h2 className="mt-4 text-lg font-bold text-primary">
                     {student.name}
                   </h2>
-                  <p className="text-secondary">{student.role}</p>
+                  <p className="text-secondary">{student.domain}</p>
                   <button className="mt-3 btn btn-primary">Connect</button>
                 </div>
                 {/* Back Side */}

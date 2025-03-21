@@ -22,7 +22,7 @@ export default function Bio() {
       <textarea
         className="w-full textarea textarea-bordered"
         placeholder="Write your bio here..."
-        value={formdata.biodata}
+        value={formdata?.biodata || ""}
         onChange={(e) => setFormData({ ...formdata, biodata: e.target.value })}
         rows="5"
         required
@@ -36,7 +36,7 @@ export default function Bio() {
       {/* Display the Saved Bio */}
       <div className="mt-4 p-4 bg-base-200 border rounded shadow-md">
         <h3 className="text-lg font-semibold mb-2 ">Your Saved Bio:</h3>
-        <p className="text-base ">{formdata.biodata || "Your saved bio will appear here..."}</p>
+        <p className="text-base ">{formdata?.biodata || "Your saved bio will appear here..."}</p>
       </div>
     </form>
   );
