@@ -1,43 +1,84 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { useAuthstore } from "../../store/useAuthstore";
-import { Loader } from "lucide-react";
+import { FileText, Save } from "lucide-react";
 
-export default function Bio() {
+const Bio = () => {
   const { authUser, update, isUpdatingProfile } = useAuthstore();
 
-  const [formdata, setFormData] = useState({
-    biodata: authUser.biodata || "",
+  const [bioData, setBioData] = useState({
+    bio: authUser?.biodata || ""
   });
 
-  const handlesubmit = (e) => {
-    e.preventDefault(); // Prevent form from refreshing
-    update(formdata);
+  const handleInputChange = (e) => {
+    setBioData({ bio: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!bioData.bio.trim()) {
+      toast.error("Please provide a bio");
+      return;
+    }
+
+    try {
+      update(bioData);
+      toast.success("Bio updated successfully!");
+    } catch (error) {
+      console.error("Failed to update bio:", error);
+      toast.error("Failed to update bio. Please try again.");
+    }
   };
 
   return (
-    <form onSubmit={handlesubmit} className="p-4 max-w-md mx-auto bg-base-100 shadow-md rounded-lg">
-      <h2 className="text-2xl font-bold mb-4 text-primary">About</h2>
-
-      {/* Input Container */}
-      <textarea
-        className="w-full textarea textarea-bordered"
-        placeholder="Write your bio here..."
-        value={formdata?.biodata || ""}
-        onChange={(e) => setFormData({ ...formdata, biodata: e.target.value })}
-        rows="5"
-        required
-      ></textarea>
-
-      {/* Save Button */}
-      <button type="submit" className="mt-4 w-full btn btn-primary" disabled={isUpdatingProfile}>
-        {isUpdatingProfile ? <Loader className="animate-spin" size={20} /> : "Save"}
-      </button>
-
-      {/* Display the Saved Bio */}
-      <div className="mt-4 p-4 bg-base-200 border rounded shadow-md">
-        <h3 className="text-lg font-semibold mb-2 ">Your Saved Bio:</h3>
-        <p className="text-base ">{formdata?.biodata || "Your saved bio will appear here..."}</p>
+    <div className="bg-base-100">
+      <div className="bg-primary/10 p-4">
+        <h2 className="text-2xl font-bold text-primary flex items-center">
+          <FileText size={24} className="mr-2" />
+          About You
+        </h2>
       </div>
-    </form>
+
+      <form onSubmit={handleSubmit} className="p-6 space-y-5">
+        <div>
+          <label className="block mb-2 font-medium text-base-content/80">
+            Bio
+          </label>
+          <textarea
+            name="bio"
+            className="w-full textarea textarea-bordered min-h-36"
+            placeholder="Share a bit about yourself, your background, interests, and goals..."
+            value={bioData.bio}
+            onChange={handleInputChange}
+            maxLength={500}
+            required
+          ></textarea>
+          <p className="text-xs text-base-content/60 mt-1">
+            {bioData.bio.length}/300 characters
+          </p>
+        </div>
+
+        <button
+          type="submit"
+          disabled={isUpdatingProfile}
+          className="w-full btn btn-primary flex items-center justify-center gap-2 mt-2"
+        >
+          {isUpdatingProfile ? (
+            <>
+              <span className="loading loading-spinner"></span>
+              <span>Updating...</span>
+            </>
+          ) : (
+            <>
+              <Save size={20} />
+              <span>Save Bio</span>
+            </>
+          )}
+        </button>
+      </form>
+    </div>
   );
-}
+};
+
+export default Bio;

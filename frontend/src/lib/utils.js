@@ -7,3 +7,7 @@ export default function formatMessageTime(date) {
     });
 };
 // Compare this snippet from backend/src/controllers/messageController.js:
+
+export function formattedDate(date) {
+    return new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(date);
+}

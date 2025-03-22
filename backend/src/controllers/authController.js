@@ -108,7 +108,7 @@ export const updateProfile = async (req, res) => {
         }
 
         // Extract fields from request
-        const { fullName, email, profilePicture, biodata, graduationYear, skills, PlatformLinks, branch, dateOfBirth, gender } = req.body;
+        const { fullName, email, profilePicture, biodata, graduationYear, skills, PlatformLinks, branch, dateOfBirth, gender, mobilenumber, domain, college, gpa } = req.body;
 
         // Create an empty object to store updated fields
         const updatedFields = {};
@@ -120,9 +120,24 @@ export const updateProfile = async (req, res) => {
         if (graduationYear) updatedFields.graduationYear = graduationYear;
         if (skills) updatedFields.skills = skills;
         if (PlatformLinks) updatedFields.PlatformLinks = PlatformLinks;
-        if (branch) updatedFields.academicDetails = { Department: branch };
         if (dateOfBirth) updatedFields.dateOfBirth = dateOfBirth;
         if (gender) updatedFields.gender = gender;
+        if (mobilenumber) updatedFields.Mobnum = mobilenumber;
+
+        // Initialize academicDetails if any related field is provided
+        if (branch || college || domain || gpa) {
+            // First find the current user to get existing academicDetails
+            const currentUser = await SrJrUser.findById(userId);
+
+            // Start with existing academicDetails or empty object if none
+            updatedFields.academicDetails = currentUser.academicDetails || {};
+
+            // Update only the fields that are provided
+            if (branch) updatedFields.academicDetails.Department = branch;
+            if (college) updatedFields.academicDetails.college = college;
+            if (domain) updatedFields.academicDetails.domain = domain;
+            if (gpa) updatedFields.academicDetails.gpa = gpa;
+        }
 
         // Handle profile picture upload separately
         if (profilePicture) {
@@ -131,7 +146,11 @@ export const updateProfile = async (req, res) => {
         }
 
         // Update user only with provided fields
-        const updatedUser = await SrJrUser.findByIdAndUpdate(userId, updatedFields, { new: true });
+        const updatedUser = await SrJrUser.findByIdAndUpdate(
+            userId,
+            { $set: updatedFields },
+            { new: true }
+        );
 
         res.status(200).json(updatedUser);
     } catch (error) {

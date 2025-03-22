@@ -1,78 +1,121 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import Messageinput from '../components/Messageinput';
 import { useChatstore } from '../store/useChatstore';
 import { useAuthstore } from '../store/useAuthstore';
 import formatMessageTime from '../lib/utils';
-import { CircleX, X } from 'lucide-react';
+import { X, Search, Send, Paperclip } from 'lucide-react';
 
 export default function GeneralUpdate() {
-  const { messages, isMessagesLoading, getchatmessages, sendchatmessage } = useChatstore();
+  const { messages = [], isMessagesLoading, getchatmessages } = useChatstore();
   const { authUser } = useAuthstore();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     getchatmessages();
-  }, []);
+  }, [authUser, getchatmessages]);
 
-  // Function to open image in modal
-  const openImageModal = (imageUrl) => {
-    setSelectedImage(imageUrl);
-  };
+  // Open image in modal
+  const openImageModal = (imageUrl) => setSelectedImage(imageUrl);
 
-  // Function to close the modal
-  const closeImageModal = () => {
-    setSelectedImage(null);
-  };
+  // Close modal
+  const closeImageModal = () => setSelectedImage(null);
+
+  // Filter messages based on search query
+  const filteredMessages = messages.filter(message =>
+    message.text?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    message.sender?.fullName?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <>
-      <div className="overflow-auto w-full md:w-svh lg:w-2/4 bg-base-100 p-6 shadow-2xl rounded-2xl flex flex-col justify-between h-[86vh] lg:h-[90vh]" style={{ scrollBehavior: 'smooth', scrollbarWidth: 'thin' }}>
-        {/* <h3 className="text-xl font-semibold text-primary mb-4">Chat Area</h3> */}
-        <div className="border-b border-base-300 mb-6 pb-4">
-          <input
-            type="text"
-            placeholder="Search messages..."
-            className="input input-bordered w-full"
-          />
+      <div className="flex flex-col w-full md:w-svh lg:w-2/4 h-[85vh] bg-base-100 rounded-2xl shadow-2xl text-base-content overflow-hidden">
+        {/* <div className="overflow-auto w-full md:w-svh lg:w-2/4 bg-base-100 p-6 shadow-2xl rounded-2xl flex flex-col justify-between h-[85vh] lg:h-[85vh]" style={{ scrollBehavior: 'smooth', scrollbarWidth: 'thin' }}> */}
+        {/* Header */}
+        <div className="bg-gradient-to-r from-primary to-secondary p-4">
+          <h2 className="text-xl font-bold text-primary-content">General Updates</h2>
+          <p className="text-xs text-primary-content/70">Team communication channel</p>
         </div>
-        <div className="flex-1 overflow-auto space-y-4" style={{ scrollbarWidth: 'thin', scrollBehavior: 'smooth' }}>
-          {/* Chat Messages */}
-          {isMessagesLoading ?
-            <p>Loading...</p> :
-            (messages.map((chat, index) => (
-              <div key={chat._id}
-                className={`chat ${chat.senderId === authUser._id ? 'chat-end' : 'chat-start'}`
-                }>
-                {/* avatar */}
-                <div className="chat-image avatar">
-                  <div className="w-10 rounded-full">
-                    <img src="/avatar.png" alt={chat.name} />
+
+        {/* Search Bar */}
+        <div className="p-2 border-b border-base-300 flex justify-center">
+          <div className="input input-bordered input-sm flex items-center gap-2 w-full max-w-md">
+            <Search className="size-4 text-base-content/50" />
+            <input
+              type="text"
+              placeholder="Search messages..."
+              className="flex-1 bg-transparent border-none outline-none text-sm"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </div>
+
+        {/* Messages Container */}
+        <div className="flex-1 overflow-y-auto p-3 space-y-3" style={{scrollbarWidth: 'thin',scrollbarColor: 'rgba(156, 163, 175, 0.2) rgba(255, 255, 255, 0.5)'}}>
+          {isMessagesLoading ? (
+            <div className="flex justify-center items-center h-full">
+              <span className="loading loading-spinner loading-md text-primary"></span>
+            </div>
+          ) : (
+            filteredMessages.map((messg, index) => {
+              // Ensure sender exists before accessing properties
+              const isMyMessage = messg.sender?.email === authUser?.email;
+
+              return (
+                <div
+                  key={messg._id || index}
+                  className={`chat ${isMyMessage ? 'chat-end' : 'chat-start'}`}
+                >
+                  {/* Avatar */}
+                  {!isMyMessage && (
+                    <div className="chat-image avatar">
+                      <div className=" w-8 rounded-full ">
+                        <img src={`${messg.sender?.profilePicture}`} />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Chat Header */}
+                  <div className="chat-header text-xs opacity-70">
+                    {isMyMessage ? "" : `${messg.sender?.fullName},` || "Unknown"} {formatMessageTime(messg.createdAt)}
+                  </div>
+
+                  {/* Chat Message */}
+                  <div className={`chat-bubble ${isMyMessage ? 'chat-bubble-primary' : 'chat-bubble-secondary'}`}>
+                    {messg.image && (
+                      <div className="mb-2" onClick={() => openImageModal(messg.image)}>
+                        <img
+                          src={messg.image}
+                          alt="Shared content"
+                          className="rounded max-h-40 w-auto object-cover cursor-pointer"
+                        />
+                      </div>
+                    )}
+                    {messg.text && (
+                      <p className="whitespace-pre-wrap">{messg.text}</p>
+                    )}
                   </div>
                 </div>
-                {/* chat header */}
-                <div className="chat-header">
-                  {chat.name}
-                  <time className="text-xs opacity-50">{formatMessageTime(chat.createdAt)}</time>
-                </div>
-                {/* chat message */}
-                <div className={`chat-bubble ${chat.senderId === authUser._id ? 'bg-secondary text-primary-content' : 'bg-primary text-secondary-content'}`}>
-                  {chat.image && (
-                    <img
-                      src={chat.image}
-                      alt="Attachment"
-                      className="sm:max-w-[200px] rounded-md mb-2 cursor-pointer hover:opacity-90 transition-opacity"
-                      onClick={() => openImageModal(chat.image)}
-                    />
-                  )}
-                  {chat.text && (
-                    <p>{chat.text}</p>
-                  )}
-                </div>
+              );
+            })
+          )}
+
+          {filteredMessages.length === 0 && !isMessagesLoading && (
+            <div className="flex flex-col items-center justify-center h-64 text-center space-y-2">
+              <div className="btn btn-circle btn-ghost btn-lg no-animation">
+                <Paperclip className="size-8 opacity-30" />
               </div>
-            )))
-          }
+              <p className="font-medium">No messages found</p>
+              <p className="text-xs opacity-70">
+                {searchQuery ? "Try a different search term" : "Start the conversation"}
+              </p>
+            </div>
+          )}
         </div>
-        <div className="mt-auto">
+
+        {/* Message Input */}
+        <div className="border-t border-base-300 p-2">
           <Messageinput />
         </div>
       </div>
@@ -80,25 +123,38 @@ export default function GeneralUpdate() {
       {/* Image Modal */}
       {selectedImage && (
         <div
-          className="fixed inset-0 backdrop-blur-lg flex items-center justify-center z-50"
+          className="modal modal-open backdrop-blur-sm transition-all duration-200"
+
           onClick={closeImageModal}
         >
-          <div className="relative max-w-3xl max-h-[90vh] p-2">
+          <div
+            className="modal-middle max-w-3xl border-none shadow-lg relative"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
-              className="absolute top-4 right-4 bg-black bg-opacity-50 rounded-full p-2 text-white hover:bg-opacity-70 transition-all"
+              className="btn btn-sm btn-circle bg-transparent text-gray-200 absolute right-1 top-1 border-none shadow-md z-50"
               onClick={closeImageModal}
             >
-              <X size={25} className='cursor-pointer' />
+              <X className="size-6" />
             </button>
-            <img
-              src={selectedImage}
-              alt="Enlarged view"
-              className="max-h-[85vh] max-w-full rounded-lg object-contain"
-              onClick={(e) => e.stopPropagation()}
-            />
+
+            <div className="">
+              <div className="overflow-hidden rounded">
+                <img
+                  src={selectedImage}
+                  alt="Enlarged view"
+                  className="max-h-[70vh] max-w-full mx-auto object-contain transition-all duration-300 hover:scale-[1.02]"
+                />
+              </div>
+            </div>
+
+            <div className="absolute bottom-3 left-0 right-0 flex justify-center opacity-70">
+              <div className="px-3 py-1 bg-base-300 rounded-full text-xs">
+                Click outside to close
+              </div>
+            </div>
           </div>
         </div>
-
       )}
     </>
   );

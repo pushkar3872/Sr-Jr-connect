@@ -7,6 +7,7 @@ export const getUsersForLead = async (req, res) => {
         //     console.error("Error: req.SrJrUser is undefined. Check authentication middleware.");
         //     return res.status(401).json({ message: "Unauthorized - User not found" });
         // }
+        
         const loggedUserId = req.SrJrUser.id;
         const LoggedInUser = await SrJrUser.findById(loggedUserId);
 

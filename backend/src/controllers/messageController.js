@@ -1,6 +1,7 @@
 import cloudinary from "../config/cloudinary.js";
 import { decryptMessage, encryptMessage } from "../lib/encryption.js";
 import Message from "../models/MessageModel.js"
+import SrJrUser from "../models/UserModel.js";
 
 
 // Send Message (Encrypt Before Storing)
@@ -29,7 +30,7 @@ export const sendMessage = async (req, res) => {
 
         const decryptednewmessage = {
             _id: newMessage._id,
-            senderId: newMessage.senderId,
+            sender: getUserfromId(newMessage.senderId),
             text: decryptMessage(newMessage.text),
             image: newMessage.image,
             createdAt: newMessage.createdAt
@@ -46,16 +47,18 @@ export const sendMessage = async (req, res) => {
 // Get Messages (Decrypt Before Sending to SrJrUser)
 export const getMessages = async (req, res) => {
     try {
-        const messages = await Message.find().sort({ createdAt: 1 }); // Sort by createdAt (oldest to newest)
+        const messages = await Message.find().sort({ createdAt: 1 }); // Oldest to newest
 
-        // Decrypt each message before sending to the frontend
-        const decryptedMessages = messages.map(msg => ({
-            _id: msg._id,
-            senderId: msg.senderId,
-            text: decryptMessage(msg.text),
-            image: msg.image,
-            createdAt: msg.createdAt
-        }));
+        // FIX: Use Promise.all to resolve all sender details asynchronously
+        const decryptedMessages = await Promise.all(
+            messages.map(async (msg) => ({
+                _id: msg._id,
+                sender: await getUserfromId(msg.senderId), // Await here!
+                text: decryptMessage(msg.text),
+                image: msg.image,
+                createdAt: msg.createdAt
+            }))
+        );
 
         res.status(200).json(decryptedMessages);
     } catch (error) {
@@ -63,3 +66,20 @@ export const getMessages = async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
+
+
+
+const getUserfromId = async (senderid) => {
+    try {
+        const user = await SrJrUser.findById(senderid).select("-password");
+
+        if (!user) {
+            return null;
+        }
+
+        return user;
+    } catch (error) {
+        console.error("Error in getUserfromId:", error.message);
+        return null;
+    }
+}
