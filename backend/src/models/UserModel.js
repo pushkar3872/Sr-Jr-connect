@@ -16,7 +16,7 @@ const srJrUserSchema = new mongoose.Schema({
     },
     profilePicture: {
         type: String,
-        default: ''
+        default: null
     },
     biodata: {
         type: String,

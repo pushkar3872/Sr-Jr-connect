@@ -98,18 +98,21 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Navigation  */}
-          <div className="hidden sm:flex items-center space-x-1 bg-base-200/50 rounded-full p-1 border border-base-300">
-            {menuItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`flex items-center py-2 px-3 hover: rounded-full transition-all duration-200 ${isActive(item.path)}`}
-              >
-                {item.icon}
-                <span className="ml-2 hidden lg:block">{item.label}</span>
-              </Link>
-            ))}
-          </div>
+
+          {
+            authUser && (<div className="hidden sm:flex items-center space-x-1 bg-base-200/50 rounded-full p-1 border border-base-300">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`flex items-center py-2 px-3 hover: rounded-full transition-all duration-200 ${isActive(item.path)}`}
+                >
+                  {item.icon}
+                  <span className="ml-2 hidden lg:block">{item.label}</span>
+                </Link>
+              ))}
+            </div>)
+          }
 
           <div className="flex items-center gap-3">
             {/* Settings button */}
@@ -118,10 +121,16 @@ const Navbar = () => {
             </Link>
 
             {/* Notification button */}
-            <button className="btn btn-circle btn-ghost indicator">
-              <Bell className="size-5" />
-              <span className="indicator-item badge badge-xs badge-primary"></span>
-            </button>
+            {
+              authUser &&
+              (
+                <button className="btn btn-circle btn-ghost indicator">
+                  <Bell className="size-5" />
+                  <span className="indicator-item badge badge-xs badge-primary"></span>
+                </button>
+
+              )
+            }
 
             {/* Profile Button - Always visible on mobile and desktop */}
             {authUser && (
@@ -221,26 +230,29 @@ const Navbar = () => {
         )}
 
         {/* Navigation links with staggered animation */}
-        <nav className="flex-1 overflow-y-auto py-4 px-2">
-          <ul className="menu gap-1.5">
-            {menuItems.map((item, index) => (
-              <li
-                key={item.path}
-                className={`transition-all duration-300 ${sidebarOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
-                style={{ transitionDelay: `${50 * index}ms` }}
-              >
-                <Link
-                  to={item.path}
-                  className={`flex items-center h-10 px-3 rounded-lg transition-colors ${isActive(item.path)}`}
-                >
-                  {item.icon}
-                  <span className="ml-3">{item.label}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
+        {authUser &&
+          (
+            <nav className="flex-1 overflow-y-auto py-4 px-2">
+              <ul className="menu gap-1.5">
+                {menuItems.map((item, index) => (
+                  <li
+                    key={item.path}
+                    className={`transition-all duration-300 ${sidebarOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
+                    style={{ transitionDelay: `${50 * index}ms` }}
+                  >
+                    <Link
+                      to={item.path}
+                      className={`flex items-center h-10 px-3 rounded-lg transition-colors ${isActive(item.path)}`}
+                    >
+                      {item.icon}
+                      <span className="ml-3">{item.label}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )
+        }
         {/* Bottom section with fade in animation */}
         <div
           className={`p-4 border-t border-base-300 transition-all duration-300 ${sidebarOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"

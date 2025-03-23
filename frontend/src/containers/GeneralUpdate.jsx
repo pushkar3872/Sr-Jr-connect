@@ -52,7 +52,7 @@ export default function GeneralUpdate() {
         </div>
 
         {/* Messages Container */}
-        <div className="flex-1 overflow-y-auto p-3 space-y-3" style={{scrollbarWidth: 'thin',scrollbarColor: 'rgba(156, 163, 175, 0.2) rgba(255, 255, 255, 0.5)'}}>
+        <div className="flex-1 overflow-y-auto p-3 space-y-3" style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(156, 163, 175, 0.2) rgba(255, 255, 255, 0.5)' }}>
           {isMessagesLoading ? (
             <div className="flex justify-center items-center h-full">
               <span className="loading loading-spinner loading-md text-primary"></span>
@@ -71,7 +71,7 @@ export default function GeneralUpdate() {
                   {!isMyMessage && (
                     <div className="chat-image avatar">
                       <div className=" w-8 rounded-full ">
-                        <img src={`${messg.sender?.profilePicture}`} />
+                        <img src={`${messg.sender?.profilePicture != "" ? messg.sender?.profilePicture : "/avatar.png"}`} />
                       </div>
                     </div>
                   )}
