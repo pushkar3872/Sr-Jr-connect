@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Messageinput from '../components/Messageinput';
 import { useChatstore } from '../store/useChatstore';
 import { useAuthstore } from '../store/useAuthstore';
@@ -6,14 +6,24 @@ import formatMessageTime from '../lib/utils';
 import { X, Search, Send, Paperclip } from 'lucide-react';
 
 export default function GeneralUpdate() {
-  const { messages = [], isMessagesLoading, getchatmessages } = useChatstore();
+  const { messages = [], isMessagesLoading, getchatmessages, subscribeToMessages, unsubscribeFromMessages } = useChatstore();
   const { authUser } = useAuthstore();
   const [selectedImage, setSelectedImage] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const messagesEndRef = useRef(null);
 
+  // Only load messages and set up subscriptions once
   useEffect(() => {
     getchatmessages();
-  }, [authUser, getchatmessages]);
+    subscribeToMessages();
+
+    return () => unsubscribeFromMessages();
+  }, [getchatmessages, subscribeToMessages, unsubscribeFromMessages]);
+
+  // Auto-scroll to bottom when messages change
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   // Open image in modal
   const openImageModal = (imageUrl) => setSelectedImage(imageUrl);
@@ -27,10 +37,15 @@ export default function GeneralUpdate() {
     message.sender?.fullName?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // Function to check if a message is from the current user
+  const isCurrentUserMessage = (message) => {
+    // Use ID comparison rather than email for more reliability
+    return message.sender?._id === authUser?._id;
+  };
+
   return (
     <>
       <div className="flex flex-col w-full md:w-svh lg:w-2/4 h-[85vh] bg-base-100 rounded-2xl shadow-2xl text-base-content overflow-hidden">
-        {/* <div className="overflow-auto w-full md:w-svh lg:w-2/4 bg-base-100 p-6 shadow-2xl rounded-2xl flex flex-col justify-between h-[85vh] lg:h-[85vh]" style={{ scrollBehavior: 'smooth', scrollbarWidth: 'thin' }}> */}
         {/* Header */}
         <div className="bg-gradient-to-r from-primary to-secondary p-4">
           <h2 className="text-xl font-bold text-primary-content">General Updates</h2>
@@ -59,8 +74,8 @@ export default function GeneralUpdate() {
             </div>
           ) : (
             filteredMessages.map((messg, index) => {
-              // Ensure sender exists before accessing properties
-              const isMyMessage = messg.sender?.email === authUser?.email;
+              const isMyMessage = isCurrentUserMessage(messg);
+              // console.log(messg.sender.fullName+"    "+ messg.text)
 
               return (
                 <div
@@ -70,15 +85,15 @@ export default function GeneralUpdate() {
                   {/* Avatar */}
                   {!isMyMessage && (
                     <div className="chat-image avatar">
-                      <div className=" w-8 rounded-full ">
-                        <img src={`${messg.sender?.profilePicture != "" ? messg.sender?.profilePicture : "/avatar.png"}`} />
+                      <div className="w-8 rounded-full">
+                        <img src={`${messg.sender?.profilePicture !== "" ? messg.sender?.profilePicture : "/avatar.png"}`} alt="Avatar" />
                       </div>
                     </div>
                   )}
 
                   {/* Chat Header */}
                   <div className="chat-header text-xs opacity-70">
-                    {isMyMessage ? "" : `${messg.sender?.fullName},` || "Unknown"} {formatMessageTime(messg.createdAt)}
+                    {isMyMessage ? "You" : messg.sender?.fullName || "Unknown"} {formatMessageTime(messg.createdAt)}
                   </div>
 
                   {/* Chat Message */}
@@ -93,13 +108,14 @@ export default function GeneralUpdate() {
                       </div>
                     )}
                     {messg.text && (
-                      <p className="whitespace-pre-wrap">{messg.text}</p>
+                      <p>{messg.text}</p>
                     )}
                   </div>
                 </div>
               );
             })
           )}
+          <div ref={messagesEndRef} /> {/* Empty div for auto-scrolling */}
 
           {filteredMessages.length === 0 && !isMessagesLoading && (
             <div className="flex flex-col items-center justify-center h-64 text-center space-y-2">
@@ -124,7 +140,6 @@ export default function GeneralUpdate() {
       {selectedImage && (
         <div
           className="modal modal-open backdrop-blur-sm transition-all duration-200"
-
           onClick={closeImageModal}
         >
           <div

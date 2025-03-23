@@ -3,18 +3,22 @@ import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 
-export const useAuthstore = create((set) => ({
+const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:4005" : "/";
+export const useAuthstore = create((set,get) => ({
     authUser: null,
     isregistering: false,
     isLoggingIn: false,
     isUpdatingProfile: false,
     isCheckingAuth: true,
     onlineUsers: [],
+    socket: null,
 
     checkAuth: async () => {
         try {
             const result = await axiosInstance.get("/auth/check");
             set({ authUser: result.data });
+
+            get().connectSocket();
         } catch (error) {
             console.log("Error in checkauth : ", error)
             set({ authUser: null })
@@ -29,6 +33,9 @@ export const useAuthstore = create((set) => ({
         try {
             const result = await axiosInstance.post("/auth/register", data);
             set({ authUser: result.data });
+
+
+            get().connectSocket();
             toast.success("Account Created Successfully");
         } catch (error) {
             toast.error(error.response.data.message);
@@ -43,6 +50,7 @@ export const useAuthstore = create((set) => ({
             const result = await axiosInstance.post("/auth/login", data);
             set({ authUser: result.data });
             toast.success("Logged in successfully");
+            get().connectSocket();
         } catch (error) {
             toast.error(error.response.data.message);
         } finally {
@@ -55,6 +63,8 @@ export const useAuthstore = create((set) => ({
             await axiosInstance.post("/auth/logout");
             set({ authUser: null });
             toast.success("Logged out successfully");
+
+            get().disconnectSocket();
         } catch (error) {
             toast.error(error.response.data.message);
         }
@@ -95,7 +105,11 @@ export const useAuthstore = create((set) => ({
         set({ socket: socket });
 
         socket.on("getOnlineUsers", (userIds) => {
-            set({ onlineUsers: `userIds` })
+            set({ onlineUsers: userIds })
+        });
+
+        socket.on("connect_error", (err) => {
+            console.error("Socket connection error:", err);
         });
     },
 

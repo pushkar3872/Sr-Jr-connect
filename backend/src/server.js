@@ -66,10 +66,10 @@ const startServer = async () => {
         console.log("MongoDB Connected");
 
         // Start cron jobs after successful DB connection
-        // updateLeetcodeStats();
+        updateLeetcodeStats();
         console.log("LeetCode stats update job scheduled");
 
-        // Start the server
+        // Start the server //not in use  since using socket.io
         // app.listen(PORT, () => {
         //     console.log(`Server is running on http://localhost:${PORT}`);
         // });

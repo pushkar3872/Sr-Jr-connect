@@ -2,7 +2,7 @@ import cloudinary from "../config/cloudinary.js";
 import { decryptMessage, encryptMessage } from "../lib/encryption.js";
 import Message from "../models/MessageModel.js"
 import SrJrUser from "../models/UserModel.js";
-import { getReceiverSocketId, io } from "../lib/socket.js";
+import { io } from "../lib/socket.js";
 
 // Send Message (Encrypt Before Storing)
 export const sendMessage = async (req, res) => {
@@ -29,16 +29,14 @@ export const sendMessage = async (req, res) => {
         await newMessage.save();
         const decryptednewmessage = {
             _id: newMessage._id,
-            sender: getUserfromId(newMessage.senderId),
+            sender: await getUserfromId(newMessage.senderId),
             text: decryptMessage(newMessage.text),
             image: newMessage.image,
             createdAt: newMessage.createdAt
         }
 
-        const receiverSocketId = getReceiverSocketId(receiverId);
-        if (receiverSocketId) {
-            io.to(receiverSocketId).emit("newMessage", decryptednewmessage);
-        }
+        io.emit("newMessage", decryptednewmessage);
+
 
         res.status(200).json(decryptednewmessage);
 

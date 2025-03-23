@@ -19,7 +19,7 @@ export const useChatstore = create((set, get) => ({
             if (!Array.isArray(result.data)) {
                 console.error("Expected an array but got:", result.data);
                 toast.error("Unexpected data format from server");
-                return;
+                return; 
             }
 
             set({ messages: result.data });
@@ -34,32 +34,17 @@ export const useChatstore = create((set, get) => ({
 
 
     sendchatmessage: async (messagedata) => {
-        set({ isMessagesLoading: true });
+        // set({ isMessagesLoading: true });
         try {
+            
             const result = await axiosInstance.post("/messages/send", messagedata);
-
-            const newMessage = {
-                _id: result.data._id,
-                senderId: result.data.senderId,
-                text: result.data.text || "",
-                image: result.data.image || null,
-                createdAt: result.data.createdAt || new Date().toISOString(),
-            };
-
-            // Append new message and maintain order
-            set((state) => ({
-                messages: [...state.messages, newMessage].sort(
-                    (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-                ),
-            }));
 
             toast.success("Message sent successfully");
         } catch (error) {
             console.error("Error sending message:", error);
             toast.error(error.response?.data?.message || "Failed to send message");
-        } finally {
-            set({ isMessagesLoading: false });
-        }
+        } 
+        
     },
     subscribeToMessages: () => {
         // const { selectedUser } = get()
@@ -71,9 +56,9 @@ export const useChatstore = create((set, get) => ({
 
 
         socket.on("newMessage", (newMessage) => {
-            if (newMessage.senderId !== selectedUser._id) {
-                return;
-            }
+            // if (newMessage.senderId !== selectedUser._id) {
+            //     return;
+            // }
             set({
                 messages: [...get().messages, newMessage],
             })
@@ -81,7 +66,7 @@ export const useChatstore = create((set, get) => ({
     },
 
     unsubscribeFromMessages: () => {
-        const socket = useAuthStore.getState().socket;
+        const socket = useAuthstore.getState().socket;
         socket.off("newMessage");
     },
 }));

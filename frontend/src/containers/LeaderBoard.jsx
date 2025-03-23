@@ -89,7 +89,7 @@ export default function LeaderBoard() {
                     {leader.fullName}
                   </p>
                   <p className="text-xs text-base-content/70 truncate">
-                    {leader.role || "Developer"}
+                    {leader.domain || "Developer"}
                   </p>
                 </div>
               </div>
