@@ -39,13 +39,13 @@ export const getAllUsers = async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        const AllColleagues = await SrJrUser.find({ _id: { $ne: loggedUserId } }).select("-password");
+        const allusers = await SrJrUser.find({ _id: { $ne: loggedUserId } }).select("-password");
 
-        if (!AllColleagues.length) {
+        if (!allusers.length) {
             return res.status(404).json({ message: "No colleagues found" });
         }
 
-        res.status(200).json(AllColleagues);
+        res.status(200).json(allusers); 
     } catch (error) {
         console.error("Error in getUsersForLead:", error);
         res.status(500).json({ message: "Internal server error" });

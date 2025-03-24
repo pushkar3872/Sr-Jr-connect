@@ -73,12 +73,12 @@ export default function LeaderBoard() {
             <div
               key={leader._id}
               className={`relative flex justify-between items-center p-4 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md ${index === 0
-                  ? "bg-warning/10 border border-warning/30"
-                  : index === 1
-                    ? "bg-base-200/80 border border-base-300"
-                    : index === 2
-                      ? "bg-warning/5 border border-warning/20"
-                      : "bg-base-200 hover:bg-base-300/50"
+                ? "bg-warning/10 border border-warning/30"
+                : index === 1
+                  ? "bg-base-200/80 border border-base-300"
+                  : index === 2
+                    ? "bg-warning/5 border border-warning/20"
+                    : "bg-base-200 hover:bg-base-300/50"
                 }`}
             >
               <div className="flex items-center gap-3 overflow-hidden">
@@ -89,19 +89,19 @@ export default function LeaderBoard() {
                     {leader.fullName}
                   </p>
                   <p className="text-xs text-base-content/70 truncate">
-                    {leader.domain || "Developer"}
+                    {leader.academicDetails.Department || "Developer"}
                   </p>
                 </div>
               </div>
 
               <div className="flex flex-col items-end">
                 <div className={`flex items-center gap-1 px-3 py-1 text-sm font-semibold rounded-lg ${index === 0
-                    ? "bg-warning/20 text-warning-content"
-                    : index === 1
-                      ? "bg-base-300"
-                      : index === 2
-                        ? "bg-warning/10"
-                        : "bg-base-300"
+                  ? "bg-warning/20 text-warning-content"
+                  : index === 1
+                    ? "bg-base-300"
+                    : index === 2
+                      ? "bg-warning/10"
+                      : "bg-base-300"
                   }`}>
                   {leader.Competitive_Programming?.LeetcodeData?.totalSolved || 0}
                   <Check className="size-4" />

@@ -1,229 +1,13 @@
-import React, { useState } from "react";
-import { Instagram, Linkedin, MessageCircle, FlipHorizontal } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Instagram, Linkedin, MessageCircle, FlipHorizontal, Link } from "lucide-react";
+import AlluserStore from "../store/AlluserStore";
 
 const Teammate = () => {
-  const students = [
-    {
-      id: 1,
-      name: "Alice Johnson",
-      domain: "Web Developer",
-      image: "https://randomuser.me/api/portraits/women/1.jpg",
-      email: "alice@example.com",
-      more: "Loves React and Tailwind CSS",
-      age: 25,
-      gender: "Female",
-      skills: "React, Tailwind, JavaScript",
-    },
-    {
-      id: 2,
-      name: "Bob Smith",
-      domain: "UI/UX Designer",
-      image: "https://randomuser.me/api/portraits/men/2.jpg",
-      email: "bob@example.com",
-      more: "Passionate about design and creativity",
-      age: 28,
-      gender: "Male",
-      skills: "UI/UX, Figma, Sketch",
-    },
-    {
-      id: 3,
-      name: "Charlie Brown",
-      domain: "Software Engineer",
-      image: "https://randomuser.me/api/portraits/men/3.jpg",
-      email: "charlie@example.com",
-      more: "Enjoys problem-solving and clean code",
-      age: 30,
-      gender: "Male",
-      skills: "Java, C++, Python",
-    },
-    {
-      id: 4,
-      name: "Diana Prince",
-      domain: "Data Scientist",
-      image: "https://randomuser.me/api/portraits/women/4.jpg",
-      email: "diana@example.com",
-      more: "Expert in machine learning and AI",
-      age: 27,
-      gender: "Female",
-      skills: "Python, R, Machine Learning",
-    },
-    {
-      id: 5,
-      name: "Ethan Hunt",
-      domain: "Backend Developer",
-      image: "https://randomuser.me/api/portraits/men/5.jpg",
-      email: "ethan@example.com",
-      more: "Focused on building scalable systems",
-      age: 32,
-      gender: "Male",
-      skills: "Node.js, Express, MongoDB",
-    },
-    {
-      id: 6,
-      name: "Fiona Davis",
-      domain: "AI Specialist",
-      image: "https://randomuser.me/api/portraits/women/6.jpg",
-      email: "fiona@example.com",
-      more: "Works on innovative AI projects",
-      age: 29,
-      gender: "Female",
-      skills: "Python, TensorFlow, PyTorch",
-    },
-    {
-      id: 7,
-      name: "George Wilson",
-      domain: "Cybersecurity Expert",
-      image: "https://randomuser.me/api/portraits/men/7.jpg",
-      email: "george@example.com",
-      more: "Protects systems from security threats",
-      age: 35,
-      gender: "Male",
-      skills: "Security, Networking, Python",
-    },
-    {
-      id: 8,
-      name: "Hannah Lee",
-      domain: "Machine Learning Engineer",
-      image: "https://randomuser.me/api/portraits/women/8.jpg",
-      email: "hannah@example.com",
-      more: "Develops ML models for various applications",
-      age: 26,
-      gender: "Female",
-      skills: "Python, Scikit-Learn, ML",
-    },
-    {
-      id: 9,
-      name: "Ian Wright",
-      domain: "Game Developer",
-      image: "https://randomuser.me/api/portraits/men/9.jpg",
-      email: "ian@example.com",
-      more: "Passionate about interactive experiences",
-      age: 31,
-      gender: "Male",
-      skills: "Unity, C#, Game Design",
-    },
-    {
-      id: 10,
-      name: "Jasmine Carter",
-      domain: "Cloud Engineer",
-      image: "https://randomuser.me/api/portraits/women/10.jpg",
-      email: "jasmine@example.com",
-      more: "Specializes in cloud infrastructure and services",
-      age: 27,
-      gender: "Female",
-      skills: "AWS, Azure, DevOps",
-    },
-    {
-      id: 11,
-      name: "Kevin Parker",
-      domain: "Full Stack Developer",
-      image: "https://randomuser.me/api/portraits/men/11.jpg",
-      email: "kevin@example.com",
-      more: "Enjoys working with both front and back end",
-      age: 30,
-      gender: "Male",
-      skills: "JavaScript, React, Node.js",
-    },
-    {
-      id: 12,
-      name: "Laura Green",
-      domain: "Graphic Designer",
-      image: "https://randomuser.me/api/portraits/women/12.jpg",
-      email: "laura@example.com",
-      more: "Creates stunning visuals and designs",
-      age: 24,
-      gender: "Female",
-      skills: "Photoshop, Illustrator, Creativity",
-    },
-    {
-      id: 13,
-      name: "Michael Scott",
-      domain: "DevOps Engineer",
-      image: "https://randomuser.me/api/portraits/men/13.jpg",
-      email: "michael@example.com",
-      more: "Optimizes development processes and pipelines",
-      age: 34,
-      gender: "Male",
-      skills: "Docker, Kubernetes, CI/CD",
-    },
-    {
-      id: 14,
-      name: "Nancy Drew",
-      domain: "Digital Marketer",
-      image: "https://randomuser.me/api/portraits/women/14.jpg",
-      email: "nancy@example.com",
-      more: "Expert in online marketing strategies",
-      age: 29,
-      gender: "Female",
-      skills: "SEO, Content, Social Media",
-    },
-    {
-      id: 15,
-      name: "Oliver Queen",
-      domain: "Product Manager",
-      image: "https://randomuser.me/api/portraits/men/15.jpg",
-      email: "oliver@example.com",
-      more: "Leads teams and product vision",
-      age: 33,
-      gender: "Male",
-      skills: "Leadership, Communication, Agile",
-    },
-    {
-      id: 16,
-      name: "Pam Beesly",
-      domain: "Data Analyst",
-      image: "https://randomuser.me/api/portraits/women/16.jpg",
-      email: "pam@example.com",
-      more: "Turns data into actionable insights",
-      age: 28,
-      gender: "Female",
-      skills: "Excel, SQL, Tableau",
-    },
-    {
-      id: 17,
-      name: "Quentin Tarantino",
-      domain: "Content Writer",
-      image: "https://randomuser.me/api/portraits/men/17.jpg",
-      email: "quentin@example.com",
-      more: "Writes engaging and creative content",
-      age: 45,
-      gender: "Male",
-      skills: "Writing, Storytelling, Creativity",
-    },
-    {
-      id: 18,
-      name: "Rachel Green",
-      domain: "Software Tester",
-      image: "https://randomuser.me/api/portraits/women/18.jpg",
-      email: "rachel@example.com",
-      more: "Ensures software quality and performance",
-      age: 26,
-      gender: "Female",
-      skills: "Testing, Automation, Selenium",
-    },
-    {
-      id: 19,
-      name: "Samuel Jackson",
-      domain: "Network Engineer",
-      image: "https://randomuser.me/api/portraits/men/19.jpg",
-      email: "samuel@example.com",
-      more: "Maintains robust network infrastructure",
-      age: 38,
-      gender: "Male",
-      skills: "Networking, Cisco, Troubleshooting",
-    },
-    {
-      id: 20,
-      name: "Tina Turner",
-      domain: "Tech Support Specialist",
-      image: "https://randomuser.me/api/portraits/women/20.jpg",
-      email: "tina@example.com",
-      more: "Provides exceptional technical support",
-      age: 31,
-      gender: "Female",
-      skills: "Support, Troubleshooting, Communication",
-    },
-  ];
+  const { users, getAllStudents } = AlluserStore();
+
+  useEffect(() => {
+    getAllStudents();
+  }, [getAllStudents]);
 
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -236,28 +20,30 @@ const Teammate = () => {
     }));
   };
 
-  // Filtering logic
-  const filteredStudents = students.filter((student) => {
+  // Filtering logic - fixed to properly filter and create a new array
+  const filteredStudents = users.filter((student) => {
     const searchQuery = search.toLowerCase();
     switch (selectedCategory) {
       case "all":
         return (
-          student.name.toLowerCase().includes(searchQuery) ||
-          student.domain.toLowerCase().includes(searchQuery) ||
-          student.age.toString().includes(searchQuery) ||
-          student.gender.toLowerCase().includes(searchQuery) ||
-          student.skills.toLowerCase().includes(searchQuery)
+          student.fullName?.toLowerCase().includes(searchQuery) ||
+          student.domain?.toLowerCase().includes(searchQuery) ||
+          student.age?.toString().includes(searchQuery) ||
+          student.gender?.toLowerCase().includes(searchQuery) ||
+          (Array.isArray(student.skills) && student.skills.some(skill => 
+            skill.toLowerCase().includes(searchQuery)))
         );
       case "name":
-        return student.name.toLowerCase().includes(searchQuery);
+        return student.fullName?.toLowerCase().includes(searchQuery);
       case "domain":
-        return student.domain.toLowerCase().includes(searchQuery);
+        return student.academicDetails.domain?.toLowerCase().includes(searchQuery);
       case "age":
-        return student.age.toString().includes(searchQuery);
+        return student.age?.toString().includes(searchQuery);
       case "gender":
-        return student.gender.toLowerCase().includes(searchQuery);
+        return student.gender?.toLowerCase().includes(searchQuery);
       case "skills":
-        return student.skills.toLowerCase().includes(searchQuery);
+        return Array.isArray(student.skills) && student.skills.some(skill => 
+          skill.toLowerCase().includes(searchQuery));
       default:
         return false;
     }
@@ -288,7 +74,7 @@ const Teammate = () => {
         >
           <option value="all">All</option>
           <option value="name">Name</option>
-          <option value="domain">Role</option>
+          <option value="domain">domain</option>
           <option value="age">Age</option>
           <option value="gender">Gender</option>
           <option value="skills">Skills</option>
@@ -296,28 +82,28 @@ const Teammate = () => {
       </div>
 
       {/* Flip Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 m-2">
         {filteredStudents.length > 0 ? (
           filteredStudents.map((student) => (
-            <div key={student.id} className="flip-card h-72">
+            <div key={student._id} className="flip-card h-72">
               <div
-                className={`flip-card-inner h-full ${flippedCards[student.id] ? "flipped" : ""
+                className={`flip-card-inner h-full ${flippedCards[student._id] ? "flipped" : ""
                   }`}
               >
                 {/* Front Side */}
                 <div className="flip-card-front h-full bg-base-100 shadow-lg rounded-lg p-4 flex flex-col items-center border border-primary">
                   <img
                     className="w-24 h-24 rounded-full border-2 border-primary"
-                    src={student.image}
-                    alt={student.name}
+                    src={student.profilePicture || "/avatar.png"}
+                    alt={student.fullName}
                   />
-                  <h2 className="mt-4 text-lg font-bold text-primary">
-                    {student.name}
+                  <h2 className="mt-4 text-lg font-bold text-primary text-center">
+                    {student.fullName}
                   </h2>
-                  <p className="text-secondary">{student.domain}</p>
+                  <p className="text-secondary">{student.academicDetails.domain}</p>
                   <button
                     className="mt-3 btn btn-primary"
-                    onClick={() => toggleFlip(student.id)}
+                    onClick={() => toggleFlip(student._id)}
                   >
                     Connect
                   </button>
@@ -325,23 +111,32 @@ const Teammate = () => {
 
                 {/* Back Side */}
                 <div className="flip-card-back h-full bg-primary text-base-100 shadow-lg rounded-lg p-4 flex flex-col items-center justify-center">
-                  <h2 className="text-lg font-bold">More Info</h2>
-                  <p className="mt-2">{student.email}</p>
-                  <p className="mt-2">{student.more}</p>
-                  <p className="mt-3 text-lg font-medium">Contact</p>
+                  <h2 className="text-lg font-bold">{student.fullName}</h2>
+                  <h1 className="text-sm font-light">{student.academicDetails.Department}</h1>
+                  
+                  {/* View Profile Button */}
+                  <a
+                    href={`/profile/${student._id}`}
+                    className="mt-4 btn btn-outline border-base-100 text-base-100 hover:bg-base-100 hover:text-primary"
+                  >
+                    View Full Profile
+                  </a>
+
+                  <p className="mt-4 text-lg font-medium">Contact</p>
 
                   {/* Social Icons */}
                   <div className="flex space-x-4 mt-3">
                     <a
-                      href="https://www.linkedin.com"
+                      href={student.PlatformLinks?.instagram || "#"}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center h-10 w-10 border-2 border-base-100 rounded-full hover:bg-base-100 hover:text-primary transition duration-300"
                     >
                       <Instagram />
                     </a>
+
                     <a
-                      href="https://leetcode.com"
+                      href={student.PlatformLinks?.Mobnum || "#"}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center h-10 w-10 border-2 border-base-100 rounded-full hover:bg-base-100 hover:text-primary transition duration-300"
@@ -349,7 +144,7 @@ const Teammate = () => {
                       <MessageCircle />
                     </a>
                     <a
-                      href="https://github.com"
+                      href={student.PlatformLinks?.linkedin || "#"}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center h-10 w-10 border-2 border-base-100 rounded-full hover:bg-base-100 hover:text-primary transition duration-300"
@@ -360,10 +155,10 @@ const Teammate = () => {
 
                   {/* Back to Front Button */}
                   <button
-                    className="mt-3 cursor-pointer btn btn-ghost flex flex-row items-center justify-center"
-                    onClick={() => toggleFlip(student.id)}
+                    className="mt-4 cursor-pointer btn btn-ghost flex flex-row items-center justify-center"
+                    onClick={() => toggleFlip(student._id)}
                   >
-                    <FlipHorizontal className=" " />flip
+                    <FlipHorizontal className="mr-1" />Flip
                   </button>
                 </div>
               </div>

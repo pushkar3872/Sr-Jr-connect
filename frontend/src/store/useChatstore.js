@@ -37,7 +37,7 @@ export const useChatstore = create((set, get) => ({
         // set({ isMessagesLoading: true });
         try {
             
-            const result = await axiosInstance.post("/messages/send", messagedata);
+            await axiosInstance.post("/messages/send", messagedata);
 
             toast.success("Message sent successfully");
         } catch (error) {
