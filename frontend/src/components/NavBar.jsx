@@ -51,7 +51,7 @@ const Navbar = () => {
     { path: "/", icon: <Home className="size-5" />, label: "Dashboard" },
     { path: "/connections", icon: <UsersRound className="size-5" />, label: "Connections" },
     { path: "/teammate", icon: <UserRoundSearch className="size-5" />, label: "Find Team" },
-    { path: "/messages", icon: <MessageCircle className="size-5" />, label: "Messages" },
+    // { path: "/messages", icon: <MessageCircle className="size-5" />, label: "Messages" },
     // { path: "/projects", icon: <Briefcase className="size-5" />, label: "Projects" },
     // { path: "/events", icon: <Calendar className="size-5" />, label: "Events" },
     // { path: "/learning", icon: <BookOpen className="size-5" />, label: "Learning" },

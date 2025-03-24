@@ -45,13 +45,9 @@ export default function Classmates() {
 
     fetchClassmates();
   }, []);
-
-  // Get all years for filter dropdown
-  const years = ['all', ...new Set(classmates.map(classmate => classmate.year))].sort();
   
   // Get all unique courses for filter dropdown
-  const allCourses = classmates.flatMap(classmate => classmate.courses || []);
-  const uniqueCourses = ['all', ...new Set(allCourses)].sort();
+  // classmates.flatMap(classmate => classmate.id || []);
 
   // Filter classmates based on search term, year, and course
   const filteredClassmates = classmates.filter(classmate => {
@@ -68,18 +64,18 @@ export default function Classmates() {
   });
 
   // Handle reset filters
-  const resetFilters = () => {
-    setSearchTerm('');
-    setSelectedYear('all');
-    setSelectedCourse('all');
-  };
+  // const resetFilters = () => {
+  //   setSearchTerm('');
+  //   setSelectedYear('all');
+  //   setSelectedCourse('all');
+  // };
 
   return (
     <div className="h-full flex flex-col p-6">
       <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-gray-800">Classmates</h2>
-          <p className="text-gray-600 mt-1">Connect with students from your classes</p>
+          <h2 className="text-2xl font-bold text-base-content">Classmates</h2>
+          <p className="text-base-content/70 mt-1">Connect with students from your classes</p>
         </div>
 
         {/* Filters */}
@@ -118,37 +114,6 @@ export default function Classmates() {
               />
             </svg>
           </div>
-
-          <select
-            className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
-            value={selectedYear}
-            onChange={(e) => setSelectedYear(e.target.value)}
-          >
-            <option value="all">All Years</option>
-            {years.filter(y => y !== 'all').map(year => (
-              <option key={year} value={year}>{year} Year</option>
-            ))}
-          </select>
-
-          <select
-            className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
-            value={selectedCourse}
-            onChange={(e) => setSelectedCourse(e.target.value)}
-          >
-            <option value="all">All Courses</option>
-            {uniqueCourses.filter(c => c !== 'all').map(course => (
-              <option key={course} value={course}>{course}</option>
-            ))}
-          </select>
-          
-          {(searchTerm || selectedYear !== 'all' || selectedCourse !== 'all') && (
-            <button
-              onClick={resetFilters}
-              className="px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600"
-            >
-              Reset Filters
-            </button>
-          )}
         </div>
       </div>
 
@@ -170,14 +135,14 @@ export default function Classmates() {
 
           {/* User Grid with overflow */}
           <div className="flex-1 overflow-y-auto" style={{scrollbarWidth: 'thin',scrollbarColor: 'rgba(156, 163, 175, 0.2) rgba(255, 255, 255, 0.5)'}}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-4 m-2">
               {filteredClassmates.map(classmate => (
                 <div key={classmate.id} className="relative">
                   {/* Using the UserCard component */}
                   <UserCard user={classmate} />
                   
                   {/* Course tags overlay */}
-                  <div className="absolute top-0 right-0 p-2 z-10">
+                  {/* <div className="absolute top-0 right-0 p-2 z-10">
                     <div className="bg-white shadow-md rounded-lg p-2 opacity-0 hover:opacity-100 transition-opacity">
                       <p className="text-xs text-gray-500 mb-1">Courses:</p>
                       <div className="flex flex-wrap gap-1">
@@ -196,7 +161,7 @@ export default function Classmates() {
                         ))}
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               ))}
             </div>

@@ -13,10 +13,10 @@ export default function ConnectionPage() {
     const [activeTab, setActiveTab] = useState('welcome');
 
     const navigationItems = [
-        { id: 'seniors', name: 'Seniors', icon: <GraduationCap size={18} />, color: 'bg-blue-500 hover:bg-blue-600' },
-        { id: 'juniors', name: 'Juniors', icon: <Users size={18} />, color: 'bg-green-500 hover:bg-green-600' },
-        { id: 'classmates', name: 'Class-Mates', icon: <UserPlus size={18} />, color: 'bg-purple-500 hover:bg-purple-600' },
-        { id: 'alumni', name: 'Alumni', icon: <Building size={18} />, color: 'bg-orange-500 hover:bg-orange-600' }
+        { id: 'seniors', name: 'Seniors', icon: <GraduationCap size={18} />, color: 'bg-primary hover:bg-primary-focus' },
+        { id: 'juniors', name: 'Juniors', icon: <Users size={18} />, color: 'bg-success hover:bg-success-focus' },
+        { id: 'classmates', name: 'Class-Mates', icon: <UserPlus size={18} />, color: 'bg-secondary hover:bg-secondary-focus' },
+        { id: 'alumni', name: 'Alumni', icon: <Building size={18} />, color: 'bg-accent hover:bg-accent-focus' }
     ];
 
     // Handle tab switching
@@ -26,23 +26,23 @@ export default function ConnectionPage() {
 
     return (
         // <div className="p-4 flex justify-center items-center min-h-screen bg-gray-100">
-            <div className="bg-white shadow-lg rounded-2xl p-6 flex w-11/12 h-[85vh] overflow-hidden m-auto mt-7">
-                {/* Left Side Navigation */}
-                <Sidebar
-                    navigationItems={navigationItems}
-                    activeTab={activeTab}
-                    onTabChange={handleTabChange}
-                />
+        <div className="bg-base-100 shadow-lg rounded-2xl p-6 flex w-11/12 h-[85vh] overflow-hidden m-auto mt-7">
+            {/* Left Side Navigation */}
+            <Sidebar
+                navigationItems={navigationItems}
+                activeTab={activeTab}
+                onTabChange={handleTabChange}
+            />
 
-                {/* Right Side Content */}
-                <div className="w-3/4 overflow-hidden">
-                    {activeTab === 'welcome' && <WelcomeDashboard />}
-                    {activeTab === 'alumni' && <Alumni />}
-                    {activeTab === 'seniors' && <Seniors />}
-                    {activeTab === 'juniors' && <Juniors />}
-                    {activeTab === 'classmates' && <Classmates />}
-                </div>
+            {/* Right Side Content */}
+            <div className="w-3/4 overflow-hidden">
+                {activeTab === 'welcome' && <WelcomeDashboard />}
+                {activeTab === 'alumni' && <Alumni />}
+                {activeTab === 'seniors' && <Seniors />}
+                {activeTab === 'juniors' && <Juniors />}
+                {activeTab === 'classmates' && <Classmates />}
             </div>
+        </div>
         // </div>
     );
 }

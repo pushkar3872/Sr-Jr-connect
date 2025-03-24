@@ -27,7 +27,7 @@ export default function Sidebar({ navigationItems, activeTab, onTabChange }) {
         {navigationItems.map((item) => (
           <li key={item.id} className={`rounded-lg overflow-hidden transition-all`}>
             <button 
-              className={`w-full p-3 flex items-center gap-2 text-white ${
+              className={`w-full p-3 flex items-center gap-2 text-white cursor-pointer ${
                 activeTab === item.id 
                   ? item.color.split(' ')[0] 
                   : item.color

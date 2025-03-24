@@ -50,10 +50,10 @@ export default function Seniors() {
   });
 
   return (
-    <div className="p-6 h-full flex flex-col">
+    <div className="p-6 h-full flex flex-col bg-base-100">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Seniors</h1>
-        <div className="bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">
+        <h1 className="text-2xl font-bold text-base-content">Seniors</h1>
+        <div className="badge badge-primary badge-lg gap-2">
           Total Seniors: {users.length}
         </div>
       </div>
@@ -64,13 +64,13 @@ export default function Seniors() {
           <input
             type="text"
             placeholder="Search seniors..."
-            className="w-full p-3 pl-10 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="input input-bordered w-full pl-10 focus:input-primary"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 text-gray-400 absolute left-3 top-3.5"
+            className="h-5 w-5 text-base-content opacity-60 absolute left-3 top-3.5"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -79,8 +79,9 @@ export default function Seniors() {
           </svg>
         </div>
 
+        {/* Uncomment and update the select if needed
         <select
-          className="p-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="select select-bordered focus:select-primary"
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
         >
@@ -88,20 +89,21 @@ export default function Seniors() {
           <option value="recent">Sort by Recent</option>
           <option value="messages">Sort by Messages</option>
         </select>
+        */}
       </div>
 
       {loading ? (
         <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          <span className="loading loading-spinner loading-lg text-primary"></span>
         </div>
       ) : (
-        <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(156, 163, 175, 0.2) rgba(255, 255, 255, 0.5)' }}>
+        <div className="flex-1 overflow-y-auto scrollbar-thin">
           {sortedUsers.length === 0 ? (
-            <div className="text-center py-12 text-gray-500">
+            <div className="text-center py-12 text-base-content opacity-60">
               No seniors found matching your search criteria.
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-4 m-2">
               {sortedUsers.map(user => (
                 <UserCard key={user.id} user={user} />
               ))}
