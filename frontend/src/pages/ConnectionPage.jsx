@@ -8,10 +8,17 @@ import Seniors from './connections/Seniors';
 import WelcomeDashboard from './connections/WelcomeDashboard';
 import Sidebar from './connections/Sidebar'
 import UserCard from './connections/UserCard';
+import AlluserStore from '../store/AlluserStore';
+import { useAuthstore } from '../store/useAuthstore';
 
 export default function ConnectionPage() {
-    const [activeTab, setActiveTab] = useState('welcome');
+    const { authUser } = useAuthstore();
+    const { users} = AlluserStore();
+    const seniors = users.filter(user => user.graduationYear >= new Date().getFullYear() && user.graduationYear < authUser.graduationYear);
+    const juniors = users.filter(user => user.graduationYear > authUser.graduationYear);
+    const classmates = users.filter(user => user.graduationYear === authUser.graduationYear);
 
+    const [activeTab, setActiveTab] = useState('welcome');
     const navigationItems = [
         { id: 'seniors', name: 'Seniors', icon: <GraduationCap size={18} />, color: 'bg-primary hover:bg-primary-focus' },
         { id: 'juniors', name: 'Juniors', icon: <Users size={18} />, color: 'bg-success hover:bg-success-focus' },

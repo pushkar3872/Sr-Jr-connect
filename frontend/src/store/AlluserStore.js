@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 const AlluserStore = create((set, get) => ({
     users: [],
-    sortedUsers: null,
+    sortedUsers: [],
     isUsersLoading: false,
 
     getUsersforleaderboard: async () => {

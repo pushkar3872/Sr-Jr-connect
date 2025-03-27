@@ -1,13 +1,28 @@
 // connections/WelcomeDashboard.jsx
 import React from 'react';
+import { useEffect } from 'react';
+import AlluserStore from '../../store/AlluserStore';
+import { useAuthstore } from '../../store/useAuthstore';
+import { use } from 'react';
 
 export default function WelcomeDashboard() {
+  const { users, getAllStudents } = AlluserStore();
+  const { authUser } = useAuthstore();
+  useEffect(() => {
+    getAllStudents();
+  }, [getAllStudents]);
+
+  const juniors = users.filter(user => user.graduationYear > authUser.graduationYear).length;
+  const classmates = users.filter(user => user.graduationYear === authUser.graduationYear).length;
+  const seniors = users.filter(user => user.graduationYear < authUser.graduationYear && user.graduationYear >= new Date().getFullYear()).length;
+  const alumni = users.filter(user => user.graduationYear < new Date().getFullYear()).length;
+
   // Sample data for the dashboard
   const stats = [
-    { category: 'Seniors', count: 32, color: 'bg-primary' },
-    { category: 'Juniors', count: 19, color: 'bg-success' },
-    { category: 'Classmates', count: 27, color: 'bg-secondary' },
-    { category: 'Alumni', count: 8, color: 'bg-accent' }
+    { category: 'Seniors', count: seniors, color: 'bg-primary' },
+    { category: 'Juniors', count: juniors, color: 'bg-success' },
+    { category: 'Classmates', count: classmates, color: 'bg-secondary' },
+    { category: 'Alumni', count: alumni, color: 'bg-accent' }
   ];
 
   const recentMessages = [
@@ -21,7 +36,7 @@ export default function WelcomeDashboard() {
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-2xl font-bold">My Connections</h1>
         <div className="badge badge-primary badge-lg font-medium px-4 py-3">
-          Total Connections: 86
+          Total Connections: {users.length}
         </div>
       </div>
 
@@ -68,24 +83,24 @@ export default function WelcomeDashboard() {
         <div className="grid grid-cols-3 gap-3">
           <button className="btn btn-primary gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
             </svg>
             Start Chat
           </button>
           <button className="btn btn-success gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-              <circle cx="9" cy="7" r="4"/>
-              <line x1="19" x2="19" y1="8" y2="14"/>
-              <line x1="22" x2="16" y1="11" y2="11"/>
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <line x1="19" x2="19" y1="8" y2="14" />
+              <line x1="22" x2="16" y1="11" y2="11" />
             </svg>
             Add Connection
           </button>
           <button className="btn btn-secondary gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
-              <line x1="3" x2="21" y1="9" y2="9"/>
-              <line x1="9" x2="9" y1="21" y2="9"/>
+              <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+              <line x1="3" x2="21" y1="9" y2="9" />
+              <line x1="9" x2="9" y1="21" y2="9" />
             </svg>
             View Calendar
           </button>
