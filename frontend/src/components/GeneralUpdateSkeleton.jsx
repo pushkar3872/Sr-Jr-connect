@@ -16,9 +16,27 @@ export default function GeneralUpdateSkeleton() {
 
       {/* Messages Container */}
       <div className="p-3 space-y-3">
-        {[...Array(5)].map((_, index) => (
-          <div key={index} className="h-16 bg-base-300 rounded"></div>
-        ))}
+        {[...Array(5)].map((_, idx) => {
+          return (
+            <div key={idx} className={`chat ${idx % 2 === 0 ? "chat-start" : "chat-end"} items-center`}>
+              {idx % 2 == 0 ? (
+                <div className="chat-image avatar">
+                  <div className="size-10 rounded-full">
+                    <div className="skeleton w-full h-full rounded-full"></div>
+                  </div>
+                </div>
+              ) : null}
+
+              <div className="chat-header mb-1">
+                <div className="skeleton h-4 w-16" />
+              </div>
+
+              <div className="chat-bubble p-0 skeleton">
+                <div className="h-12" style={{ width: `${200}px` }} />
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       {/* Message Input */}

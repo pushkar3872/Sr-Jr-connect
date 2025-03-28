@@ -72,7 +72,7 @@ const Navbar = () => {
               <Menu className="size-6" />
             </button>
 
-            <Link to="/" className="hidden sm:inline-flex items-center gap-2.5 hover:opacity-80 transition-all">
+            <Link to="/" className="hidden sm:inline-flex items-center gap-2.5 hover:opacity-80 transition-all ">
               <svg
                 fill="currentColor"
                 version="1.1"
@@ -152,7 +152,7 @@ const Navbar = () => {
                     <div className="p-6 flex flex-col items-center border-b border-base-300">
                       <img className="w-20 h-20 rounded-full object-cover ring-2 ring-primary ring-offset-2" src={authUser.profilePicture || "/avatar.png"} alt="Profile" />
                       <p className="mt-3 text-lg font-bold">{authUser.fullName}</p>
-                      <p className="text-sm text-base-content/70">{authUser.role || "Developer"}</p>
+                      <p className="text-sm text-base-content/70">{authUser.academicDetails.domain || "Developer"}</p>
                     </div>
                     <div className="p-3">
                       <Link to="/profile" className="flex items-center p-3 rounded-lg hover:bg-base-200 transition-colors">

@@ -4,6 +4,8 @@ import { useChatstore } from '../store/useChatstore';
 import { useAuthstore } from '../store/useAuthstore';
 import formatMessageTime from '../lib/utils';
 import { X, Search, Send, Paperclip } from 'lucide-react';
+import GeneralUpdateSkeleton from '../components/GeneralUpdateSkeleton';
+import ChatBoxskeleton from '../components/ChatBoxskeleton';
 
 export default function GeneralUpdate() {
   const { messages = [], isMessagesLoading, getchatmessages, subscribeToMessages, unsubscribeFromMessages } = useChatstore();
@@ -43,11 +45,14 @@ export default function GeneralUpdate() {
     return message.sender?._id === authUser?._id;
   };
 
+  // if (isMessagesLoading) {
+  //   return <GeneralUpdateSkeleton />
+  // }
   return (
     <>
       <div className="flex flex-col w-full md:w-svh lg:w-2/4 h-[85vh] bg-base-100 rounded-2xl shadow-2xl text-base-content overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-primary to-secondary p-4">
+        <div className="bg-gradient-to-r from-primary to-secondary p-2 px-4">
           <h2 className="text-xl font-bold text-primary-content">General Updates</h2>
           <p className="text-xs text-primary-content/70">Team communication channel</p>
         </div>
@@ -69,9 +74,7 @@ export default function GeneralUpdate() {
         {/* Messages Container */}
         <div className="flex-1 overflow-y-auto p-3 space-y-3" style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(156, 163, 175, 0.2) rgba(255, 255, 255, 0.5)' }}>
           {isMessagesLoading ? (
-            <div className="flex justify-center items-center h-full">
-              <span className="loading loading-spinner loading-md text-primary"></span>
-            </div>
+            <ChatBoxskeleton />
           ) : (
             filteredMessages.map((messg, index) => {
               const isMyMessage = isCurrentUserMessage(messg);

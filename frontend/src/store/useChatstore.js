@@ -8,6 +8,7 @@ export const useChatstore = create((set, get) => ({
     isMessagesLoading: false,
 
     getchatmessages: async () => {
+        set({ isMessagesLoading: true })
         try {
             // console.log("Making API request...");      // Debugging
             const result = await axiosInstance.get("/messages/receive");
@@ -19,7 +20,7 @@ export const useChatstore = create((set, get) => ({
             if (!Array.isArray(result.data)) {
                 console.error("Expected an array but got:", result.data);
                 toast.error("Unexpected data format from server");
-                return; 
+                return;
             }
 
             set({ messages: result.data });
@@ -36,15 +37,15 @@ export const useChatstore = create((set, get) => ({
     sendchatmessage: async (messagedata) => {
         // set({ isMessagesLoading: true });
         try {
-            
+
             await axiosInstance.post("/messages/send", messagedata);
 
             toast.success("Message sent successfully");
         } catch (error) {
             console.error("Error sending message:", error);
             toast.error(error.response?.data?.message || "Failed to send message");
-        } 
-        
+        }
+
     },
     subscribeToMessages: () => {
         // const { selectedUser } = get()

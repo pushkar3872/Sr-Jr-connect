@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Check, Crown, Medal, Award, Trophy, Star, ArrowUpRight } from 'lucide-react';
 import AlluserStore from "../store/AlluserStore.js";
+import LeaderBoardSkeleton from '../components/LeaderBoardSkeleton.jsx';
 
 export default function LeaderBoard() {
-  const { sortedUsers, getUsersforleaderboard } = AlluserStore();
+  const { sortedUsers, getUsersforleaderboard, isUsersLoading } = AlluserStore();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -28,11 +29,13 @@ export default function LeaderBoard() {
         return <span className="flex justify-center items-center size-6 rounded-full bg-base-200 font-bold text-sm">{index + 1}</span>;
     }
   };
-
+  if (isUsersLoading) {
+    return <LeaderBoardSkeleton />
+  }
   return (
     <div className="hidden bg-base-100 lg:block w-full lg:w-1/4 shadow-2xl rounded-2xl text-base-content h-[85vh] overflow-hidden border border-base-300">
       {/* Header with gradient background */}
-      <div className="bg-gradient-to-r from-primary/80 to-secondary/80 p-4 rounded-t-2xl flex items-center justify-between">
+      <div className="bg-gradient-to-r from-primary/80 to-secondary/80 p-3 px-4 rounded-t-2xl flex items-center justify-between">
         <h3 className="text-2xl font-bold text-primary-content flex items-center gap-2">
           <Crown className="size-6" /> Leaderboard
         </h3>

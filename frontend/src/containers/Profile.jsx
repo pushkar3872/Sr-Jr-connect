@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { useAuthstore } from '../store/useAuthstore';
-import { Github, Linkedin, Mail, MapPin, Calendar, Edit, X } from 'lucide-react';
+import { Github, Linkedin, Mail, MapPin, Calendar, Edit, X, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { formattedDate } from '../lib/utils';
+import UserModal from '../components/UserModal';
 
 export default function Profile() {
-  const { authUser } = useAuthstore();
+  const { authUser, update } = useAuthstore();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [formdata, setFormdata] = useState({
+    fullName: authUser?.fullName || "",
+    biodata: authUser?.biodata || "",
+  });
 
   // Platform links with labels for better readability
   const platformLinks = [
@@ -50,17 +55,39 @@ export default function Profile() {
     },
   ];
 
+  // Handle input changes in the edit form
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormdata(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await update(formdata);
+      setIsEditModalOpen(false);
+    } catch (error) {
+      console.error("Failed to update profile:", error);
+      // Optionally, you could add error handling here, like showing an error message
+    }
+  };
+
   return (
-    <div className="w-full hidden lg:block  md:w-svh lg:w-1/4 h-[85vh] bg-base-100 rounded-2xl shadow-2xl text-base-content overflow-hidden">
+    <div className="w-full hidden lg:block md:w-svh lg:w-1/4 h-[85vh] bg-base-100 rounded-2xl shadow-2xl text-base-content overflow-hidden">
+      {/* ... (previous code remains the same) */}
       {/* <div className="hidden w-full lg:block  lg:w-1/4 bg-base-100 p-6  shadow-2xl rounded-2xl h-[85vh] lg:h-[85vh]:"></div> */}
       {/* Header */}
-      <div className="bg-gradient-to-r from-primary to-secondary p-4">
+      <div className="bg-gradient-to-r from-primary to-secondary p-2 px-4">
         <h2 className="text-xl font-bold text-primary-content">Profile</h2>
         <p className="text-xs text-primary-content/70">Your personal information</p>
       </div>
 
       {/* Profile Content */}
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 overflow-auto p-4 h-[78vh]" style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(156, 163, 175, 0.2) rgba(255, 255, 255, 0.5)' }}>
         {/* Profile Image and Basic Info */}
         <div className="flex flex-col items-center mb-6">
           <div className="relative">
@@ -87,37 +114,34 @@ export default function Profile() {
         <div className="bg-base-200 p-4 rounded-lg mb-4">
           <h3 className="text-sm font-semibold uppercase opacity-70 mb-2">About</h3>
           <p className="text-sm whitespace-pre-wrap">
-            {authUser?.biodata || "No bio information available. Edit your profile to add a bio."}
+            {formdata.biodata || "No bio information available. Edit your profile to add a bio."}
           </p>
         </div>
 
         {/* Details Section */}
-        <div className="space-y-4 mb-6">
+        <div className="space-y-2 mb-2">
           {/* Member Since */}
-          <div className="flex items-center gap-2 text-sm">
-            <Calendar size={18} className="opacity-70" />
-            <span>Member since {formattedDate(authUser?.createdAt ? new Date(authUser.createdAt) : new Date())}</span>
-          </div>
+
 
           {/* Location (if available) */}
-          {authUser?.location && (
+          {/* {authUser?.location && (
             <div className="flex items-center gap-2 text-sm">
               <MapPin size={18} className="opacity-70" />
               <span>{authUser.location}</span>
             </div>
-          )}
+          )} */}
 
           {/* Contact (if available) */}
-          {authUser?.contactEmail && (
+          {authUser?.email && (
             <div className="flex items-center gap-2 text-sm">
               <Mail size={18} className="opacity-70" />
-              <span>{authUser.contactEmail}</span>
+              <span>{authUser.email}</span>
             </div>
           )}
         </div>
 
         {/* Platform Links */}
-        <div className="mb-6">
+        <div className="mb-4">
           <h3 className="text-sm font-semibold uppercase opacity-70 mb-3">Connect</h3>
           <div className="grid grid-cols-2 gap-2">
             {platformLinks.map((link, index) => (
@@ -135,26 +159,15 @@ export default function Profile() {
             ))}
           </div>
         </div>
-
-        {/* Additional Stats or Info */}
-        <div className="stats stats-vertical shadow w-full">
-          <div className="stat">
-            <div className="stat-title">Total Contributions</div>
-            <div className="stat-value">{authUser?.contributions || 0}</div>
-            <div className="stat-desc">↗︎ 14% from last month</div>
-          </div>
-
-          <div className="stat">
-            <div className="stat-title">Rating</div>
-            <div className="stat-value">{authUser?.rating || "N/A"}</div>
-            <div className="stat-desc">Jan 1st - March 1st</div>
-          </div>
+        <div className="flex items-center gap-2 text-sm mb-4">
+          <Calendar size={18} className="opacity-70" />
+          <span>Member since {formattedDate(authUser?.createdAt ? new Date(authUser.createdAt) : new Date())}</span>
         </div>
       </div>
 
       {/* Edit Profile Modal */}
       {isEditModalOpen && (
-        <div className="modal modal-open">
+        <div className="modal modal-open backdrop-blur-sm">
           <div className="modal-box max-w-md" onClick={(e) => e.stopPropagation()}>
             <button
               className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
@@ -164,15 +177,17 @@ export default function Profile() {
             </button>
             <h3 className="font-bold text-lg mb-4">Edit Profile</h3>
 
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Full Name</span>
                 </label>
                 <input
                   type="text"
+                  name="fullName"
                   className="input input-bordered"
-                  defaultValue={authUser?.fullName}
+                  value={formdata.fullName}
+                  onChange={handleInputChange}
                 />
               </div>
 
@@ -181,21 +196,12 @@ export default function Profile() {
                   <span className="label-text">Bio</span>
                 </label>
                 <textarea
+                  name="biodata"
                   className="textarea textarea-bordered"
                   rows="3"
-                  defaultValue={authUser?.biodata}
+                  value={formdata.biodata}
+                  onChange={handleInputChange}
                 ></textarea>
-              </div>
-
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Location</span>
-                </label>
-                <input
-                  type="text"
-                  className="input input-bordered"
-                  defaultValue={authUser?.location}
-                />
               </div>
 
               <div className="modal-action">
@@ -207,9 +213,8 @@ export default function Profile() {
                   Cancel
                 </button>
                 <button
-                  type="button"
+                  type="submit"
                   className="btn btn-primary"
-                  onClick={() => setIsEditModalOpen(false)}
                 >
                   Save Changes
                 </button>

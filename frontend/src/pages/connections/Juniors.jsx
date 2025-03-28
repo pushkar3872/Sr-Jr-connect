@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import UserCard from './UserCard';
 import AlluserStore from '../../store/AlluserStore';
 import { useAuthstore } from '../../store/useAuthstore';
+import UserModal from '../../components/UserModal'; // Make sure to import UserModal
 
 export default function Juniors() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isUserModalOpen, setUserModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   // Zustand store
   const { users, getAllStudents, isUsersLoading } = AlluserStore();
@@ -21,6 +24,12 @@ export default function Juniors() {
   const filteredJuniors = juniors.filter(user =>
     user.fullName.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  // Handler to open user modal
+  const handleUserCardClick = (user) => {
+    setSelectedUser(user);
+    setUserModalOpen(true);
+  };
 
   return (
     <div className="p-6 h-full flex flex-col bg-base-100">
@@ -94,12 +103,31 @@ export default function Juniors() {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pb-4 m-2">
                 {filteredJuniors.map(user => (
-                  <UserCard key={user._id} fullName={user.fullName} domain={user.academicDetails.domain} avatar={user.profilePicture} />
+                  <div 
+                    key={user._id} 
+                    onClick={() => handleUserCardClick(user)}
+                    className="cursor-pointer"
+                  >
+                    <UserCard 
+                      fullName={user.fullName} 
+                      domain={user.academicDetails.domain} 
+                      avatar={user.profilePicture} 
+                    />
+                  </div>
                 ))}
               </div>
             )}
           </div>
         </>
+      )}
+
+      {/* User Modal */}
+      {isUserModalOpen && selectedUser && (
+        <UserModal 
+          user={selectedUser} 
+          isOpen={isUserModalOpen} 
+          onClose={() => setUserModalOpen(false)} 
+        />
       )}
     </div>
   );

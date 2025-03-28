@@ -78,7 +78,7 @@ export default function WelcomeDashboard() {
       </div>
 
       {/* Quick Actions */}
-      <div className="card bg-base-100 shadow-sm p-4">
+      {/* <div className="card bg-base-100 shadow-sm p-4">
         <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
         <div className="grid grid-cols-3 gap-3">
           <button className="btn btn-primary gap-2">
@@ -105,7 +105,7 @@ export default function WelcomeDashboard() {
             View Calendar
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

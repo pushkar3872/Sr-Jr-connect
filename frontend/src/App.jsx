@@ -12,9 +12,11 @@ import ConnectionPage from './pages/ConnectionPage';
 import { useAuthstore } from './store/useAuthstore';
 import { Loader } from 'lucide-react';
 import SettingsPage from './pages/SettingsPage';
+import { useThemeStore } from './store/useThemestore';
 
 function App() {
   const { authUser, checkAuth, isCheckingAuth } = useAuthstore();
+  const { theme } = useThemeStore();
 
   useEffect(() => {
     checkAuth();
@@ -40,27 +42,27 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-base-200">
+    <div className="min-h-screen bg-base-200" data-theme={theme}>
       <Toaster />
       <NavBar />
-      
+
       <Routes>
         {/* Public routes */}
-        <Route path="/" 
-          element={authUser 
-            ? <HomePage /> 
+        <Route path="/"
+          element={authUser
+            ? <HomePage />
             : <WelcomePage />
-          } 
+          }
         />
         <Route path="/login" element={<PublicRoute element={<LoginPage />} />} />
         <Route path="/register" element={<PublicRoute element={<RegisterPage />} />} />
-        
+
         {/* Protected routes */}
         <Route path="/profile" element={<ProtectedRoute element={<ProfilePage />} />} />
         <Route path="/settings" element={<ProtectedRoute element={<SettingsPage />} />} />
         <Route path="/teammate" element={<ProtectedRoute element={<FindTeammatePage />} />} />
         <Route path="/connections" element={<ProtectedRoute element={<ConnectionPage />} />} />
-        
+
         {/* Catch-all route for 404 - add this if you need it */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

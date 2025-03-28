@@ -25,7 +25,7 @@ const AlluserStore = create((set, get) => ({
         try {
             const result = await axiosInstance.get("users/allusers");
                 
-            console.log(Array.isArray(result.data));
+            // console.log(Array.isArray(result.data));
             
             set({ users: result.data || [] }); // Ensure it's always an array
         } catch (error) {

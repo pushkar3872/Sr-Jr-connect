@@ -1,11 +1,16 @@
+import { Crown } from 'lucide-react';
 import React from 'react';
 
 export default function LeaderBoardSkeleton() {
   return (
     <div className="hidden lg:block w-1/4 h-[85vh] bg-base-100 rounded-2xl shadow-2xl overflow-hidden animate-pulse">
       {/* Header */}
-      <div className="bg-gradient-to-r from-primary to-secondary p-4">
-        <div className="h-6 bg-base-300 rounded w-3/4 mb-2"></div>
+      <div className="bg-gradient-to-r from-primary/80 to-secondary/80 p-4 rounded-t-2xl flex items-center justify-between">
+        <h3 className="text-2xl font-bold text-primary-content flex items-center gap-2">
+          <Crown className="size-6" />
+           Leaderboard
+        </h3>
+        <span className="badge badge-secondary text-xs font-medium">Top Coders</span>
       </div>
 
       {/* Stats Summary */}

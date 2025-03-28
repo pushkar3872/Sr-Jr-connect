@@ -1,4 +1,3 @@
-// ConnectionPage.jsx
 import React, { useState } from 'react';
 import { UserPlus, Users, GraduationCap, Building } from 'lucide-react';
 import Alumni from './connections/Alumni';
@@ -17,7 +16,6 @@ export default function ConnectionPage() {
     const seniors = users.filter(user => user.graduationYear >= new Date().getFullYear() && user.graduationYear < authUser.graduationYear);
     const juniors = users.filter(user => user.graduationYear > authUser.graduationYear);
     const classmates = users.filter(user => user.graduationYear === authUser.graduationYear);
-
     const [activeTab, setActiveTab] = useState('welcome');
     const navigationItems = [
         { id: 'seniors', name: 'Seniors', icon: <GraduationCap size={18} />, color: 'bg-primary hover:bg-primary-focus' },
@@ -32,17 +30,18 @@ export default function ConnectionPage() {
     };
 
     return (
-        // <div className="p-4 flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="bg-base-100 shadow-lg rounded-2xl p-6 flex w-11/12 h-[85vh] overflow-hidden m-auto mt-7">
-            {/* Left Side Navigation */}
-            <Sidebar
-                navigationItems={navigationItems}
-                activeTab={activeTab}
-                onTabChange={handleTabChange}
-            />
-
-            {/* Right Side Content */}
-            <div className="w-3/4 overflow-hidden">
+        <div className="bg-base-100 mt-2 mx-16 shadow-lg rounded-2xl p-6 flex flex-col md:flex-row h-full">
+            {/* Sidebar Container */}
+            <div className="w-full md:w-64 mb-4 md:mb-0">
+                <Sidebar
+                    navigationItems={navigationItems}
+                    activeTab={activeTab}
+                    onTabChange={handleTabChange}
+                />
+            </div>
+            
+            {/* Content Area */}
+            <div className="flex-grow pl-0 md:pl-4">
                 {activeTab === 'welcome' && <WelcomeDashboard />}
                 {activeTab === 'alumni' && <Alumni />}
                 {activeTab === 'seniors' && <Seniors />}
@@ -50,6 +49,5 @@ export default function ConnectionPage() {
                 {activeTab === 'classmates' && <Classmates />}
             </div>
         </div>
-        // </div>
     );
 }

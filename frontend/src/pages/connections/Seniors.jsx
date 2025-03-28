@@ -2,21 +2,25 @@ import React, { useState, useEffect } from 'react';
 import UserCard from './UserCard';
 import AlluserStore from '../../store/AlluserStore';
 import { useAuthstore } from '../../store/useAuthstore';
+import UserModal from '../../components/UserModal';
 
 export default function Seniors() {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('fullName');
+  const [isUserModalOpen, setUserModalOpen] = useState(false);
+  const [SelectedUser, setSelectedUser] = useState(null);
 
   // Zustand store
   const { users, getAllStudents, isUsersLoading } = AlluserStore();
   const { authUser } = useAuthstore(); // Get authenticated user data
+
 
   useEffect(() => {
     getAllStudents();
   }, []); // Fetch students only once on mount
 
   // Filter out seniors (graduation year < authUser)
-  const seniors = users.filter(user => user.graduationYear < authUser.graduationYear);
+  const seniors = users.filter(user => user.graduationYear < authUser.graduationYear && user.graduationYear >= new Date().getFullYear());
 
   // Apply search filter
   const filteredSeniors = seniors.filter(user =>
@@ -29,6 +33,10 @@ export default function Seniors() {
     return 0;
   });
 
+  const handleUserCardClick = (user) => {
+    setSelectedUser(user);
+    setUserModalOpen(true);
+  };
   return (
     <div className="p-6 h-full flex flex-col bg-base-100">
       <div className="flex items-center justify-between mb-6">
@@ -74,11 +82,29 @@ export default function Seniors() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-4 m-2">
               {sortedSeniors.map(user => (
-                <UserCard key={user._id} fullName={user.fullName} domain={user.academicDetails.domain} avatar={user.profilePicture} />
+                <div
+                  key={user._id}
+                  onClick={() => handleUserCardClick(user)}
+                  className="cursor-pointer"
+                >
+                  <UserCard
+                    fullName={user.fullName}
+                    domain={user.academicDetails.domain}
+                    avatar={user.profilePicture}
+                  />
+                </div>
               ))}
             </div>
           )}
         </div>
+      )}
+
+      {isUserModalOpen && SelectedUser && (
+        <UserModal
+          user={SelectedUser}
+          isOpen={isUserModalOpen}
+          onClose={() => setUserModalOpen(false)}
+        />
       )}
     </div>
   );

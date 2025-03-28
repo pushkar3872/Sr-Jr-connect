@@ -1,25 +1,35 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { 
-  Instagram, 
-  Linkedin, 
-  MessageCircle, 
-  FlipHorizontal, 
-  Search, 
+import {
+  Instagram,
+  Linkedin,
+  MessageCircle,
+  FlipHorizontal,
+  Search,
   X,
   Flame,
   Star,
   Award
 } from "lucide-react";
 import AlluserStore from "../store/AlluserStore";
+import FindTeammatePageSkeleton from "../components/FindTeammatePageSkeleton";
+import UserModal from "../components/UserModal"
 
 const Teammate = () => {
-  const { users, getAllStudents } = AlluserStore();
+  const { users, getAllStudents, isUsersLoading } = AlluserStore();
 
   // State Management
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [flippedCards, setFlippedCards] = useState({});
   const [sortBy, setSortBy] = useState("name");
+
+  const [isUserModalOpen, setUserModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const handleUserCardClick = (user) => {
+    setSelectedUser(user);
+    setUserModalOpen(true);
+  };
 
   // Fetch students on component mount
   useEffect(() => {
@@ -33,8 +43,8 @@ const Teammate = () => {
     const cleanedNumber = phoneNumber.replace(/\D/g, '');
     const defaultCountryCode = "91";
 
-    let formattedNumber = cleanedNumber.length === 10 
-      ? defaultCountryCode + cleanedNumber 
+    let formattedNumber = cleanedNumber.length === 10
+      ? defaultCountryCode + cleanedNumber
       : cleanedNumber;
 
     return formattedNumber.length >= 11 && formattedNumber.length <= 15
@@ -54,24 +64,24 @@ const Teammate = () => {
   const filteredAndSortedStudents = useMemo(() => {
     let result = users.filter(student => {
       const searchQuery = search.toLowerCase();
-      
+
       // Comprehensive search across multiple fields
-      const matchesSearch = 
+      const matchesSearch =
         student.fullName?.toLowerCase().includes(searchQuery) ||
         student.academicDetails?.domain?.toLowerCase().includes(searchQuery) ||
         student.age?.toString().includes(searchQuery) ||
         student.gender?.toLowerCase().includes(searchQuery) ||
-        (Array.isArray(student.skills) && 
+        (Array.isArray(student.skills) &&
           student.skills.some(skill => skill.toLowerCase().includes(searchQuery)));
 
       // Category-based filtering
-      const matchesCategory = selectedCategory === "all" || 
+      const matchesCategory = selectedCategory === "all" ||
         (selectedCategory === "name" && student.fullName?.toLowerCase().includes(searchQuery)) ||
         (selectedCategory === "domain" && student.academicDetails?.domain?.toLowerCase().includes(searchQuery)) ||
         (selectedCategory === "age" && student.age?.toString().includes(searchQuery)) ||
         (selectedCategory === "gender" && student.gender?.toLowerCase().includes(searchQuery)) ||
-        (selectedCategory === "skills" && 
-          Array.isArray(student.skills) && 
+        (selectedCategory === "skills" &&
+          Array.isArray(student.skills) &&
           student.skills.some(skill => skill.toLowerCase().includes(searchQuery)));
 
       return matchesSearch && matchesCategory;
@@ -79,7 +89,7 @@ const Teammate = () => {
 
     // Sorting logic
     return result.sort((a, b) => {
-      switch(sortBy) {
+      switch (sortBy) {
         case "name":
           return a.fullName.localeCompare(b.fullName);
         case "domain":
@@ -99,19 +109,13 @@ const Teammate = () => {
     setSortBy("name");
   };
 
+  if (isUsersLoading) {
+    return <FindTeammatePageSkeleton />
+  }
+
   return (
     <div className="container mx-auto px-4 pt-2 h-[90vh] flex flex-col">
-      {/* Enhanced Search and Filter Section */}
       <div className="mb-6 space-y-4">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold text-primary">
-            Find Your Ideal Teammate
-          </h2>
-          <p className="text-secondary text-lg mt-2">
-            Connect with students across different domains
-          </p>
-        </div>
-
         <div className="flex flex-col md:flex-row justify-center items-center space-y-3 md:space-y-0 md:space-x-4">
           {/* Search Input */}
           <div className="relative w-full max-w-md">
@@ -120,13 +124,13 @@ const Teammate = () => {
               placeholder="Search teammates..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="input input-bordered w-full pl-10 pr-10 focus:ring-2 focus:ring-primary"
+              className="input input-bordered input-primary w-full pl-10 pr-10"
             />
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-base-content/50" />
             {search && (
-              <button 
+              <button
                 onClick={clearSearch}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-primary"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-base-content/50 hover:text-primary"
               >
                 <X />
               </button>
@@ -137,7 +141,7 @@ const Teammate = () => {
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="select select-bordered w-full max-w-xs focus:ring-2 focus:ring-primary"
+            className="select select-bordered select-primary w-full max-w-xs"
           >
             <option value="all">All Categories</option>
             <option value="name">Name</option>
@@ -151,7 +155,7 @@ const Teammate = () => {
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="select select-bordered w-full max-w-xs focus:ring-2 focus:ring-primary"
+            className="select select-bordered select-primary w-full max-w-xs"
           >
             <option value="name">Sort by Name</option>
             <option value="domain">Sort by Domain</option>
@@ -165,38 +169,38 @@ const Teammate = () => {
         <div className="p-2 pt-4 h-full overflow-y-auto pr-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 pb-6">
           {filteredAndSortedStudents.length > 0 ? (
             filteredAndSortedStudents.map((student) => (
-              <div 
-                key={student._id} 
+              <div
+                key={student._id}
                 className="flip-card h-72 transition-all duration-300 hover:scale-105"
               >
                 <div
                   className={`flip-card-inner h-full ${flippedCards[student._id] ? "flipped" : ""}`}
                 >
                   {/* Front Side */}
-                  <div className="flip-card-front h-full bg-white shadow-lg rounded-xl p-5 flex flex-col items-center border-2 border-primary/20 hover:border-primary/50 transition-all">
+                  <div className="flip-card-front h-full bg-base-100 shadow-lg rounded-xl p-5 flex flex-col items-center border-2 border-base-300 hover:border-primary transition-all">
                     <div className="relative">
                       <img
                         className="w-28 h-28 rounded-full border-3 border-primary/30 object-cover shadow-md"
                         src={student.profilePicture || "/avatar.png"}
                         alt={student.fullName.trim().split(" ")[0]}
                       />
-                      {student.academicDetails?.gpa >= 8.5 && (
-                        <div className="absolute bottom-0 right-0 bg-yellow-400 text-white rounded-full p-1">
+                      {student.academicDetails?.gpa >= 9.5 && (
+                        <div className="absolute bottom-0 right-0 bg-secondary text-secondary-content rounded-full p-1">
                           <Star className="w-4 h-4" />
                         </div>
                       )}
                     </div>
-                    <h2 className="mt-4 text-xl font-bold text-primary text-center">
+                    <h2 className="mt-4 text-lg font-bold text-primary text-center line-clamp-2">
                       {student.fullName}
                     </h2>
-                    <div className="flex items-center text-secondary mt-2">
+                    <div className="flex items-center text-base-content/70 mt-2">
                       <Flame className="w-4 h-4 mr-2" />
                       <p className="text-sm">
                         {student.academicDetails?.domain || 'No Domain'}
                       </p>
                     </div>
                     <button
-                      className="mt-4 btn btn-primary btn-outline hover:bg-primary hover:text-white transition-all"
+                      className="mt-4 btn btn-primary btn-outline"
                       onClick={() => toggleFlip(student._id)}
                     >
                       Connect
@@ -204,21 +208,21 @@ const Teammate = () => {
                   </div>
 
                   {/* Back Side */}
-                  <div className="flip-card-back h-full bg-gradient-to-br from-primary to-primary/80 text-base-100 shadow-lg rounded-xl p-5 flex flex-col items-center justify-center">
-                    <h2 className="text-xl font-bold mb-1">{student.fullName}</h2>
+                  <div className="flip-card-back h-full bg-gradient-to-br from-primary to-primary-focus text-primary-content shadow-lg rounded-xl p-5 flex flex-col items-center justify-center">
+                    <h2 className="text-lg font-bold mb-1 text-center line-clamp-2">
+                      {student.fullName}
+                    </h2>
                     <p className="text-sm font-light mb-3 flex items-center">
                       <Award className="w-4 h-4 mr-2" />
                       {student.academicDetails?.Department || 'No Department'}
                     </p>
 
-                    {/* View Profile Button */}
-                    <a
-                      href={`/profile/${student._id}`}
-                      className="mt-4 btn btn-outline border-base-100 text-base-100 hover:bg-base-100 hover:text-primary transition-all"
+                    <button
+                      onClick={() => handleUserCardClick(student)}
+                      className="mt-4 btn btn-outline border-base-100 text-base-100 hover:bg-base-100 hover:text-primary"
                     >
-                      View Full Profile
-                    </a>
-
+                      View Profile
+                    </button>
                     <p className="mt-4 text-lg font-medium">Contact</p>
 
                     {/* Social Icons */}
@@ -289,16 +293,16 @@ const Teammate = () => {
             ))
           ) : (
             <div className="col-span-full flex flex-col items-center justify-center space-y-4 p-10">
-              <img 
-                src="/no-results.svg" 
-                alt="No results found" 
+              <img
+                src="/no-results.svg"
+                alt="No results found"
                 className="w-64 h-64 opacity-70"
               />
-              <p className="text-2xl font-bold text-secondary animate-pulse">
+              <p className="text-2xl font-bold text-base-content/70 animate-pulse">
                 No teammates found
               </p>
-              <button 
-                onClick={clearSearch} 
+              <button
+                onClick={clearSearch}
                 className="btn btn-primary"
               >
                 Reset Search
@@ -334,22 +338,35 @@ const Teammate = () => {
         .flip-card-back {
           transform: rotateY(180deg);
         }
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
         /* Custom Scrollbar */
         .overflow-y-auto::-webkit-scrollbar {
           width: 8px;
         }
         .overflow-y-auto::-webkit-scrollbar-track {
-          background: #f1f1f1;
+          background: hsl(var(--b2));
           border-radius: 10px;
         }
         .overflow-y-auto::-webkit-scrollbar-thumb {
-          background: #888;
+          background: hsl(var(--p));
           border-radius: 10px;
         }
         .overflow-y-auto::-webkit-scrollbar-thumb:hover {
-          background: #555;
+          background: hsl(var(--p-focus));
         }
       `}</style>
+      {isUserModalOpen && selectedUser && (
+        <UserModal
+          user={selectedUser}
+          isOpen={isUserModalOpen}
+          onClose={() => setUserModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
