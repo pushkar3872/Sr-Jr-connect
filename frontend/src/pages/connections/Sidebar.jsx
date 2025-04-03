@@ -64,7 +64,7 @@ export default function Sidebar({ navigationItems = [], activeTab, onTabChange }
                 setIsMobileMenuOpen(false);
               }}
             >
-              <span className={`w-8 h-8 rounded-full grid place-items-center mr-3 ${item.color}`}>
+              <span className={`w-8 h-8 rounded-full grid place-items-center mr-3`}>
                 {item.icon}
               </span>
               {item.name}

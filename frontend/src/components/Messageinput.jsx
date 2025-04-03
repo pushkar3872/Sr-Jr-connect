@@ -48,7 +48,7 @@ const MessageInput = () => {
     }
 
     return (
-        <div className="pt-4 w-full">
+        <div className=" w-full">
             {imagepreview && (
                 <div className="relative inline-block mb-3">
                     <img

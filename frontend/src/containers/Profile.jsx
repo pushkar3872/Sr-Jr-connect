@@ -77,7 +77,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="w-full hidden lg:block md:w-svh lg:w-1/4 h-[85vh] bg-base-100 rounded-2xl shadow-2xl text-base-content overflow-hidden">
+    <div className="w-full md:hidden lg:block lg:block lg:w-1/4 h-[85vh] bg-base-100 rounded-2xl shadow-2xl text-base-content overflow-hidden">
       {/* ... (previous code remains the same) */}
       {/* <div className="hidden w-full lg:block  lg:w-1/4 bg-base-100 p-6  shadow-2xl rounded-2xl h-[85vh] lg:h-[85vh]:"></div> */}
       {/* Header */}

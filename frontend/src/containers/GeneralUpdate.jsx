@@ -89,7 +89,7 @@ export default function GeneralUpdate() {
                   {!isMyMessage && (
                     <div className="chat-image avatar">
                       <div className="w-8 rounded-full">
-                        <img src={`${messg.sender?.profilePicture !== "" ? messg.sender?.profilePicture : "/avatar.png"}`} alt="Avatar" />
+                        <img src={`${messg.sender?.profilePicture !== null ? messg.sender?.profilePicture : "/avatar.png"}`} alt="Avatar" />
                       </div>
                     </div>
                   )}
@@ -134,7 +134,7 @@ export default function GeneralUpdate() {
         </div>
 
         {/* Message Input */}
-        <div className="border-t border-base-300 p-2">
+        <div className="border-t border-base-300 p-4">
           <Messageinput />
         </div>
       </div>

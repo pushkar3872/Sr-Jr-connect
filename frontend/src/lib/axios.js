@@ -1,6 +1,7 @@
-import axios from "axios";
-
+import axios from "axios"
 export const axiosInstance = axios.create({
-    baseURL: "http://localhost:4005/api", // Removed extra space
-    withCredentials: true, // Ensures cookies are sent with requests
+    baseURL: window.location.hostname === "localhost"
+        ? "http://localhost:4005/api"  // Local development
+        : "http://192.168.0.108:4005/api", // Public access
+    withCredentials: true,
 });

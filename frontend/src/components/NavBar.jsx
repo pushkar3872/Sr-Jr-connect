@@ -12,31 +12,33 @@ const Navbar = () => {
 
   // Close dropdown if clicked outside
   useEffect(() => {
+    // 1. Handle click outside of dropdown
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setProfileDropdownOpen(false);
       }
     }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
-  // Close sidebar when route changes (mobile navigation)
-  useEffect(() => {
-    setSidebarOpen(false);
-  }, [location]);
-
-  // Close sidebar if screen size becomes larger than sm
-  useEffect(() => {
-    const handleResize = () => {
+    // 2. Handle screen resize for sidebar
+    function handleResize() {
       if (window.innerWidth >= 640) { // 640px is the default Tailwind sm breakpoint
         setSidebarOpen(false);
       }
-    };
+    }
 
+    // Add all event listeners
+    document.addEventListener("mousedown", handleClickOutside);
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+
+    // 3. Close sidebar when route changes (handled directly in useEffect dependency array)
+    setSidebarOpen(false);
+
+    // Clean up all event listeners on unmount
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [location]);
 
   // Check if route is active for sidebar highlighting
   const isActive = (path) => {
@@ -147,7 +149,13 @@ const Navbar = () => {
                 {profileDropdownOpen && (
                   <div
                     ref={dropdownRef}
-                    className="absolute top-16 right-4 mt-2 w-64 bg-base-100 shadow-xl rounded-xl border border-base-300 z-50 overflow-hidden animate-in fade-in slide-in-from-top-5 duration-700"
+                    className="absolute top-16 right-4 mt-2 w-64 bg-base-100 shadow-xl rounded-xl border border-base-300 z-50 overflow-hidden transition-all duration-300 ease-out"
+                    style={{
+                      transformOrigin: 'top right',
+                      opacity: profileDropdownOpen ? 1 : 0,
+                      transform: profileDropdownOpen ? 'scale(1)' : 'scale(0.95)',
+                      visibility: profileDropdownOpen ? 'visible' : 'hidden'
+                    }}
                   >
                     <div className="p-6 flex flex-col items-center border-b border-base-300">
                       <img className="w-20 h-20 rounded-full object-cover ring-2 ring-primary ring-offset-2" src={authUser.profilePicture || "/avatar.png"} alt="Profile" />

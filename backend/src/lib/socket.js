@@ -1,7 +1,7 @@
 import { Server } from "socket.io"
 import http from "http"
 import express from "express"
-
+const IP_ADDRESS = process.env.IP_ADDRESS;
 const app = express();
 
 const server = http.createServer(app);
@@ -9,7 +9,8 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: ["http://localhost:5173"]
+        origin: ["http://localhost:5173",
+            `http://${IP_ADDRESS}:5173`]
         ,
     }
 })

@@ -13,9 +13,6 @@ export const useChatstore = create((set, get) => ({
             // console.log("Making API request...");      // Debugging
             const result = await axiosInstance.get("/messages/receive");
 
-            // console.log("Full API response:", result);       // Debugging
-            // console.log("Response data type:", typeof result.data);
-            // console.log("Is Array?", Array.isArray(result.data));
 
             if (!Array.isArray(result.data)) {
                 console.error("Expected an array but got:", result.data);
@@ -32,12 +29,9 @@ export const useChatstore = create((set, get) => ({
         }
     },
 
-
-
     sendchatmessage: async (messagedata) => {
         // set({ isMessagesLoading: true });
         try {
-
             await axiosInstance.post("/messages/send", messagedata);
 
             toast.success("Message sent successfully");
@@ -48,23 +42,22 @@ export const useChatstore = create((set, get) => ({
 
     },
     subscribeToMessages: () => {
-        // const { selectedUser } = get()
-        // if (!selectedUser) {
-        //     return;
-        // }
-
         const socket = useAuthstore.getState().socket;
 
+        // Remove any existing listener before adding a new one
+        socket.off("newMessage");
 
         socket.on("newMessage", (newMessage) => {
-            // if (newMessage.senderId !== selectedUser._id) {
-            //     return;
-            // }
-            set({
-                messages: [...get().messages, newMessage],
-            })
-        })
+            set((state) => {
+                // Avoid adding duplicate messages
+                const isDuplicate = state.messages.some(msg => msg._id === newMessage._id);
+                if (isDuplicate) return state;
+
+                return { messages: [...state.messages, newMessage] };
+            });
+        });
     },
+
 
     unsubscribeFromMessages: () => {
         const socket = useAuthstore.getState().socket;

@@ -33,7 +33,7 @@ const srJrUserSchema = new mongoose.Schema({
     gender: {
         type: String,
         enum: ['Male', 'Female', 'Other', 'Prefer not to say'],
-        default: ''
+        default: 'Prefer not to say'
     },
     graduationYear: {
         type: Number,
