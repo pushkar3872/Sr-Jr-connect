@@ -30,9 +30,9 @@ export default function ConnectionPage() {
     };
 
     return (
-        <div className="bg-base-100 mt-2 mx-16 shadow-lg rounded-2xl p-6 flex flex-col md:flex-row h-full">
+        <div className="bg-base-100 mt-2 mx-16 shadow-lg rounded-2xl p-6 flex flex-row md:flex-row h-[85vh]">
             {/* Sidebar Container */}
-            <div className="w-full md:w-64 mb-4 md:mb-0">
+            <div className="w-0 pr-2.5 md:w-64 mb-4 md:mb-0">
                 <Sidebar
                     navigationItems={navigationItems}
                     activeTab={activeTab}

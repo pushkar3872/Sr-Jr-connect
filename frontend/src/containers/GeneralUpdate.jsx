@@ -146,7 +146,7 @@ export default function GeneralUpdate() {
           onClick={closeImageModal}
         >
           <div
-            className="modal-middle max-w-3xl border-none shadow-lg relative"
+            className="modal-middle max-w-[90vw] border-none shadow-lg relative"
             onClick={(e) => e.stopPropagation()}
           >
             <button

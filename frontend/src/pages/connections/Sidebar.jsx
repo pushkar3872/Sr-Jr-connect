@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
-export default function Sidebar({ navigationItems, activeTab, onTabChange }) {
+export default function Sidebar({ navigationItems = [], activeTab, onTabChange }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <>
+    <div className="relative -top-4 -left-4 z-40">
       {/* Mobile Menu Toggle Button */}
       <div className="md:hidden">
-        <button 
+        <button
           className="btn btn-circle btn-outline"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
@@ -19,9 +19,9 @@ export default function Sidebar({ navigationItems, activeTab, onTabChange }) {
 
       {/* Sidebar Content */}
       <div className={`
-        ${isMobileMenuOpen ? 'block' : 'hidden'}
+        ${isMobileMenuOpen ? 'relative top-0 z-50' : 'hidden'}
         md:block
-        w-64 bg-base-100 border-r border-base-200 p-4 
+        w-64 bg-base-100 border-r border-base-200 p-4
         flex flex-col h-full
       `}>
         {/* Header */}
@@ -51,12 +51,12 @@ export default function Sidebar({ navigationItems, activeTab, onTabChange }) {
 
         {/* Navigation Links */}
         <nav className="space-y-2 mb-6">
-          {navigationItems.map((item) => (
+          {navigationItems && navigationItems.map((item) => (
             <button
               key={item.id}
               className={`btn btn-ghost w-full justify-start ${
-                activeTab === item.id 
-                  ? 'bg-base-200 text-base-content' 
+                activeTab === item.id
+                  ? 'bg-base-200 text-base-content'
                   : 'text-base-content/70 hover:bg-base-200'
               }`}
               onClick={() => {
@@ -93,6 +93,6 @@ export default function Sidebar({ navigationItems, activeTab, onTabChange }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

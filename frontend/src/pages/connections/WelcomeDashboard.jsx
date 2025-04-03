@@ -41,9 +41,9 @@ export default function WelcomeDashboard() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="flex flex-row flex-wrap gap-4 justify-around mb-8 ">
         {stats.map((stat) => (
-          <div key={stat.category} className="card bg-base-100 shadow-lg ring-1 ring-gray-700">
+          <div key={stat.category} className="card w-60 bg-base-100 shadow-lg ring-1 ring-gray-700">
             <div className={`h-2 ${stat.color} rounded-t-lg`}></div>
             <div className="p-4">
               <h3 className="text-base-content/70 text-sm">{stat.category}</h3>
@@ -54,7 +54,7 @@ export default function WelcomeDashboard() {
       </div>
 
       {/* Recent Activity */}
-      <div className="card bg-base-100 shadow-lg p-4 mb-6 ring-1 ring-gray-700">
+      {/* <div className="card bg-base-100 shadow-lg p-4 mb-6 ring-1 ring-gray-700">
         <h2 className="text-lg font-semibold mb-4">Recent Messages</h2>
         <div className="space-y-4">
           {recentMessages.map((msg) => (
@@ -75,7 +75,7 @@ export default function WelcomeDashboard() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Quick Actions */}
       {/* <div className="card bg-base-100 shadow-sm p-4">

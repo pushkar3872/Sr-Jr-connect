@@ -121,7 +121,7 @@ const Navbar = () => {
             </Link>
 
             {/* Notification button */}
-            {
+            {/* {
               authUser &&
               (
                 <button className="btn btn-circle btn-ghost indicator">
@@ -130,7 +130,7 @@ const Navbar = () => {
                 </button>
 
               )
-            }
+            } */}
 
             {/* Profile Button - Always visible on mobile and desktop */}
             {authUser && (
@@ -147,7 +147,7 @@ const Navbar = () => {
                 {profileDropdownOpen && (
                   <div
                     ref={dropdownRef}
-                    className="absolute top-16 right-4 mt-2 w-64 bg-base-100 shadow-xl rounded-xl border border-base-300 z-50 overflow-hidden animate-in fade-in slide-in-from-top-5 duration-300"
+                    className="absolute top-16 right-4 mt-2 w-64 bg-base-100 shadow-xl rounded-xl border border-base-300 z-50 overflow-hidden animate-in fade-in slide-in-from-top-5 duration-700"
                   >
                     <div className="p-6 flex flex-col items-center border-b border-base-300">
                       <img className="w-20 h-20 rounded-full object-cover ring-2 ring-primary ring-offset-2" src={authUser.profilePicture || "/avatar.png"} alt="Profile" />
