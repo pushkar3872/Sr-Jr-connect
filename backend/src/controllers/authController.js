@@ -108,7 +108,8 @@ export const updateProfile = async (req, res) => {
         }
 
         // Extract fields from request
-        const { fullName, email, profilePicture, biodata, graduationYear, skills, PlatformLinks, branch, dateOfBirth, gender, mobilenumber, domain, college, gpa } = req.body;
+        const { fullName, email, profilePicture, biodata, graduationYear, skills, PlatformLinks, branch, dateOfBirth, gender, mobilenumber, domain, college, gpa, currentPassword,
+            newPassword, } = req.body;
 
         // Create an empty object to store updated fields
         const updatedFields = {};
@@ -145,6 +146,19 @@ export const updateProfile = async (req, res) => {
             updatedFields.profilePicture = uploadResponse.secure_url;
         }
 
+        // 
+        const curr_user = await SrJrUser.findById(userId);
+        // Check if currentPassword and newPassword are provided and different
+        // and if currentPassword is correct
+        if (currentPassword && newPassword && currentPassword !== newPassword) {
+            const isMatch = await bcrypt.compare(currentPassword, curr_user.password);
+            if (!isMatch) {
+                return res.status(400).json({ message: "Current password is incorrect" });
+            }
+            const salt = await bcrypt.genSalt(10);
+            updatedFields.password = await bcrypt.hash(newPassword, salt);
+
+        }
         // Update user only with provided fields
         const updatedUser = await SrJrUser.findByIdAndUpdate(
             userId,
