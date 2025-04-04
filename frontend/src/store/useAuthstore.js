@@ -2,9 +2,9 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
+const BASE_URL = `http://${window.location.hostname}:4005`;
 
-const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:4005" : "/";
-export const useAuthstore = create((set,get) => ({
+export const useAuthstore = create((set, get) => ({
     authUser: null,
     isregistering: false,
     isLoggingIn: false,
