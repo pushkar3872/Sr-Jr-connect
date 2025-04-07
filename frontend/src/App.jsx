@@ -13,6 +13,7 @@ import { useAuthstore } from './store/useAuthstore';
 import { Loader } from 'lucide-react';
 import SettingsPage from './pages/SettingsPage';
 import { useThemeStore } from './store/useThemestore';
+import Events from './components/Events';
 
 function App() {
   const { authUser, checkAuth, isCheckingAuth } = useAuthstore();
@@ -44,6 +45,7 @@ function App() {
   return (
     <div className="min-h-screen bg-base-200" data-theme={theme}>
       <Toaster />
+
       <NavBar />
 
       <Routes>
@@ -62,6 +64,9 @@ function App() {
         <Route path="/settings" element={<ProtectedRoute element={<SettingsPage />} />} />
         <Route path="/teammate" element={<ProtectedRoute element={<FindTeammatePage />} />} />
         <Route path="/connections" element={<ProtectedRoute element={<ConnectionPage />} />} />
+        
+        <Route path="/events" element={<ProtectedRoute element={<Events/>} />} />
+
 
         {/* Catch-all route for 404 - add this if you need it */}
         <Route path="*" element={<Navigate to="/" replace />} />

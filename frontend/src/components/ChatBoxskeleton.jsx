@@ -10,6 +10,7 @@ export default function ChatBoxskeleton() {
 
     return (
         <div className="flex-1 overflow-y-auto p-4 space-y-4" style={{ scrollbarWidth: "none" }}>
+
             {skeletonMessages.map((_, idx) => {
                 return (
                     <div key={idx} className={`chat ${idx % 2 === 0 ? "chat-start" : "chat-end"} items-center`}>

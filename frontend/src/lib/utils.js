@@ -1,4 +1,5 @@
 export default function formatMessageTime(date) {
+    
     return new Date(date).toLocaleDateString("en-IN", {
         hour: "2-digit",
         minute: "2-digit",
@@ -8,6 +9,7 @@ export default function formatMessageTime(date) {
 };
 // Compare this snippet from backend/src/controllers/messageController.js:
 
-export function formattedDate(date) {
+export function formattedDate(date) 
+{
     return new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(date);
 }
