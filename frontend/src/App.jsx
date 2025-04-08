@@ -42,6 +42,7 @@ function App() {
   return (
     <div className="min-h-screen bg-base-200" data-theme={theme}>
       <Toaster />
+
       <NavBar />
 
       <Routes>
@@ -58,6 +59,9 @@ function App() {
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/teammate" element={<ProtectedRoute element={<FindTeammatePage />} />} />
         <Route path="/connections" element={<ProtectedRoute element={<ConnectionPage />} />} />
+        
+        <Route path="/events" element={<ProtectedRoute element={<Events/>} />} />
+
 
         {/* 404 Page */}
         <Route path="*" element={<Page404 />} />

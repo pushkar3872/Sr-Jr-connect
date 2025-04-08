@@ -41,7 +41,9 @@ const Navbar = () => {
   }, [location]);
 
   // Check if route is active for sidebar highlighting
+
   const isActive = (path) => {
+    
     const active = location.pathname === path;
     return active
       ? "bg-primary text-primary-content font-medium"
@@ -55,7 +57,7 @@ const Navbar = () => {
     { path: "/teammate", icon: <UserRoundSearch className="size-5" />, label: "Find Team" },
     // { path: "/messages", icon: <MessageCircle className="size-5" />, label: "Messages" },
     // { path: "/projects", icon: <Briefcase className="size-5" />, label: "Projects" },
-    // { path: "/events", icon: <Calendar className="size-5" />, label: "Events" },
+    { path: "/events", icon: <Calendar className="size-5" />, label: "Events" },
     // { path: "/learning", icon: <BookOpen className="size-5" />, label: "Learning" },
     // { path: "/achievements", icon: <Award className="size-5" />, label: "Achievements" },
   ];
@@ -314,8 +316,24 @@ const Navbar = () => {
               <span className="ml-3">Logout</span>
             </button>
           )}
+
+
+
+
+          <Link to="/events"></Link>
+
         </div>
+
+
+
+
+
       </aside>
+
+
+
+
+
 
       {/* Spacer to prevent content from hiding under the navbar */}
       <div className="h-16"></div>
