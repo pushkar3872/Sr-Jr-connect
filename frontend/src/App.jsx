@@ -12,7 +12,7 @@ import ConnectionPage from './pages/ConnectionPage';
 import { useAuthstore } from './store/useAuthstore';
 import { Loader } from 'lucide-react';
 import SettingsPage from './pages/SettingsPage';
-import { useThemeStore } from './store/useThemestore';
+import { useThemeStore } from './store/useThemeStore';
 import Page404 from './pages/Page404'; // ✅ Added 404 Page
 
 function App() {
@@ -55,7 +55,7 @@ function App() {
 
         {/* Protected routes */}
         <Route path="/profile" element={<ProtectedRoute element={<ProfilePage />} />} />
-        <Route path="/settings" element={<SettingsPage /> } />
+        <Route path="/settings" element={<SettingsPage />} />
         <Route path="/teammate" element={<ProtectedRoute element={<FindTeammatePage />} />} />
         <Route path="/connections" element={<ProtectedRoute element={<ConnectionPage />} />} />
 
