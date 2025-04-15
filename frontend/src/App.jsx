@@ -16,6 +16,8 @@ import { useThemeStore } from './store/useThemestore';
 import Events from './components/Events';
 import Page404 from './pages/Page404';
 
+import AboutUs from './pages/AboutUs';
+
 function App() {
   const { authUser, checkAuth, isCheckingAuth } = useAuthstore();
   const { theme } = useThemeStore();
@@ -62,6 +64,7 @@ function App() {
         <Route path="/connections" element={<ProtectedRoute element={<ConnectionPage />} />} />
         
         <Route path="/events" element={<ProtectedRoute element={<Events/>} />} />
+        <Route path="/aboutus" element={<ProtectedRoute element={<AboutUs/>} />} />
 
 
         {/* 404 Page */}
