@@ -3,29 +3,20 @@ import cron from "node-cron";
 import axios from "axios";
 import SrJrUser from "../models/UserModel.js";
 
+// Extract usernames from platform URLs
 const extractUsername = (platformUrl) => {
     try {
-        if (!platformUrl || platformUrl === "") {
-            return null;
-        }
-        // Add more logging for debugging
-        // console.log(`Extracting username from: ${platformUrl}`);
-        
+        if (!platformUrl || platformUrl === "") return null;
+
         const urlObj = new URL(platformUrl);
         const hostname = urlObj.hostname;
-        let pathname = urlObj.pathname.replace(/\/$/, ''); // Remove trailing slash
-        
-        // console.log(`Hostname: ${hostname}, Pathname: ${pathname}`);
-        
+        let pathname = urlObj.pathname.replace(/\/$/, '');
+
         if (hostname.includes("codeforces.com")) {
-            const username = pathname.split('/').pop();
-            // console.log(`Extracted Codeforces username: ${username}`);
-            return username;
+            return pathname.split('/').pop();
         } else if (hostname.includes("leetcode.com")) {
             const parts = pathname.split('/');
-            const username = parts.includes("u") ? parts[parts.indexOf("u") + 1] : parts.pop();
-            // console.log(`Extracted Leetcode username: ${username}`);
-            return username;
+            return parts.includes("u") ? parts[parts.indexOf("u") + 1] : parts.pop();
         } else {
             console.log(`Unrecognized platform: ${hostname}`);
             return null;
@@ -36,162 +27,141 @@ const extractUsername = (platformUrl) => {
     }
 };
 
-// Function to fetch Leetcode stats with better error handling
+// Fetch Leetcode Stats
 const fetchLeetcodeStats = async (username) => {
     try {
-        console.log(`Fetching Leetcode stats for: ${username}`);
-        
-        // Test alternative APIs if the Heroku one fails
         const LEETCODE_API_URLS = [
             `https://leetcode-stats-api.herokuapp.com/${username}`,
-            `https://leetcode-api-faisalm.vercel.app/${username}`,
-            // Add more alternative APIs if available
+            `https://leetcode-api-faisalm.vercel.app/${username}`
         ];
-        
-        // Try each API endpoint until one works
+
         for (const apiUrl of LEETCODE_API_URLS) {
             try {
-                // console.log(`Trying API endpoint: ${apiUrl}`);
-                const response = await axios.get(apiUrl, { 
-                    timeout: 5000,  // Set a reasonable timeout
-                    headers: {
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-                    }
-                });
-                // console.log(`Success from: ${apiUrl}`);
+                const response = await axios.get(apiUrl, { timeout: 5000 });
                 return response.data;
             } catch (apiError) {
-                console.error(`API ${apiUrl} failed:`, apiError.message);
-                // Continue to the next API endpoint
+                console.error(`Leetcode API failed: ${apiUrl}`, apiError.message);
             }
         }
-        
-        // If we get here, all API attempts failed
-        console.error(`All API endpoints failed for username: ${username}`);
+
         return {
             status: "error",
-            message: "All API endpoints failed"
+            message: "All Leetcode APIs failed"
         };
     } catch (error) {
-        console.error(`Failed to fetch Leetcode stats for ${username}:`, error);
-        return {
-            status: "error", 
-            message: error.message,
-            username: username
-        };
+        console.error("Leetcode fetch error:", error);
+        return { status: "error", message: error.message };
     }
 };
 
-// Function to update Leetcode stats for all users
+// 🔥 New: Fetch Codeforces Stats
+const fetchCodeforcesStats = async (username) => {
+    try {
+        const url = `https://codeforces.com/api/user.info?handles=${username}`;
+        const response = await axios.get(url, { timeout: 5000 });
+
+        if (response.data && response.data.status === "OK") {
+            const userInfo = response.data.result[0];
+            return {
+                username: userInfo.handle,
+                rating: userInfo.rating || 0,
+                rank: userInfo.rank || "Unrated",
+                maxRating: userInfo.maxRating || 0
+            };
+        } else {
+            console.error(`Invalid response for Codeforces: ${username}`);
+            return null;
+        }
+    } catch (error) {
+        console.error(`Codeforces fetch error for ${username}:`, error.message);
+        return null;
+    }
+};
+
+// Update stats for all users
 const updateLeetcodeStats = async () => {
     try {
-        // console.log("Starting Leetcode stats update job...");
-        
         if (mongoose.connection.readyState !== 1) {
-            console.log("MongoDB not connected yet. Retrying...");
+            console.log("MongoDB not connected. Skipping...");
             return;
         }
-        
-        const users = await SrJrUser.find({ "PlatformLinks.leetcode": { $exists: true, $ne: "" } });
-        console.log(`Found ${users.length} users with Leetcode links.`);
-        
-        // Commented out all checking except fetching users
+
+        const users = await SrJrUser.find({
+            $or: [
+                { "PlatformLinks.leetcode": { $exists: true, $ne: "" } },
+                { "PlatformLinks.codeforces": { $exists: true, $ne: "" } }
+            ]
+        });
+
+        console.log(`Found ${users.length} users with platform links.`);
+
         const bulkOps = [];
-        const usersWithNoLeetcode = [];
-        let successCount = 0;
-        let errorCount = 0;
-        
+
         for (const user of users) {
-            try {
-                // console.log(`Processing user: ${user.email || user._id}`);
-                const username = extractUsername(user.PlatformLinks.leetcode);
-                
-                if (!username) {
-                    // console.log(`No valid username extracted for user: ${user.email || user._id}`);
-                    usersWithNoLeetcode.push({
-                        updateOne: {
-                            filter: { _id: user._id },
-                            update: {
-                                $set: {
-                                    "Competitive_Programming.LeetcodeData": {
-                                        username: null,
-                                        ranking: null,
-                                        totalSolved: 0
-                                    }
-                                }
-                            }
-                        }
-                    });
-                    continue;
+            const updates = {};
+
+            // Leetcode
+            const leetcodeLink = user.PlatformLinks.leetcode;
+            const leetcodeUsername = extractUsername(leetcodeLink);
+            if (leetcodeUsername) {
+                const leetData = await fetchLeetcodeStats(leetcodeUsername);
+                if (leetData && leetData.totalSolved !== undefined) {
+                    updates["Competitive_Programming.LeetcodeData"] = {
+                        username: leetcodeUsername,
+                        ranking: leetData.ranking || "N/A",
+                        totalSolved: leetData.totalSolved || 0
+                    };
                 }
-                
-                const leetcodeData = await fetchLeetcodeStats(username);
-                
-                if (leetcodeData && leetcodeData.totalSolved !== undefined) {
-                    console.log(`Successfully fetched data for ${username}: ${leetcodeData.totalSolved} problems solved`);
-                    bulkOps.push({
-                        updateOne: {
-                            filter: { _id: user._id },
-                            update: {
-                                $set: {
-                                    "Competitive_Programming.LeetcodeData": {
-                                        username: username,
-                                        ranking: leetcodeData.ranking || "N/A",
-                                        totalSolved: leetcodeData.totalSolved || 0
-                                    }
-                                }
-                            }
-                        }
-                    });
-                    successCount++;
-                } else {
-                    console.log(`Failed to fetch valid data for ${username}`);
-                    errorCount++;
+            }
+
+            // Codeforces
+            const codeforcesLink = user.PlatformLinks.codeforces;
+            const codeforcesUsername = extractUsername(codeforcesLink);
+            if (codeforcesUsername) {
+                const cfData = await fetchCodeforcesStats(codeforcesUsername);
+                if (cfData) {
+                    updates["Competitive_Programming.CodeforcesData"] = {
+                        username: cfData.username,
+                        // rating: cfData.rating,
+                        ranking: cfData.rank,
+                        // maxRating: cfData.maxRating
+                        rating: cfData.maxRating
+                    };
                 }
-            } catch (userError) {
-                console.error(`Error processing user ${user.email || user._id}:`, userError);
-                errorCount++;
+            }
+
+            if (Object.keys(updates).length > 0) {
+                bulkOps.push({
+                    updateOne: {
+                        filter: { _id: user._id },
+                        update: { $set: updates }
+                    }
+                });
             }
         }
-        
-        // Update users with no valid Leetcode username
-        if (usersWithNoLeetcode.length > 0) {
-            console.log(`Updating ${usersWithNoLeetcode.length} users with no valid Leetcode usernames`);
-            await SrJrUser.bulkWrite(usersWithNoLeetcode);
-        }
-        
-        // Update users with valid Leetcode data
+
         if (bulkOps.length > 0) {
-            // console.log(`Updating ${bulkOps.length} users with Leetcode data`);
             await SrJrUser.bulkWrite(bulkOps);
-            console.log("Leetcode stats updated successfully.");
+            console.log(`✅ Stats updated for ${bulkOps.length} users`);
         } else {
-            console.log("No Leetcode data updates were made.");
+            console.log("No updates needed");
         }
-        
-        // console.log(`Update job completed. Success: ${successCount}, Errors: ${errorCount}`);
-       
-        // Only keeping the user fetching part
-        console.log("Users fetched successfully");
+
         return users;
     } catch (error) {
-        console.error("Error in Leetcode update job:", error);
+        console.error("Error in update job:", error);
     }
 };
 
-// Commenting out cron job
-// Schedule the job to run every 6 hours
+// ⏲️ Cron job (6-hour schedule)
 cron.schedule("0 */6 * * *", () => {
-    console.log("Running scheduled Leetcode stats update");
+    console.log("🔁 Running scheduled update job");
     updateLeetcodeStats().catch(err => {
-        console.error("Scheduled job error:", err);
+        console.error("Scheduled update error:", err);
     });
 });
 
-// // Run immediately on module import
-// console.log("Initializing Leetcode stats module");
-// updateLeetcodeStats().catch(err => {
-//     console.error("Initial update error:", err);
-// });
+// Uncomment this to run immediately
+// updateLeetcodeStats().catch(err => console.error("Initial update error:", err));
 
 export default updateLeetcodeStats;

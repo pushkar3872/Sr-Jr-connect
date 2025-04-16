@@ -85,3 +85,24 @@ const getUserfromId = async (senderid) => {
         return null;
     }
 }
+
+export const delete_message = async (req, res) => {
+    try {
+        const { messageId } = req.params;
+
+        // Find and delete the message
+        const deletedMessage = await Message.findByIdAndDelete(messageId);
+
+        if (!deletedMessage) {
+            return res.status(404).json({ message: "Message not found" });
+        }
+
+        // Emit real-time deletion event
+        io.emit("messageDeleted", { _id: deletedMessage._id });
+
+        res.status(200).json({ message: "Message deleted successfully", id: deletedMessage._id });
+    } catch (error) {
+        console.error("Error in delete_message:", error.message);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};

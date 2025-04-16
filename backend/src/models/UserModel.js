@@ -83,7 +83,8 @@ const srJrUserSchema = new mongoose.Schema({
             rating: {
                 type: Number,
                 default: -1
-            }
+            },
+            ranking: String
         }
     }
 }, {
