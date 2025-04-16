@@ -60,6 +60,13 @@ const Navbar = () => {
     { path: "/events", icon: <Calendar className="size-5" />, label: "Events" },
     // { path: "/learning", icon: <BookOpen className="size-5" />, label: "Learning" },
     // { path: "/achievements", icon: <Award className="size-5" />, label: "Achievements" },
+
+    { 
+      path: "/aboutus", 
+      icon: <User className="size-5" />, 
+      label: "AboutUs" 
+    }
+
   ];
 
   return (
@@ -321,6 +328,7 @@ const Navbar = () => {
 
 
           <Link to="/events"></Link>
+         
 
         </div>
 
