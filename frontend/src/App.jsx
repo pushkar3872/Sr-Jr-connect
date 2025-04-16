@@ -14,6 +14,7 @@ import { Loader } from 'lucide-react';
 import SettingsPage from './pages/SettingsPage';
 import { useThemeStore } from './store/useThemeStore';
 import Page404 from './pages/Page404'; // ✅ Added 404 Page
+import Events from './components/Events';
 
 function App() {
   const { authUser, checkAuth, isCheckingAuth } = useAuthstore();
