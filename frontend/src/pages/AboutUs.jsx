@@ -1,64 +1,80 @@
 import React from 'react';
-import { Github, Linkedin, Twitter } from 'lucide-react';
+import { Github, Linkedin, Phone, Mail } from 'lucide-react';
+import shubhamImage from '../assets/shubham.jpg';
+import krishimg from "../assets/krisha.jpg"
+import varadimg from "../assets/varad.jpg"
 
 export default function BalancedTeamProfile() {
   const team = [
     {
       name: "Pushkar Takale",
-      role: "Computer Engineering Student",
+      role: "Frontend and Backend Developer",
       description: "Passionate about tech, AI, and building impactful projects.",
-      color: "primary",
-      size: "large",
+      color: "black",
+      size: "w-28 h-28",
       social: {
-        github: "#",
-        linkedin: "#",
-        twitter: "#"
+        github: "https://github.com/pushkar3872",
+        linkedin: "https://www.linkedin.com/in/pushkar-takale-a78644288/",
+        whatsapp: "8421663872",
+        email: "taklepushkar3872@gmail.com"
       }
     },
     {
-      name: "John Doe",
+      name: "Varad Sane",
       role: "Frontend Developer",
       description: "Loves crafting beautiful UI with React and Tailwind.",
-      color: "secondary",
-      size: "medium",
+      color: "black",
+      size: "w-28 h-28",
+      img: varadimg,
       social: {
-        github: "#",
-        linkedin: "#",
-        twitter: "#"
+        github: "https://github.com/Varad73",
+        linkedin: "https://www.linkedin.com/in/varad-sane-0838552a9/",
+        whatsapp: "9518953455",
+        email: "varadsane2004@gmail.com"
       }
     },
     {
-      name: "Jane Smith",
-      role: "UI/UX Designer",
+      name: "Krisha Ukey",
+      role: "Frontend Developer",
       description: "Creates intuitive and beautiful user experiences.",
-      color: "accent",
-      size: "medium",
+      color: "black",
+      size: "w-28 h-28",
+      img: krishimg,
       social: {
-        github: "#",
-        linkedin: "#",
-        twitter: "#"
+        github: "https://github.com/Krisha1803",
+        linkedin: "https://www.linkedin.com/in/krisha-ukey-173399288/",
+        whatsapp: "8767964320",
+        email: "ukeykrisha@gmail.com"
       }
     },
     {
-      name: "Alex Johnson",
-      role: "Backend Developer",
-      description: "Architecture expert with a passion for scalable systems.",
-      color: "info",
-      size: "medium",
+      name: "Shubham Shinde",
+      role: "Frontend and Backend Developer",
+      description: "Full-stack developer with hands-on experience in building scalable systems through real-world projects.",
+      color: "black",
+      size: "w-28 h-28",
+      img: shubhamImage,
       social: {
         github: "#",
         linkedin: "#",
-        twitter: "#"
+        whatsapp: "8421663872",
+        email: "shindeshubham4241@gmail.com"
       }
     }
   ];
 
   const getSizeClass = (size) => {
-    switch(size) {
-      case 'large': return 'w-36 h-36';
+    switch (size) {
+      case 'large': return 'w-28 h-28';
       case 'medium': return 'w-28 h-28';
-      case 'small': return 'w-20 h-20';
+      case 'small': return 'w-28 h-28';
       default: return 'w-28 h-28';
+    }
+  };
+
+  const redirectToWhatsApp = (phoneNumber) => {
+    if (phoneNumber) {
+      window.open(`https://wa.me/${phoneNumber}`, '_blank');
     }
   };
 
@@ -77,16 +93,41 @@ export default function BalancedTeamProfile() {
                 <div className="card-body items-center text-center">
                   <div className="avatar">
                     <div className={`${getSizeClass(member.size)} rounded-full ring ring-${member.color} ring-offset-2 ring-offset-base-100`}>
-                      <img src={`/api/placeholder/150/150?text=${member.name.charAt(0)}`} alt={member.name} />
+                      <img
+                        src={member.img || `/api/placeholder/150/150?text=${member.name}`}
+                        alt={member.name}
+                      // onError={(e) => {
+                      //   e.target.onerror = null;
+                      //   e.target.src = `/api/placeholder/150/150?text=${member.name}`;
+                      // }}
+                      />
                     </div>
                   </div>
-                  <h3 className={`card-title text-${member.color} mt-4`}>{member.name}</h3>
+                  <h3 className={`card-title text-primary mt-4`}>{member.name}</h3>
                   <div className={`badge badge-${member.color} badge-outline mb-2`}>{member.role}</div>
                   <p className="text-sm">{member.description}</p>
                   <div className="card-actions justify-center mt-4">
-                    <a className={`btn btn-circle btn-outline btn-${member.color} btn-sm`}><Github size={16} /></a>
-                    <a className={`btn btn-circle btn-outline btn-${member.color} btn-sm`}><Linkedin size={16} /></a>
-                    <a className={`btn btn-circle btn-outline btn-${member.color} btn-sm`}><Twitter size={16} /></a>
+                    <a href={member.social.github} target="_blank" rel="noopener noreferrer" className={`btn btn-circle btn-outline btn-${member.color} btn-sm`}>
+                      <Github size={16} />
+                    </a>
+                    <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className={`btn btn-circle btn-outline btn-${member.color} btn-sm`}>
+                      <Linkedin size={16} />
+                    </a>
+                    <button
+                      onClick={() => redirectToWhatsApp(member.social.whatsapp)}
+                      className={`btn btn-circle btn-outline btn-${member.color} btn-sm`}
+                      disabled={!member.social.whatsapp}
+                    >
+                      <Phone size={16} />
+                    </button>
+                    <a
+                      href={`mailto:${member.social.email}`}
+                      className={`btn btn-circle btn-outline btn-${member.color} btn-sm`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Mail size={16} />
+                    </a>
                   </div>
                 </div>
               </div>
@@ -95,7 +136,6 @@ export default function BalancedTeamProfile() {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="footer footer-center p-10 bg-base-300 text-base-content rounded-t-lg mt-12 border-t border-base-content/10">
         <div>
           <h4 className="font-bold text-lg">Senior–Junior Connect</h4>
@@ -112,10 +152,10 @@ export default function BalancedTeamProfile() {
 
         <div>
           <p className="italic text-sm text-base-content/70">
-            “Alone we can do so little; together we can do so much.” — Helen Keller
+            "Alone we can do so little; together we can do so much." — Helen Keller
           </p>
           <p className="text-xs text-base-content/50">
-            © {new Date().getFullYear()} Senior–Junior Connect. All rights reserved.
+            © {new Date().getFullYear()} Senior-Junior Connect. All rights reserved.
           </p>
         </div>
       </footer>

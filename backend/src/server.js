@@ -89,11 +89,6 @@ const startServer = async () => {
 // Start the server
 startServer();
 
-// server.listen(PORT, () => {
-//     console.log("server is running on port:" + PORT)
-//     // connectDB();
-// })
-
 server.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on http://${IP_ADDRESS}:${PORT}`);
 });
