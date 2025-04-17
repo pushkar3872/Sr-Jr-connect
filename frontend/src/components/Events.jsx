@@ -15,7 +15,7 @@ export default function Events() {
   );
 
   return (
-    <div className="min-h-screen bg-base-200 px-6 py-10">
+    <div className="min-h-screen bg-base-200 px-6 pt-4">
       <h1 className="text-4xl font-bold text-center text-primary mb-8">🎉 Explore Events</h1>
 
       {/* Search Bar */}

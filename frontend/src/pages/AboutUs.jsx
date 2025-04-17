@@ -3,6 +3,7 @@ import { Github, Linkedin, Phone, Mail } from 'lucide-react';
 import shubhamImage from '../assets/shubham.jpg';
 import krishimg from "../assets/krisha.jpg"
 import varadimg from "../assets/varad.jpg"
+import pushkarimg from "../assets/pushkar.jpg"
 
 export default function BalancedTeamProfile() {
   const team = [
@@ -12,6 +13,7 @@ export default function BalancedTeamProfile() {
       description: "Passionate about tech, AI, and building impactful projects.",
       color: "black",
       size: "w-28 h-28",
+      img: pushkarimg,
       social: {
         github: "https://github.com/pushkar3872",
         linkedin: "https://www.linkedin.com/in/pushkar-takale-a78644288/",

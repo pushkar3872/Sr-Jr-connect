@@ -14,6 +14,7 @@ import AlluserStore from "../store/AlluserStore";
 import FindTeammatePageSkeleton from "../components/FindTeammatePageSkeleton";
 import UserModal from "../components/UserModal"
 
+
 const Teammate = () => {
   const { users, getAllStudents, isUsersLoading } = AlluserStore();
 
@@ -114,7 +115,7 @@ const Teammate = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 pt-2 h-[90vh] flex flex-col">
+    <div className="container mx-auto px-4 pt-7 h-[90vh] flex flex-col ">
       <div className="mb-6 space-y-4">
         <div className="flex flex-col md:flex-row justify-center items-center space-y-3 md:space-y-0 md:space-x-4">
           {/* Search Input */}
