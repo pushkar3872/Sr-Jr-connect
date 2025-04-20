@@ -28,15 +28,23 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+// app.use(cors({
+//     origin: [
+//         process.env.FRONTEND_URL || "http://localhost:5173",
+//         `http://${IP_ADDRESS}:5173`,  // Fix the incorrect `/`
+//         `http://${IP_ADDRESS}:4005`,
+//         `https://sr-jr-connect.onrender.com`
+//     ],
+//     credentials: true, // Allow cookies & authentication
+// }));
+
 app.use(cors({
-    origin: [
-        process.env.FRONTEND_URL || "http://localhost:5173",
-        `http://${IP_ADDRESS}:5173`,  // Fix the incorrect `/`
-        `http://${IP_ADDRESS}:4005`,
-        `https://sr-jr-connect.onrender.com`
-    ],
-    credentials: true, // Allow cookies & authentication
+    origin: (origin, callback) => {
+        callback(null, true); // Allow all origins
+    },
+    credentials: true,
 }));
+
 
 
 
