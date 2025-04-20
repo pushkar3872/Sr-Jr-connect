@@ -93,5 +93,5 @@ startServer();
 
 server.listen(PORT, '0.0.0.0', () => {
     console.log(`server running on http://localhost:${PORT}`)
-    console.log(`Server running on http://${IP_ADDRESS}:${PORT}`);
+    // console.log(`Server running on http://${IP_ADDRESS}:${PORT}`);
 });
