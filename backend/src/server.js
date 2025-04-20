@@ -4,7 +4,7 @@ import "dotenv/config";
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import { app, server } from "./lib/socket.js";
-
+import path from "path"
 // Import routes
 import authRouter from './routes/auth.route.js';
 import usersRouter from './routes/users.route.js';
@@ -18,8 +18,10 @@ import connectDB from './config/mongodb.js';
 import updateLeetcodeStats from './lib/cronjobs.js';
 
 // const app = express();
+const __dirname = path.resolve();
 const PORT = process.env.PORT || 4005;
 const IP_ADDRESS = process.env.IP_ADDRESS;
+
 
 // Middleware setup
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -30,6 +32,7 @@ app.use(cors({
     origin: [
         process.env.FRONTEND_URL || "http://localhost:5173",
         `http://${IP_ADDRESS}:5173`,  // Fix the incorrect `/`
+        `http://${IP_ADDRESS}:4005`
     ],
     credentials: true, // Allow cookies & authentication
 }));
@@ -60,12 +63,15 @@ app.use((err, req, res, next) => {
     });
 });
 
-// 404 route handler for undefined routes
-app.use("*", (req, res) => {
-    res.status(404).json({ error: "Route not found" });
-});
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-// Database connection and server startup sequence
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+
+    })
+}
+// Database connection 
 const startServer = async () => {
     try {
         // Connect to MongoDB
@@ -75,20 +81,17 @@ const startServer = async () => {
         // Start cron jobs after successful DB connection
         updateLeetcodeStats();
         console.log("LeetCode stats update job scheduled");
-
-        // Start the server //not in use  since using socket.io
-        // app.listen(PORT, () => {
-        //     console.log(`Server is running on http://localhost:${PORT}`);
-        // });
     } catch (error) {
-        console.error("Failed to start server:", error);
+        console.error("Failed in connectdb  :", error);
         process.exit(1);
     }
 };
+
 
 // Start the server
 startServer();
 
 server.listen(PORT, '0.0.0.0', () => {
+    console.log(`server running on http://localhost:${PORT}`)
     console.log(`Server running on http://${IP_ADDRESS}:${PORT}`);
 });

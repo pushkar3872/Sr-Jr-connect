@@ -1,0 +1,22 @@
+{
+  "name": "sr-jr-connect",
+  "version": "1.0.0",
+  "description": "Welcome to the **Senior-Junior Connect** project, a web-based platform built using the **MERN stack (MongoDB, Express.js, React.js, Node.js)**, designed to connect alumni and students from a college for communication, resource sharing, and networking.",
+  "main": "index.js",
+  "scripts": {
+    "build":"npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
+    "start":"npm run start --prefix backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Techyshubhs/Sr-Jr-connect.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Techyshubhs/Sr-Jr-connect/issues"
+  },
+  "homepage": "https://github.com/Techyshubhs/Sr-Jr-connect#readme"
+}
