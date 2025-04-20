@@ -32,7 +32,8 @@ app.use(cors({
     origin: [
         process.env.FRONTEND_URL || "http://localhost:5173",
         `http://${IP_ADDRESS}:5173`,  // Fix the incorrect `/`
-        `http://${IP_ADDRESS}:4005`
+        `http://${IP_ADDRESS}:4005`,
+        `https://sr-jr-connect.onrender.com`
     ],
     credentials: true, // Allow cookies & authentication
 }));
