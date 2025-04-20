@@ -10,9 +10,9 @@ import {
   Star,
   Award
 } from "lucide-react";
-import AlluserStore from "../store/AlluserStore";
-import FindTeammatePageSkeleton from "../components/FindTeammatePageSkeleton";
-import UserModal from "../components/UserModal"
+import AlluserStore from "../store/AlluserStore.js";
+import FindTeammatePageSkeleton from "../components/FindTeammatePageSkeleton.jsx";
+import UserModal from "../components/UserModal.jsx"
 
 
 const Teammate = () => {

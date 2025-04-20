@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import UserCard from './UserCard';
-import AlluserStore from '../../store/AlluserStore';
-import { useAuthstore } from '../../store/useAuthstore';
-import UserModal from '../../components/UserModal'; // Make sure to import UserModal
+import UserCard from './UserCard.jsx';
+import AlluserStore from '../../store/AlluserStore.js';
+import { useAuthstore } from '../../store/useAuthstore.js';
+import UserModal from '../../components/UserModal.jsx'; // Make sure to import UserModal
 
 export default function Juniors() {
   const [searchQuery, setSearchQuery] = useState('');

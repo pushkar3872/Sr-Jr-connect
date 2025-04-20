@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useAuthstore } from '../store/useAuthstore';
+import { useAuthstore } from '../store/useAuthstore.js';
 import { Github, Linkedin, Mail, MapPin, Calendar, Edit, X, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { formattedDate } from '../lib/utils';
-import UserModal from '../components/UserModal';
+import { formattedDate } from '../lib/utils.js';
+import UserModal from '../components/UserModal.jsx';
 
 export default function Profile() {
   const { authUser, update } = useAuthstore();

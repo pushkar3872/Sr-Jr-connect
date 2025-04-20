@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Image, Send, X } from "lucide-react";
-import { useAuthstore } from '../store/useAuthstore';
-import { useChatstore } from '../store/useChatstore';
+import { useAuthstore } from '../store/useAuthstore.js';
+import { useChatstore } from '../store/useChatstore.js';
 import toast from 'react-hot-toast';
 
 const MessageInput = () => {

@@ -1,7 +1,7 @@
 import React from 'react';
-import ProfileSkeleton from './ProfileSkeleton';
-import GeneralUpdateSkeleton from './GeneralUpdateSkeleton';
-import LeaderBoardSkeleton from './LeaderBoardSkeleton';
+import ProfileSkeleton from './ProfileSkeleton.jsx';
+import GeneralUpdateSkeleton from './GeneralUpdateSkeleton.jsx';
+import LeaderBoardSkeleton from './LeaderBoardSkeleton.jsx';
 
 export default function HomePageSkeleton() {
   return (

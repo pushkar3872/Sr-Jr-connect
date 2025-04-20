@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { ArrowUpFromLine, ArrowsUpFromLine, ArrowDownFromLine, EqualApproximately } from 'lucide-react';
-import Alumni from './connections/Alumni';
-import Classmates from './connections/Classmates';
-import Juniors from './connections/Juniors';
-import Seniors from './connections/Seniors';
-import WelcomeDashboard from './connections/WelcomeDashboard';
-import Sidebar from './connections/Sidebar'
-import AlluserStore from '../store/AlluserStore';
-import { useAuthstore } from '../store/useAuthstore';
+import Alumni from './connections/Alumni.jsx';
+import Classmates from './connections/Classmates.jsx';
+import Juniors from './connections/Juniors.jsx';
+import Seniors from './connections/Seniors.jsx';
+import WelcomeDashboard from './connections/WelcomeDashboard.jsx';
+import Sidebar from './connections/Sidebar.jsx'
+import AlluserStore from '../store/AlluserStore.js';
+import { useAuthstore } from '../store/useAuthstore.js';
 
 export default function ConnectionPage() {
     const { authUser } = useAuthstore();

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { useAuthstore } from '../store/useAuthstore';
+import { useAuthstore } from '../store/useAuthstore.js';
 import { Link } from "react-router-dom";
 import { Loader2, Mail, Lock, User, ArrowRight } from 'lucide-react';
 

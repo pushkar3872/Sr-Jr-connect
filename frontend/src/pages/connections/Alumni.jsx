@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import UserCard from './UserCard';
-import AlluserStore from '../../store/AlluserStore';
+import AlluserStore from '../../store/AlluserStore.js';
 import { useAuthstore } from '../../store/useAuthstore.js';
 import UserModal from '../../components/UserModal.jsx';
 

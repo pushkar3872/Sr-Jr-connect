@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { useAuthstore } from "../../store/useAuthstore";
+import { useAuthstore } from "../../store/useAuthstore.js";
 import { Loader, Save, GraduationCap, BookOpen, Building, Code, BarChart } from 'lucide-react';
 
 const General = () => {

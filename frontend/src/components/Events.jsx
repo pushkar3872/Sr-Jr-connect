@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Addiction from './myevents/Addiction';
-import Pulzion from './myevents/Pulzion';
-import Credenz from './myevents/Credenz';
-import Pradny from './myevents/Pradnya';
-import EventCard from './myevents/EventCard';
+import Addiction from './myevents/Addiction.jsx';
+import Pulzion from './myevents/Pulzion.jsx';
+import Credenz from './myevents/Credenz.jsx';
+import Pradny from './myevents/Pradnya.jsx';
+import EventCard from './myevents/EventCard.jsx';
 
 export default function Events() {
   const [searchTerm, setSearchTerm] = useState('');

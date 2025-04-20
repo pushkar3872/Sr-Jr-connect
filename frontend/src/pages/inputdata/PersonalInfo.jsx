@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { useAuthstore } from "../../store/useAuthstore";
+import { useAuthstore } from "../../store/useAuthstore.js";
 import { Loader, Save, Phone, Calendar, User, Mail } from "lucide-react";
 
 const PersonalInfo = () => {

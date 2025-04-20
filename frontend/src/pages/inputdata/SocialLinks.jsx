@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { useAuthstore } from "../../store/useAuthstore";
+import { useAuthstore } from "../../store/useAuthstore.js";
 import {
   Link, Save, Linkedin, Github, Code, Instagram
 } from "lucide-react";

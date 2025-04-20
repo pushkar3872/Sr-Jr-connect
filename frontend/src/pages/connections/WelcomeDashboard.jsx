@@ -1,8 +1,8 @@
 // connections/WelcomeDashboard.jsx
 import React from 'react';
 import { useEffect } from 'react';
-import AlluserStore from '../../store/AlluserStore';
-import { useAuthstore } from '../../store/useAuthstore';
+import AlluserStore from '../../store/AlluserStore.js';
+import { useAuthstore } from '../../store/useAuthstore.js';
 import { use } from 'react';
 
 export default function WelcomeDashboard() {

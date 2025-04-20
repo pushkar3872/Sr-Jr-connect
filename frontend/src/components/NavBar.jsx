@@ -1,6 +1,6 @@
 import { LogOut, MessageCircle, Settings, User, UserRoundSearch, UsersRound, Menu, Bell, X, Home, Briefcase, Calendar, Award, BookOpen } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { useAuthstore } from "../store/useAuthstore";
+import { useAuthstore } from "../store/useAuthstore.js";
 import { useEffect, useRef, useState } from "react";
 
 const Navbar = () => {

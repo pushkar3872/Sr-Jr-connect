@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import General from './inputdata/General';
-import Bio from './inputdata/Bio';
-import ChangePass from './inputdata/ChangePass';
-import Skills from './inputdata/Skills';
-import SocialLinks from './inputdata/SocialLinks';
-import ProfilePicture from './inputdata/ProfilePicture';
-import { useAuthstore } from '../store/useAuthstore';
+import General from './inputdata/General.jsx';
+import Bio from './inputdata/Bio.jsx';
+import ChangePass from './inputdata/ChangePass.jsx';
+import Skills from './inputdata/Skills.jsx';
+import SocialLinks from './inputdata/SocialLinks.jsx';
+import ProfilePicture from './inputdata/ProfilePicture.jsx';
+import { useAuthstore } from '../store/useAuthstore.js';
 import { User, FileText, KeyRound, Code, Link as LinkIcon, ChevronLeft, ChevronRight, UserPlus } from 'lucide-react';
-import formattedDate from '../lib/utils';
-import PersonalInfo from './inputdata/Personalinfo';
+import formattedDate from '../lib/utils.js';
+import PersonalInfo from './inputdata/PersonalInfo.jsx';
 
 export default function ProfilePage() {
   const { authUser } = useAuthstore();

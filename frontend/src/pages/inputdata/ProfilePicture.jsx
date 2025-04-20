@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { useAuthstore } from "../../store/useAuthstore";
+import { useAuthstore } from "../../store/useAuthstore.js";
 import toast from "react-hot-toast";
 import { Loader, Upload, Camera, X, Check } from "lucide-react";
 

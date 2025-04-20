@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import UserCard from './UserCard';
-import AlluserStore from '../../store/AlluserStore';
-import { useAuthstore } from '../../store/useAuthstore';
-import UserModal from '../../components/UserModal';
+import UserCard from './UserCard.jsx';
+import AlluserStore from '../../store/AlluserStore.js';
+import { useAuthstore } from '../../store/useAuthstore.js';
+import UserModal from '../../components/UserModal.jsx';
 
 export default function Seniors() {
   const [searchQuery, setSearchQuery] = useState('');

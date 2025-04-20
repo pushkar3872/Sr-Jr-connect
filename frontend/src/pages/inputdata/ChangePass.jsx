@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Lock, CheckCircle, Key, Eye, EyeOff } from "lucide-react";
 import toast from "react-hot-toast";
-import { useAuthstore } from "../../store/useAuthstore";
+import { useAuthstore } from "../../store/useAuthstore.js";
 
 export default function ChangePass() {
   const [currentPassword, setCurrentPassword] = useState("");

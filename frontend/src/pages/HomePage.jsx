@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Messageinput from '../components/Messageinput';
-import GeneralUpdate from "../containers/GeneralUpdate";
-import LeaderBoard from "../containers/LeaderBoard";
-import Profile from "../containers/Profile";
-import { useAuthstore } from '../store/useAuthstore';
+import Messageinput from '../components/Messageinput.jsx';
+import GeneralUpdate from "../containers/GeneralUpdate.jsx";
+import LeaderBoard from "../containers/LeaderBoard.jsx";
+import Profile from "../containers/Profile.jsx";
+import { useAuthstore } from '../store/useAuthstore.js';
 import { Navigate } from 'react-router-dom';
 import { MessageSquare, Award, User } from 'lucide-react';
 

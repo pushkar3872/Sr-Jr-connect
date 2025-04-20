@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
-import Messageinput from '../components/Messageinput';
-import { useChatstore } from '../store/useChatstore';
-import { useAuthstore } from '../store/useAuthstore';
-import formatMessageTime from '../lib/utils';
+import Messageinput from '../components/Messageinput.jsx';
+import { useChatstore } from '../store/useChatstore.js';
+import { useAuthstore } from '../store/useAuthstore.js';
+import formatMessageTime from '../lib/utils.js';
 import { X, Search, Send, Paperclip } from 'lucide-react';
-import GeneralUpdateSkeleton from '../components/GeneralUpdateSkeleton';
-import ChatBoxskeleton from '../components/ChatBoxskeleton';
+import GeneralUpdateSkeleton from '../components/GeneralUpdateSkeleton.jsx';
+import ChatBoxskeleton from '../components/ChatBoxskeleton.jsx';
 
 export default function GeneralUpdate() {
   const {

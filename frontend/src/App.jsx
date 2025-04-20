@@ -1,22 +1,22 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import WelcomePage from './pages/WelcomePage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import HomePage from './pages/HomePage';
+import WelcomePage from './pages/WelcomePage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import RegisterPage from './pages/RegisterPage.jsx';
+import HomePage from './pages/HomePage.jsx';
 import ProfilePage from './pages/Profilepage.jsx';
 import { Toaster } from 'react-hot-toast';
-import NavBar from './components/NavBar';
-import FindTeammatePage from './pages/FindTeammatePage';
-import ConnectionPage from './pages/ConnectionPage';
-import { useAuthstore } from './store/useAuthstore';
+import NavBar from './components/NavBar.jsx';
+import FindTeammatePage from './pages/FindTeammatePage.jsx';
+import ConnectionPage from './pages/ConnectionPage.jsx';
+import { useAuthstore } from './store/useAuthstore.js';
 import { Loader } from 'lucide-react';
-import SettingsPage from './pages/SettingsPage';
-import { useThemeStore } from './store/useThemeStore';
+import SettingsPage from './pages/SettingsPage.jsx';
+import { useThemeStore } from './store/useThemeStore.js';
 import Page404 from './pages/Page404'; // ✅ Added 404 Page
-import Events from './components/Events';
+import Events from './components/Events.jsx';
 
-import AboutUs from './pages/AboutUs';
+import AboutUs from './pages/AboutUs.jsx';
 
 function App() {
   const { authUser, checkAuth, isCheckingAuth } = useAuthstore();
