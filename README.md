@@ -1,33 +1,121 @@
 # Senior-Junior Connect Web App
 
-Welcome to the **Senior-Junior Connect** project, a web-based platform built using the **MERN stack (MongoDB, Express.js, React.js, Node.js)**, designed to connect alumni and students from a college for communication, resource sharing, and networking.
+Welcome to the **Senior-Junior Connect** project, a web-based platform built using the **MERN stack (MongoDB, Express.js, React.js, Node.js)**, designed to connect senior and junior students from colleges for networking, skill sharing, and communication.
 
 ## Features
+- **User Authentication**: Secure registration and login system with JWT-based authentication
+- **Profile Management**: 
+  - Personal information management
+  - Academic details
+  - Skills showcase
+  - Social platform links (GitHub, LinkedIn, LeetCode, etc.)
+- **Real-Time Chat**: Live messaging system using Socket.io
+- **Connections**: Find and connect with other students
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Theme Customization**: Multiple theme options for personalized user experience
+- **Cloud Storage**: Profile picture storage using Cloudinary
 
-- **Real-Time Chat**: A messaging system that allows users to connect and chat with their peers.
-- **User Profiles**: Alumni and students can manage their profiles, including their year of graduation, bio, and contact information.
-- **Leaderboards**: Showcasing top participants in various activities within the community.
-- **Event & Workshop Page**: A page that allows users to stay updated on upcoming events and workshops.
-- **Responsive Design**: Optimized for both desktop and mobile devices.
-- **Authentication**: Secure login, registration, and profile management using JWT-based authentication.
-  
 ## Technologies Used
 
-- **Frontend**:
-  - React.js
-  - Tailwind CSS (for UI styling)
-  - Vite (for fast bundling and dev environment)
-  
-- **Backend**:
-  - Node.js
-  - Express.js
-  
-- **Database**:
-  - MongoDB
-  
-- **Other Tools**:
-  - JWT (JSON Web Token) for authentication
-  - Socket.io for real-time messaging
+### Frontend
+- React.js with Vite
+- State Management: Zustand
+- UI Components:
+  - TailwindCSS
+  - DaisyUI
+  - Lucide React Icons
+- Notifications: React Hot Toast
+- Routing: React Router DOM v7
+- Real-time Communication: Socket.io Client
+
+### Backend
+- Node.js with Express.js
+- Authentication: JWT & bcryptjs
+- Database: MongoDB with Mongoose
+- Real-time Server: Socket.io
+- File Upload: Cloudinary
+- Environment Variables: dotenv
+- CORS enabled for secure communication
+
+## Getting Started
+
+### Prerequisites
+- Node.js (v14 or higher)
+- MongoDB Atlas Account
+- Cloudinary Account
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/Its-Shinde4241/Sr-Jr-connect.git
+cd Sr-Jr-connect
+```
+
+2. Set up environment variables:
+
+Create a `.env` file in the backend directory:
+```env
+MONGODB_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+NODE_ENV=development
+```
+
+Create a `.env` file in the frontend directory:
+```env
+VITE_IP_ADDRESS=your_local_ip_address
+```
+
+3. Install dependencies and start the application:
+
+For Development:
+```bash
+# Install backend dependencies
+cd backend
+npm install
+
+# Install frontend dependencies
+cd ../frontend
+npm install
+
+# Start the backend server (from backend directory)
+npm run dev
+
+# Start the frontend development server (from frontend directory)
+npm run dev
+```
+
+For Production:
+```bash
+# Install all dependencies and build frontend
+npm run build
+
+# Start the production server
+npm start
+```
+
+## Scripts
+
+- `npm run build`: Installs dependencies for both frontend and backend, and builds the frontend for production
+- `npm start`: Starts the production server
+
+## Repository
+
+- Issues: [https://github.com/Its-Shinde4241/Sr-Jr-connect/issues](https://github.com/Its-Shinde4241/Sr-Jr-connect/issues)
+- Homepage: [https://github.com/Its-Shinde4241/Sr-Jr-connect#readme](https://github.com/Its-Shinde4241/Sr-Jr-connect#readme)
+
+## License
+This project is licensed under the ISC License.
+
+## Contributors
+- [Shubham Shinde](https://github.com/Its-Shinde4241)
+- [Pushkar Takale](https://github.com/pushkar3872)
+- [Varad Sane](https://github.com/Varad73)
+- [Krisha Ukey](https://github.com/Krisha1803)
+
 ## Snapshots
 ![image](https://github.com/user-attachments/assets/6b810883-38c8-432f-ba07-de063424a73a)
 ![image](https://github.com/user-attachments/assets/71a9a6a1-2fb4-4057-baa3-ef1bca6d9c42)
@@ -36,14 +124,4 @@ Welcome to the **Senior-Junior Connect** project, a web-based platform built usi
 ![image](https://github.com/user-attachments/assets/62da236d-29df-4f10-bed9-76a74b94d65b)
 ![image](https://github.com/user-attachments/assets/1248ca42-0829-4f96-b996-b84223b9ce0e)
 
-
-### Prerequisites
-
-- **Node.js** (v14 or higher)
-- **MongoDB** (if you're running a local MongoDB instance, otherwise use MongoDB Atlas)
-  
-### Clone the Repository
-
-```bash
-git clone https://github.com/Its-Shinde4241/Sr-Jr-connect
-cd Sr-Jr-connect
+## 🙏 Thanks for Visiting 🙏
