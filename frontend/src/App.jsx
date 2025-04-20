@@ -4,7 +4,7 @@ import WelcomePage from './pages/WelcomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
-import ProfilePage from './pages/ProfilePage';
+import ProfilePage from './pages/Profilepage.jsx';
 import { Toaster } from 'react-hot-toast';
 import NavBar from './components/NavBar';
 import FindTeammatePage from './pages/FindTeammatePage';
