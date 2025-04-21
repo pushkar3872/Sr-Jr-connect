@@ -57,9 +57,9 @@ export default function BalancedTeamProfile() {
       size: "w-28 h-28",
       img: shubhamImage,
       social: {
-        github: "#",
-        linkedin: "#",
-        whatsapp: "8421663872",
+        github: "https://github.com/Its-Shinde4241",
+        linkedin: "https://www.linkedin.com/in/shubham-shinde-3a36b528a/",
+        whatsapp: "8767604529",
         email: "shindeshubham4241@gmail.com"
       }
     }
