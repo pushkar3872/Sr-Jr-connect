@@ -1,59 +1,47 @@
-import { Server } from "socket.io"
-import https from "https"
-import http from "http"
-import express from "express"
-import fs from "fs"
-import path from "path"
+import { Server } from "socket.io";
+import http from "http";
+import express from "express";
+import path from "path";
 
 const __dirname = path.resolve();
-const IP_ADDRESS = process.env.IP_ADDRESS;
 const app = express();
 
-let server;
+// Create HTTP server (Render handles HTTPS)
+const server = http.createServer(app);
 
-try {
-    const options = {
-        key: fs.readFileSync(path.join(__dirname, "src", "certs", "server.key")),
-        cert: fs.readFileSync(path.join(__dirname, "src", "certs", "server.cert"))
-    };
-    server = https.createServer(options, app);
-    console.log("Server running in HTTPS mode");
-} catch (error) {
-    console.log("SSL certificates not found, falling back to HTTP");
-    server = http.createServer(app);
-}
+// Initialize Socket.IO with CORS settings
 const io = new Server(server, {
-    cors: {
-        origin: "*"
-    }
+  cors: {
+    origin: ["https://sr-jr-connect.onrender.com", "http://localhost:5173"],
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+  transports: ['websocket', 'polling']
 });
 
-
-export function getReceiverSocketId(userId) {
-    return userSocketMap[userId];
-}
-
-
-// stores online users here {userID,socketID}
+// User socket mapping
 const userSocketMap = {};
 
-
 io.on("connection", (socket) => {
-    console.log("a user connected :", socket.id);
+  console.log("A user connected:", socket.id);
 
-    const userId = socket.handshake.query.userId;
-    if (userId) {
-        userSocketMap[userId] = socket.id;
-    }
-    // send to every connected user that user with id 'userId' is online 
+  const userId = socket.handshake.query.userId;
+  if (userId) {
+    userSocketMap[userId] = socket.id;
+  }
+
+  io.emit("getOnlineUsers", Object.keys(userSocketMap));
+
+  socket.on("disconnect", () => {
+    console.log("A user disconnected:", socket.id);
+    delete userSocketMap[userId];
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
+  });
+});
 
-    socket.on("disconnect", () => {
-        console.log("A user Disconnected : ", socket.id);
-        delete userSocketMap[userId];
-        io.emit("getOnlineUsers", Object.keys(userSocketMap));
-    })
-})
+// Helper function to get a user's socket ID
+export function getReceiverSocketId(userId) {
+  return userSocketMap[userId];
+}
 
 export { io, app, server };
-

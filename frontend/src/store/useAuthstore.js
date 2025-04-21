@@ -96,11 +96,17 @@ export const useAuthstore = create((set, get) => ({
             return;
         }
         // connecting to socket io
-        const socket = io(BASE_URL, {
+
+        const socket = io(window.location.hostname === 'localhost'
+            ? "http://localhost:4005"
+            : "https://sr-jr-connect.onrender.com", {
             query: {
                 userId: authUser._id,
-            }
+            },
+            transports: ['websocket', 'polling'],
+            secure: true
         });
+
         socket.connect();
         set({ socket: socket });
 

@@ -89,6 +89,5 @@ startServer();
 
 // Listen for HTTPS requests and Socket.IO connections
 server.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-    // console.log(`Server running on https://${IP_ADDRESS}:${PORT}`);
+    console.log(`Server running on https://localhost:${PORT}`);
 });
