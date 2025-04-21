@@ -1,12 +1,27 @@
 import { Server } from "socket.io"
+import https from "https"
 import http from "http"
 import express from "express"
+import fs from "fs"
+import path from "path"
+
+const __dirname = path.resolve();
 const IP_ADDRESS = process.env.IP_ADDRESS;
 const app = express();
 
-const server = http.createServer(app);
+let server;
 
-
+try {
+    const options = {
+        key: fs.readFileSync(path.join(__dirname, "src", "certs", "server.key")),
+        cert: fs.readFileSync(path.join(__dirname, "src", "certs", "server.cert"))
+    };
+    server = https.createServer(options, app);
+    console.log("Server running in HTTPS mode");
+} catch (error) {
+    console.log("SSL certificates not found, falling back to HTTP");
+    server = http.createServer(app);
+}
 const io = new Server(server, {
     cors: {
         origin: "*"

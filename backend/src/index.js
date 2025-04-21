@@ -3,8 +3,9 @@ import cors from 'cors';
 import "dotenv/config";
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import { app, server } from "./lib/socket.js";
-import path from "path"
+import { app, server } from "./lib/socket.js"; // Importing server from socket.js
+import path from "path";
+
 // Import routes
 import authRouter from './routes/auth.route.js';
 import usersRouter from './routes/users.route.js';
@@ -22,32 +23,19 @@ const __dirname = path.resolve();
 const PORT = process.env.PORT || 4005;
 const IP_ADDRESS = process.env.IP_ADDRESS;
 
-
 // Middleware setup
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-// app.use(cors({
-//     origin: [
-//         process.env.FRONTEND_URL || "http://localhost:5173",
-//         `http://${IP_ADDRESS}:5173`,  // Fix the incorrect `/`
-//         `http://${IP_ADDRESS}:4005`,
-//         `https://sr-jr-connect.onrender.com`
-//     ],
-//     credentials: true, // Allow cookies & authentication
-// }));
 
+// Allow all origins for CORS (adjust as necessary for production)
 app.use(cors({
     origin: (origin, callback) => {
         callback(null, true); // Allow all origins
     },
     credentials: true,
 }));
-
-
-
-
 
 // API routes
 app.use("/api/auth", authRouter); // Auth routes are public
@@ -72,9 +60,10 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Change the development check to production
+// Serve static files (your frontend app)
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
+// Fallback route for any other requests (catch-all for React)
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
 });
@@ -95,11 +84,11 @@ const startServer = async () => {
     }
 };
 
-
 // Start the server
 startServer();
 
+// Listen for HTTPS requests and Socket.IO connections
 server.listen(PORT, '0.0.0.0', () => {
-    console.log(`server running on http://localhost:${PORT}`)
-    // console.log(`Server running on http://${IP_ADDRESS}:${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
+    // console.log(`Server running on https://${IP_ADDRESS}:${PORT}`);
 });
