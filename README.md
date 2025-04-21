@@ -36,6 +36,18 @@ Welcome to the **Senior-Junior Connect** project, a web-based platform built usi
 - File Upload: Cloudinary
 - Environment Variables: dotenv
 - CORS enabled for secure communication
+  
+## Live Demo
+🌐 Deployed Web : [Sr-Jr Connect](https://sr-jr-connect.onrender.com)
+
+## Snapshots
+![image](https://github.com/user-attachments/assets/6b810883-38c8-432f-ba07-de063424a73a)
+![image](https://github.com/user-attachments/assets/71a9a6a1-2fb4-4057-baa3-ef1bca6d9c42)
+![image](https://github.com/user-attachments/assets/97f07116-41b4-4508-a929-4cc01369197f)
+![image](https://github.com/user-attachments/assets/428ff3a1-d544-4cdc-b32f-3fedb6396383)
+![image](https://github.com/user-attachments/assets/62da236d-29df-4f10-bed9-76a74b94d65b)
+![image](https://github.com/user-attachments/assets/1248ca42-0829-4f96-b996-b84223b9ce0e)
+
 
 ## Getting Started
 
@@ -102,6 +114,8 @@ npm start
 - `npm run build`: Installs dependencies for both frontend and backend, and builds the frontend for production
 - `npm start`: Starts the production server
 
+
+
 ## Repository
 
 - Issues: [https://github.com/Its-Shinde4241/Sr-Jr-connect/issues](https://github.com/Its-Shinde4241/Sr-Jr-connect/issues)
@@ -115,13 +129,5 @@ This project is licensed under the ISC License.
 - [Pushkar Takale](https://github.com/pushkar3872)
 - [Varad Sane](https://github.com/Varad73)
 - [Krisha Ukey](https://github.com/Krisha1803)
-
-## Snapshots
-![image](https://github.com/user-attachments/assets/6b810883-38c8-432f-ba07-de063424a73a)
-![image](https://github.com/user-attachments/assets/71a9a6a1-2fb4-4057-baa3-ef1bca6d9c42)
-![image](https://github.com/user-attachments/assets/97f07116-41b4-4508-a929-4cc01369197f)
-![image](https://github.com/user-attachments/assets/428ff3a1-d544-4cdc-b32f-3fedb6396383)
-![image](https://github.com/user-attachments/assets/62da236d-29df-4f10-bed9-76a74b94d65b)
-![image](https://github.com/user-attachments/assets/1248ca42-0829-4f96-b996-b84223b9ce0e)
 
 ## 🙏 Thanks for Visiting 🙏
