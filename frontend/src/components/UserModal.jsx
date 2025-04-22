@@ -330,14 +330,6 @@ export default function UserModal({
                             ))}
                         </div>
                     </div>
-
-                    {/* Edit Form (only for own profile) */}
-                    {isOwnProfile && (
-                        <form onSubmit={handleSubmit} className="space-y-6 border-t pt-6">
-                            {/* Rest of the edit form remains the same as in the previous implementation */}
-                            {/* ... (previous edit form code) */}
-                        </form>
-                    )}
                 </div>
             </div>
         </div>

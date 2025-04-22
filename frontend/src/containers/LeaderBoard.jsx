@@ -88,19 +88,6 @@ export default function LeaderBoard() {
   };
 
   // Get platform-specific stats
-  const getTopScore = () => {
-    const users = getSortedUsers();
-    if (users.length === 0) return 0;
-    return getUserScore(users[0]);
-  };
-
-  const getAvgScore = () => {
-    const users = getSortedUsers();
-    if (users.length === 0) return 0;
-
-    const total = users.reduce((acc, user) => acc + getUserScore(user), 0);
-    return Math.round(total / users.length);
-  };
 
   // Platform data
   const platforms = [

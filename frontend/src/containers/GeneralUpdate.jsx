@@ -6,6 +6,8 @@ import formatMessageTime from '../lib/utils.js';
 import { X, Search, Send, Paperclip } from 'lucide-react';
 import GeneralUpdateSkeleton from '../components/GeneralUpdateSkeleton.jsx';
 import ChatBoxskeleton from '../components/ChatBoxskeleton.jsx';
+import AlluserStore from '../store/AlluserStore.js';
+import UserModal from '../components/UserModal.jsx';
 
 export default function GeneralUpdate() {
   const {
@@ -23,6 +25,16 @@ export default function GeneralUpdate() {
   const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0, messageId: null });
   const messagesEndRef = useRef(null);
   const contextMenuRef = useRef(null);
+
+  const [Selectedprofile, setSelectedprofile] = useState(null);
+  const [IsModalOpen, setIsModalOpen] = useState(false);
+
+
+  const handleselectprofile = (profile) => {
+    setSelectedprofile(profile);
+    setIsModalOpen(true);
+  }
+
 
   useEffect(() => {
     getchatmessages();
@@ -109,7 +121,7 @@ export default function GeneralUpdate() {
                   onContextMenu={(e) => handleRightClick(e, messg._id, isMyMessage)}
                 >
                   {!isMyMessage && (
-                    <div className="chat-image avatar">
+                    <div className="chat-image cursor-pointer avatar" onClick={() => { handleselectprofile(messg.sender); }}>
                       <div className="w-8 rounded-full">
                         <img src={`${messg.sender?.profilePicture ?? "/avatar.png"}`} alt="Avatar" />
                       </div>
@@ -181,6 +193,18 @@ export default function GeneralUpdate() {
           </div>
         )}
       </div>
+      {Selectedprofile && (
+        <UserModal
+          user={Selectedprofile}
+          isOpen={IsModalOpen}
+          onClose={() => {
+            // setSelectedprofile(null);
+            setIsModalOpen(false);
+          }}
+          isOwnProfile={false}
+          onSave={() => { }} // Empty function as users can't edit others' profiles
+        />
+      )}
 
       {/* Image Modal */}
       {selectedImage && (

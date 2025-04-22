@@ -20,6 +20,9 @@ export default function ChangePass() {
     if (newPassword.length < 6) {
       return toast.error("Password must be at least 6 characters!");
     }
+    if (newPassword !== confirmPassword) {
+      return toast.error("Passwords do not match");
+    }
     try {
       const result = await update({
         currentPassword,
